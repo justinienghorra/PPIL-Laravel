@@ -8,3 +8,4 @@ Projet PPIL - L3 Informatique - FST
     * cp env-exmample .env
     * Dans le .env, changer le MDP de MYSQL (ligne 106)
     * docker-compose up -d nginx mysql phpmyadmin
+    * Aller sur http://localhost pour voir si ça marche 
