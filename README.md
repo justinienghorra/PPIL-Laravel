@@ -5,7 +5,7 @@ Projet PPIL - L3 Informatique - FST
 * (Installer docker)
 * Pull https://github.com/laradock/laradock à la racine du projet
 * Dans laradock/
-    * ```p env-exmample .env```
+    * ```cp env-example .env```
     * Dans le .env, changer le MDP de MYSQL (ligne 106)
     * ```docker-compose up -d nginx mysql phpmyadmin```
 * Le serveur nginx est dispo sur le port 80 (par défaut). Aller sur http://localhost pour voir si ça marche 
