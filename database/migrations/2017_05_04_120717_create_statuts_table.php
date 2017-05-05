@@ -16,7 +16,7 @@ class CreateStatutsTable extends Migration
         // Création de la table statuts
         Schema::create('statuts', function(Blueprint $table) {
             // ID en autoincrement
-            $table->increment('id');
+            $table->increments('id');
 
             // String représentant le statut
             $table->string('statut');
