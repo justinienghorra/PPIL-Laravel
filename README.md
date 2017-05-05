@@ -11,7 +11,7 @@ Projet PPIL - L3 Informatique - FST
 * Le serveur nginx est dispo sur le port 80 (par défaut). Aller sur http://localhost pour voir si ça marche 
 * Phpmyadmin est dispo sur le port 8080 (par défaut). Aller sur http://localhost:8080 pour voir si ça marche
 * Pour se connecter à Php my admin :
-    * Serveur : l'IP de la machine hôte (ex : 192.168.1.53)
+    * Serveur : l'IP de la machine hôte (192.169.99.100 par défaut)
     * Login : default / root (Par défaut, à modifier dans le .env du dossier laradock dans la section MYSQL si ça convient pas)
     * Password : secret / root (Par défaut, pareil si vous voulez modifier)
 * Se connecter en root (Password : root) sur php my admin pour créer la base 
