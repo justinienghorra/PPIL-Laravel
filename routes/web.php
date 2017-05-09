@@ -31,3 +31,19 @@ Route::get('mesFormations/L1Informatique', function() {
 Route::get('profil', function() {
     return view('profil');
 });
+
+
+
+Route::get('recapEnseignants', function() {
+    return view('recapEnseignants');
+});
+
+
+Route::get('journal', function() {
+    return view('journal');
+});
+
+
+Route::get('annuaire', function() {
+    return view('annuaire');
+});
