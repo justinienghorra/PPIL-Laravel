@@ -14,3 +14,36 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/mesUE', function() {
+    return view('mesUE');
+});
+
+
+Route::get('/mesEnseignements', function() {
+    return view('mesEnseignements');
+});
+
+Route::get('mesFormations/L1Informatique', function() {
+    return view('L1Informatique');
+});
+
+Route::get('profil', function() {
+    return view('profil');
+});
+
+
+
+Route::get('recapEnseignants', function() {
+    return view('recapEnseignants');
+});
+
+
+Route::get('journal', function() {
+    return view('journal');
+});
+
+
+Route::get('annuaire', function() {
+    return view('annuaire');
+});
