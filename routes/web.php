@@ -47,3 +47,11 @@ Route::get('journal', function() {
 Route::get('annuaire', function() {
     return view('annuaire');
 });
+
+Route::get('connexion', function() {
+    return view('connexion');
+});
+
+Route::get('inscription', function() {
+    return view('inscription');
+});
