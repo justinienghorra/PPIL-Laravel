@@ -29,7 +29,7 @@ Inscription
           <label for="email">Prénom</label>
         </div>
 
-        <div class="input-field col s4">
+        <div class="input-field col s3">
           <select>
             <option value="1">Enseignant chercheur</option>
             <option value="2">Vacataire</option>
@@ -38,6 +38,14 @@ Inscription
             <option value="5">PRAG</option>
           </select>
           <label>Votre statut</label>
+        </div>
+
+        <div class="input-field col s1">
+          <select>
+              <option value="1">M.</option>
+              <option value="2">Mme</option>
+          </select>
+          <label>Civilité</label>
         </div>
       </div>
       

@@ -55,3 +55,7 @@ Route::get('connexion', function() {
 Route::get('inscription', function() {
     return view('inscription');
 });
+
+Route::get('reset', function() {
+    return view('reinitPassword');
+});
