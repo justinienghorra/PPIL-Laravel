@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            // --- Attribut par défaut --- //
+            // --- Gen par Laravel --- //
             $table->increments('id');
             //$table->string('name');
             $table->string('email')->unique();

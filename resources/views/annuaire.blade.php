@@ -100,7 +100,7 @@ Récapitulatif des enseignants
     <div id="modal_import" class="modal">
         <div class="modal-content">
             <h4>Importation d'une liste d'enseignants</h4>
-            
+
             <div class="row">
                 <div class="file-field input-field">
                     <div class="btn btn-flat purple-text">

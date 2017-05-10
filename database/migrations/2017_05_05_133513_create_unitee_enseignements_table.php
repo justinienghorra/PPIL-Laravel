@@ -21,20 +21,15 @@ class CreateUniteeEnseignementsTable extends Migration
             $table->string('description');
 
             $table->integer('cm_volume_attendu')->unsigned();
-            $table->integer('cm_volume_affecte')->unsigned();
 
             $table->integer('td_volume_attendu')->unsigned();
-            $table->integer('td_volume_affecte')->unsigned();
-
             $table->integer('tp_volume_attendu')->unsigned();
-            $table->integer('tp_volume_affecte')->unsigned();
-
+            $table->integer('ei_volume_attendu')->unsigned();
 
             $table->integer('td_nb_groupes_attendus')->unsigned();
-            $table->integer('td_nb_groupes_affectes')->unsigned();
-
             $table->integer('tp_nb_groupes_attendus')->unsigned();
-            $table->integer('tp_nb_groupes_affectes')->unsigned();
+            $table->integer('ei_nb_groupes_attendus')->unsigned();
+
 
             $table->boolean('attente_modif');
             $table->date('derniere_modif');

@@ -11,8 +11,13 @@
 |
 */
 
-Route::get('/', function () {
+
+Route::get('/welcome', function () {
     return view('welcome');
+});
+
+Route::get('/', function() {
+   return view('mesUE');
 });
 
 Route::get('/mesUE', function() {
@@ -31,7 +36,6 @@ Route::get('mesFormations/L1Informatique', function() {
 Route::get('profil', function() {
     return view('profil');
 });
-
 
 
 Route::get('recapEnseignants', function() {
