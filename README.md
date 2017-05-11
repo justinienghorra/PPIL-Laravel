@@ -3,7 +3,7 @@ Projet PPIL - L3 Informatique - FST
 
 ## Setup avec Docker/laradock
 * (Installer docker)
-* Pull le projet
+* Cloner le projet
 * Pull https://github.com/laradock/laradock à la racine du projet
 * Dans laradock/
     * ```cp env-example .env``` : On renome env-example en .env
@@ -31,9 +31,12 @@ Projet PPIL - L3 Informatique - FST
     
 ## Si vous voulez un IP fixe pour phpmyadmin et pour le .env
 * Sur Mac
-    * sudo ifconfig nomdel'interface alias 10.200.10.1/24 ()
+    * sudo ifconfig nomdel'interface alias IP/Masque
+    * Ex : sudo ifconfig en0 alias 10.200.10.1/24
 * Sur linux
-    * sudo ifconfig nomdel'interface:0 10.200.10.1 up 
+    * sudo ifconfig nomdel'interface:0 IP up
+    * Ex : sudo ifconfig enp1s0:0 10.200.10.1 up
+    * Ex : sudo ifconfig wlan0:0 10.200.10.1 up
 
 ## Infos
 * Les routes sont dans routes/web.php
