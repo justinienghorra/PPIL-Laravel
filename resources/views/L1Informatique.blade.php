@@ -282,4 +282,44 @@ L1 Informatique
     </div>
   </div>
 
+  <!-- Modal add UE -->
+  <div id="modal_add" class="modal">
+    <div class="modal-content">
+      <h4>Ajout d'une UE</h4>
+      <div class="row">
+          <div class="col s6 input-field">
+              <input type="text">
+              <label for="">Nom</label>
+          </div>
+          <div class="col s6 input-field">
+              <select name="" id="">
+                  <option value="1">Chuck Norris</option>
+                  <option value="1">Groot</option>
+              </select>
+              <label for="">Responsable</label>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col s12 input-field">
+              <input type="text">
+              <label for="">Description</label>
+          </div>
+      </div>
+        <div class="row">
+            <div class="col s6 input-field">
+                <select name="" id="">
+                    <option value="1">L1 Informatique</option>
+                    <option value="1">L2 Informatique</option>
+                </select>
+                <label for="">Formation</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Confirmer</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
+    </div>
+  </div>
+  <!-- End Modal add UE -->
+
 @stop
