@@ -29,6 +29,8 @@ class CreateUniteeEnseignementsTable extends Migration
             $table->integer('tp_volume_attendu')->unsigned();
             $table->integer('tp_volume_affecte')->unsigned();
 
+            $table->integer('ei_volume_attendu')->unsigned();
+            $table->integer('ei_volume_affecte')->unsigned();
 
             $table->integer('td_nb_groupes_attendus')->unsigned();
             $table->integer('td_nb_groupes_affectes')->unsigned();
