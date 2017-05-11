@@ -35,3 +35,9 @@ Projet PPIL - L3 Informatique - FST
 * Sur linux
     * sudo ifconfig nomdel'interface:0 10.200.10.1 up 
 
+## Infos
+* Les routes sont dans routes/web.php
+* Créer un Controller : php artisan make:controller -> app/Http/Controllers
+* Créer un Model avec fichier de migration : php artisan make:Model User -m 
+    * -> Classe User dans app/
+    * -> fichier de migration create_users_table dans database/migrations/
