@@ -14,14 +14,17 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+
             // --- Gen par Laravel --- //
+
             $table->increments('id');
-            //$table->string('name');
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
             // -------------------------- //
+
             $table->string('nom');
             $table->string('prenom');
             $table->string('civilite');
@@ -29,8 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('adresse');
             
             $table->boolean('attente_validation');
-            $table->integer('prochaine_modif_en_attente');
-            $table->date('derniere_modif');
+            $table->date('date_derniere_modif');
 
         });
 
