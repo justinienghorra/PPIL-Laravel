@@ -28,4 +28,10 @@ Projet PPIL - L3 Informatique - FST
     * DB_DATABASE=PPIL (Le nom que t'as donné à la base)
     * DB_USERNAME=root 
     * DB_PASSWORD=root (#ultrasécu)
+    
+## Si vous voulez un IP fixe pour phpmyadmin et pour le .env
+* Sur Mac
+    * sudo ifconfig nomdel'interface alias 10.200.10.1/24 ()
+* Sur linux
+    * sudo ifconfig nomdel'interface:0 10.200.10.1 up 
 
