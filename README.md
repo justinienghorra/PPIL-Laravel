@@ -41,6 +41,6 @@ Projet PPIL - L3 Informatique - FST
 ## Infos
 * Les routes sont dans routes/web.php
 * Créer un Controller : php artisan make:controller -> app/Http/Controllers
-* Créer un Model avec fichier de migration : php artisan make:Model User -m 
+* Créer un Model avec fichier de migration : php artisan make:model User -m 
     * -> Classe User dans app/
     * -> fichier de migration create_users_table dans database/migrations/
