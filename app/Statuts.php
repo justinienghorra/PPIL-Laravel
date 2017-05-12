@@ -12,4 +12,6 @@ class Statuts extends Model
      * @var string
      */
     protected $table = 'statuts';
+
+    protected $fillable = ['statut'];
 }

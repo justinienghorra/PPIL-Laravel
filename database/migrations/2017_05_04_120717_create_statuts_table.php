@@ -15,6 +15,9 @@ class CreateStatutsTable extends Migration
     {
         // Création de la table statuts
         Schema::create('statuts', function(Blueprint $table) {
+            // Utilisé par Laravel (Ajoute les champs created_at et updated_at)
+            $table->timestamps();
+
             // ID en autoincrement
             $table->increments('id');
 
