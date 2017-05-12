@@ -11,6 +11,7 @@ Projet PPIL - L3 Informatique - FST
 * A la racine du projet
     * ``` composer update ``` : Download des dépendances
     * ``` php artisan key:generate ```
+    * ```sudo chmod 777 -R storage/ ```
 * Le serveur nginx est dispo sur le port 80 (par défaut). Aller sur http://localhost pour voir si ça marche 
 * Phpmyadmin est dispo sur le port 8080 (par défaut). Aller sur http://localhost:8080 pour voir si ça marche
 * Pour se connecter à Php my admin :
