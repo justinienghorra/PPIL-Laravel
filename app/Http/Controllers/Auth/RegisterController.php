@@ -27,6 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
+    // TODO : Rediriger vers la page de profil
     protected $redirectTo = '/home';
 
     /**
@@ -48,7 +49,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            // TODO : Vérifier que civilité = M ou Mme
+            // TODO : Vérifier que civilité = M ou Mme (Voir doc Validator)
+            'civilite' => 'required|string|max:3',
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
