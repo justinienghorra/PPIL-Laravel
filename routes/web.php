@@ -63,6 +63,7 @@ Route::get('inscription', function() {
 Route::get('reset', function() {
     return view('reinitPassword');
 });
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
