@@ -30,8 +30,8 @@ Projet PPIL - L3 Informatique - FST
     * DB_USERNAME=root 
     * DB_PASSWORD=root (#ultrasécu)
     
-# Persistence de la base enter les reboot
-Petit détail très léger, le dossier où est stocké la base est par défaut /tmp.....  
+# Persistence de la base entre les reboots
+Petit détail très léger, le dossier où est stocké la base est par défaut /tmp..... (Sérieusement quoi...) 
 Pour changer ça :
 * A la racine du projet, créer un dossier app-data
 * Dans le .env du dossier laradock
