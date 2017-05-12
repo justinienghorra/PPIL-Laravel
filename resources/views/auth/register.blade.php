@@ -11,7 +11,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('civilite') ? ' has-error' : '' }}">
-                            <label for="nom" class="col-md-4 control-label">Civilité</label>
+                            <label for="nom" class="col-md-4 control-label">Civilité - TODO : Faire une petite liste déroulante</label>
 
                             <div class="col-md-6">
                                 <input id="civilite" type="text" class="form-control" name="civilite" value="{{ old('civilite') }}" required autofocus>

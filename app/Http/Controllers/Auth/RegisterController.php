@@ -48,6 +48,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            // TODO : Vérifier que civilité = M ou Mme
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -65,11 +66,17 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'civilite' => $data['civilite'],
             'nom' => $data['nom'],
             'prenom' => $data['prenom'],
             'adresse' => $data['adresse'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+
+            // TODO Gérer l'attente de validation
+            'attente_validation' => false,
+
+            //TODO Gérer les statuts (Décommenter les lignes dans database/migrations/add_fk_to_users) et regen la BDD (php artisan migrate:refresh)
         ]);
     }
 }
