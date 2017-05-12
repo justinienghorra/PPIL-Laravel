@@ -30,6 +30,13 @@ Projet PPIL - L3 Informatique - FST
     * DB_USERNAME=root 
     * DB_PASSWORD=root (#ultrasécu)
     
+# Persistence de la base enter les reboot
+Petit détail très léger, le dossier où est stocké la base est par défaut /tmp.....  
+Pour changer ça :
+* A la racine du projet, créer un dossier app-data
+* Dans le .env du dossier laradock
+    * Remplacer DATA_SAVE_PATH=/tmp par DATA_SAVE_PATH=../app-data
+    
 ## Si vous voulez un IP fixe pour phpmyadmin et pour le .env
 * Sur Mac
     * sudo ifconfig nomdel'interface alias IP/Masque

@@ -11,3 +11,4 @@ npm-debug.log
 .env
 laradock/
 composer.lock
+app-data/*
