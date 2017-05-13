@@ -14,8 +14,11 @@
                             <label for="nom" class="col-md-4 control-label">Civilité - TODO : Faire une petite liste déroulante</label>
 
                             <div class="col-md-6">
-                                <input id="civilite" type="text" class="form-control" name="civilite" value="{{ old('civilite') }}" required autofocus>
 
+                                <select id="civilite" class="form-control" name="civilite" value="{{ old('civilite') }}" required autofocus>
+                                    <option>M</option>
+                                    <option>Mme</option>
+                                </select>
                                 @if ($errors->has('civilite'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('civilite') }}</strong>
