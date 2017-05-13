@@ -19,7 +19,7 @@ class StatutsTableSeeder extends Seeder
         $s->statut = 'PRAG';
         $s->save();
         $s = new Statuts;
-        $s->statut = 'EC';
+        $s->statut = 'Enseignant chercheur';
         $s->save();
         $s = new Statuts;
         $s->statut = 'Doctorant';

@@ -14,8 +14,8 @@ class AddFkToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //$table->integer('id_statut')->unsigned();
-            //$table->foreign('id_statut')->references('id')->on('statuts');
+            $table->integer('id_statut')->unsigned();
+            $table->foreign('id_statut')->references('id')->on('statuts');
         });
     }
 
@@ -27,7 +27,7 @@ class AddFkToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function(Blueprint $table) {
-            //$table->dropForeign(['id_statut']);
+            $table->dropForeign(['id_statut']);
         });
     }
 }
