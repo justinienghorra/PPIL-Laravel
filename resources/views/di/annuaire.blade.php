@@ -26,5 +26,23 @@
 
 @endif
 
+<br>
+<br>
+<br>
+
+<a href="/di/annuaire.csv">Export to csv</a>
+
+<hr>
+
+<form method="post" action="/di/annuaire/importCSV" enctype="multipart/form-data">
+    {{ csrf_field() }}
+    <input type="file" name="file_csv" />
+    <button type="submit">Envoyer</button>
+</form>
+
+@if(isset ($data))
+    {{  $data }}
+@endif
+
 </body>
 </html>

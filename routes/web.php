@@ -70,4 +70,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profil', 'ProfilController@show');
 
 Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
-Route::get('/di/json/annuaire', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::get('/di/annuaire.json', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::get('/di/annuaire.csv', 'ResponsableDI\AnnuaireController@getAnnuaireCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/annuaire/importCSV', 'ResponsableDI\AnnuaireController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
