@@ -18,4 +18,12 @@ class AnnuaireController extends Controller
         $users = User::all();
         return \view('di.annuaire')->with('users', $users);
     }
+
+    /**
+     * Retourne la liste des utilisateurs au format json
+     */
+    protected function getAnnuaireJSON() {
+        $users = User::all();
+        return json_encode($users);
+    }
 }
