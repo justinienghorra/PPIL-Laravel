@@ -65,3 +65,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/profil', 'ProfilController@show');
+
+Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);

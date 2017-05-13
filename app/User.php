@@ -40,7 +40,7 @@ class User extends Authenticatable
      *
      * @return boolean
      */
-    protected function estResponsableDI() {
+    public function estResponsableDI() {
         $res = ResponsableDepInfo::where('id_utilisateur', $this->id)->count();
         return $res > 0;
     }
