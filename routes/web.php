@@ -33,11 +33,6 @@ Route::get('mesFormations/L1Informatique', function() {
     return view('L1Informatique');
 });
 
-Route::get('profil', function() {
-    return view('profil');
-});
-
-
 Route::get('recapEnseignants', function() {
     return view('recapEnseignants');
 });
@@ -69,4 +64,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/home/profil', 'ProfilController@show');
+Route::get('/profil', 'ProfilController@show');
