@@ -5,13 +5,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register - Vue générée par Laravel - A modifier</div>
+                <div class="panel-heading">Register - Vue générée par Laravel avec Bootstrap - A modifier</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('civilite') ? ' has-error' : '' }}">
-                            <label for="nom" class="col-md-4 control-label">Civilité - TODO : Faire une petite liste déroulante</label>
+                            <label for="nom" class="col-md-4 control-label">Civilité</label>
 
                             <div class="col-md-6">
 
@@ -50,6 +50,26 @@
                                 @if ($errors->has('prenom'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('prenom') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('statut') ? ' has-error' : '' }}">
+                            <label for="statut" class="col-md-4 control-label">Statut</label>
+
+                            <div class="col-md-6">
+
+                                <select id="statut" class="form-control" name="statut" value="{{ old('statut') }}" required autofocus>
+                                    <option>ATER</option>
+                                    <option>PRAG</option>
+                                    <option>Enseignant chercheur</option>
+                                    <option>Doctorant</option>
+                                    <option>Vacataire</option>
+                                </select>
+                                @if ($errors->has('statut'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('statut') }}</strong>
                                     </span>
                                 @endif
                             </div>
