@@ -34,11 +34,11 @@
 <br>
 <br>
 <br>
-
+<h4>Exportation</h4>
 <a href="/di/annuaire.csv">Export to csv</a>
 
 <hr>
-
+<h4>Importation</h4>
 <form method="post" action="/di/annuaire/importCSV" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type="file" name="file_csv" />
@@ -48,6 +48,7 @@
 @if(isset ($data))
     {{  $data }}
 @endif
-
+<h4>Format requis</h4>
+civilite,prenom,nom,email,adresse,statut
 </body>
 </html>
