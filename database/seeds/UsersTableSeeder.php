@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
         $admin->adresse = "45 Rue de la Liberté, 54000 Nancy";
         $admin->civilite = "M";
         $admin->attente_validation = false;
-        $admin->id_statut = \App\Statuts::where('statut', 'Aucun')->first()->id;
+        $admin->id_statut = \App\Statut::where('statut', 'Aucun')->first()->id;
         $admin->save();
 
         $respDI = new \App\ResponsableDepInfo;

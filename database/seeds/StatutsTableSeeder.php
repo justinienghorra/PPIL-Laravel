@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Statuts;
+use App\Statut;
 
 class StatutsTableSeeder extends Seeder
 {
@@ -12,22 +12,22 @@ class StatutsTableSeeder extends Seeder
      */
     public function run()
     {
-        $s = new Statuts;
+        $s = new Statut;
         $s->statut = 'ATER';
         $s->save();
-        $s = new Statuts;
+        $s = new Statut;
         $s->statut = 'PRAG';
         $s->save();
-        $s = new Statuts;
+        $s = new Statut;
         $s->statut = 'Enseignant chercheur';
         $s->save();
-        $s = new Statuts;
+        $s = new Statut;
         $s->statut = 'Doctorant';
         $s->save();
-        $s = new Statuts;
+        $s = new Statut;
         $s->statut = 'Vacataire';
         $s->save();
-        $s = new Statuts;
+        $s = new Statut;
         $s->statut = 'Aucun';
         $s->save();
     }

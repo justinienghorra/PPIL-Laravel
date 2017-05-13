@@ -7,20 +7,21 @@ use App\Http\Controllers\Controller;
 use App\Statut;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Validator;
+
+use Illuminate\Validation\Rule;
+use Validator;
 use Illuminate\View\View;
 
 class AnnuaireController extends Controller
 {
-
-    protected $civilite_array;
     protected $statut_array;
 
     public function __construct()
     {
-        $this->civilite_array = array("M", "Mme");
-        $this->statut_array = Statut::select('statut')->get();
+        $this->statut_array = array();
+        foreach (Statut::select('statut')->cursor() as $statut) {
+            array_push($this->statut_array, $statut->statut);
+        }
     }
 
     /**
@@ -66,14 +67,18 @@ class AnnuaireController extends Controller
         $csv_content = fgetcsv($f);
         while ($csv_content) {
 
-            $validator = Validator::make($request->all(), [
-                '0' => 'required|in_array:civilite_array',
+            $validator = Validator::make($csv_content, [
+                '0' => ['required', 'string', Rule::in(['M, "Mme'])],
                 '1' => 'required|string|max:255',
                 '2' => 'required|string|max:255',
-                '3' => 'required',
-                '4' => 'required',
-                '5' => 'required|in_array',
+                '3' => 'required|string|email|unique:users,email',
+                '4' => 'required|string',
+                '5' => ['required', 'string', Rule::in($this->statut_array)],
             ]);
+
+            if ($validator->fails()) {
+                return redirect('/di/annuaire')->withErrors($validator);
+            }
 
             $user = new User;
             $user->civilite = $csv_content[0];

@@ -5,6 +5,11 @@
 <body>
 <h1>Annuaire</h1>
 
+<h4>Objet error (pour le frontend)</h4>
+<p>
+    {{ var_dump($errors) }}
+</p>
+
 @if($users->count() > 0)
 
     <table border="1">
