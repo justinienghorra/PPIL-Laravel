@@ -67,3 +67,6 @@ Route::get('reset', function() {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/home/profil', 'ProfilController@show');

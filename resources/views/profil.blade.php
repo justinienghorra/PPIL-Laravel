@@ -74,7 +74,7 @@ Profil
                     
                     <div class="row">
                         <div class="input-field col s10 offset-s1">
-                        <input id="email" type="email" class="validate" value="jezapelgroot@gmail.com">
+                        <input id="email" type="email" class="validate" value={!! $user->email !!}>
                         <label for="email">Votre Email</label>
                         </div>
                     </div>
