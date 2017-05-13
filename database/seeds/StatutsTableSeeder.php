@@ -27,5 +27,8 @@ class StatutsTableSeeder extends Seeder
         $s = new Statuts;
         $s->statut = 'Vacataire';
         $s->save();
+        $s = new Statuts;
+        $s->statut = 'Aucun';
+        $s->save();
     }
 }

@@ -34,4 +34,14 @@ class User extends Authenticatable
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * Retourne vrai si l'utilisateur est responsable DI
+     *
+     * @return boolean
+     */
+    protected function estResponsableDI() {
+        $res = ResponsableDepInfo::where('id_utilisateur', $this->id)->count();
+        return $res > 0;
+    }
 }
