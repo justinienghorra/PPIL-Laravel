@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ResponsableDI;
 
 use App\Http\Controllers\Controller;
 
+use App\User;
 use Illuminate\View\View;
 
 class AnnuaireController extends Controller
@@ -14,6 +15,7 @@ class AnnuaireController extends Controller
      * @return View
      */
     protected function show() {
-        return \view('di.annuaire');
+        $users = User::all();
+        return \view('di.annuaire')->with('users', $users);
     }
 }

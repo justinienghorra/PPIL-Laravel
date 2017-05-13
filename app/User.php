@@ -44,4 +44,13 @@ class User extends Authenticatable
         $res = ResponsableDepInfo::where('id_utilisateur', $this->id)->count();
         return $res > 0;
     }
+
+    /**
+     * Retourne le statut
+     *
+     * @return string
+     */
+    public function statut() {
+        return Statut::where('id', $this->id_statut)->first()->statut;
+    }
 }

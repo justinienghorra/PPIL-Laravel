@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Statuts;
+use App\Statut;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -82,7 +82,7 @@ class RegisterController extends Controller
             // TODO Gérer l'attente de validation
             'attente_validation' => false,
 
-            'id_statut' => Statuts::where('statut', $data['statut'])->first()->id,
+            'id_statut' => Statut::where('statut', $data['statut'])->first()->id,
         ]);
     }
 }

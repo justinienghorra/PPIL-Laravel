@@ -11,53 +11,56 @@
 |
 */
 
+// Vues de la partie modélisation du projet
 
 Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/', function() {
+Route::get('/conception/', function() {
    return view('mesUE');
 });
 
-Route::get('/mesUE', function() {
+Route::get('/conception/mesUE', function() {
     return view('mesUE');
 });
 
 
-Route::get('/mesEnseignements', function() {
+Route::get('/conception/mesEnseignements', function() {
     return view('mesEnseignements');
 });
 
-Route::get('mesFormations/L1Informatique', function() {
+Route::get('/conception/mesFormations/L1Informatique', function() {
     return view('L1Informatique');
 });
 
-Route::get('recapEnseignants', function() {
+Route::get('/conception/recapEnseignants', function() {
     return view('recapEnseignants');
 });
 
 
-Route::get('journal', function() {
+Route::get('/conception/journal', function() {
     return view('journal');
 });
 
 
-Route::get('annuaire', function() {
+Route::get('/conception/annuaire', function() {
     return view('annuaire');
 });
 
-Route::get('connexion', function() {
+Route::get('/conception/connexion', function() {
     return view('connexion');
 });
 
-Route::get('inscription', function() {
+Route::get('/conception/inscription', function() {
     return view('inscription');
 });
 
-Route::get('reset', function() {
+Route::get('/conception/reset', function() {
     return view('reinitPassword');
 });
+
+// ------------------------------------------------
 
 Auth::routes();
 
