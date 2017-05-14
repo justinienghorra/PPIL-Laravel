@@ -87,3 +87,5 @@ Route::get('/di/formations', 'ResponsableDI\FormationsController@show')->middlew
 Route::get('/en_attente', function () {
     return view('auth.en_attente');
 });
+
+//Route::get('/formation/{nom_formation}', 'FormationController@show');
