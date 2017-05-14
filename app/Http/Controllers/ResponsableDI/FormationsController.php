@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ResponsableDI;
 
 
 use App\Formation;
+use App\User;
 use Illuminate\View\View;
 
 class FormationsController
@@ -14,9 +15,8 @@ class FormationsController
      * @return View
      */
     public function show() {
-
         $formations = Formation::all();
-
-        return view('di.formations')->with(['formations' => $formations]);
+        $users = User::all();
+        return view('di.formations')->with(['formations' => $formations, 'users' => $users]);
     }
 }
