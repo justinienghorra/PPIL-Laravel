@@ -1,6 +1,18 @@
 # PPIL-Laravel
 Projet PPIL - L3 Informatique - FST
 
+## Infos pour le frontend
+* ```php artisan migrate:refresh --seed ``` pour mettre à jour la base
+* Après ça, deux utilisateur sont créés :
+    * Le resp DI : jean.dupont@gmail.com | password
+    * Un utilisateur lambda : utilisateur.lambda@gmail.com | password
+* La vue du login est dispo sur /login - elle a été générée par Laravel (A modifier)
+* La vue register est dispo sur /register - elle a été générée par Laravel (A modifier)
+* La vue journal est dispo sur /di/journal (Quand on est loggé en resp DI)
+* La vue annuaire est dispo sur /di/annuaire (Quand on est loggé en resp DI)
+* La vue profil est dispo sur /profil
+* Les vues de la partie modélisation sont dispo sur /conception/xxxxxx
+
 ## Setup avec Docker/laradock
 * (Installer docker)
 * Cloner le projet
