@@ -9,7 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Validation\Rule;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class AnnuaireController extends Controller
@@ -59,7 +59,25 @@ class AnnuaireController extends Controller
      * Importation d'un fichier csv
      */
     protected function importCSV(Request $request) {
+
         //TODO check le type du fichier
+        $validator = Validator::make(
+            [
+                'file' => $request->file('file_csv'),
+                'extension' => strtolower($request->file('file_csv')->getClientOriginalExtension()),
+            ]
+            ,
+            [
+                'file' => 'required',
+                'extension' => 'required|mimes:csv',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect('/di/annuaire')->withErrors($validator);
+        }
+
+
         $file = $request->file('file_csv');
 
         $f = fopen($file->path(), "r");
