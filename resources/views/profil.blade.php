@@ -112,39 +112,8 @@ Profil
                         <h5 class="header col s12 light">Modification du mot de passe</h5>
                     </div>
                     <div class="row">
-                        <!--<form class="col s12">
-                       
 
-                        <div class="row">
-
-                            <div class="input-field col s10 offset-s1">
-                            <input id="password" type="password" class="validate">
-                            <label for="password">Nouveau mot de passe</label>
-                            </div>
-
-                        </div>
-                        
-                        <div class="row">
-                            <div class="input-field col s10 offset-s1">
-                            <input id="password" type="password" class="validate">
-                            <label for="password">Confirmation du nouveau mot de passe</label>
-                            </div>
-                        </div>
-                        
-
-                        
-
-                        <div class="row center">
-                            <a href="#" class="btn btn-flat blue-text" id="download-button" >Enregistrer les modifications</a>
-                        </div>
-                        
-                        </form>-->
-
-
-
-                        <div class="col s12">
-
-                            {!! Form::open(['url' => 'profil/password']) !!}
+                            {!! Form::open(['url' => 'profil/password'], $attributes = ['class' => 'col s12']) !!}
 
                             <div class="row">
                                 <div class="input-field col s10 offset-s1">
@@ -173,7 +142,6 @@ Profil
                             {{ Session::get('password_message') }}
                             </div>
                         </div>
-                    </div>
 
 
 
