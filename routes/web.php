@@ -80,6 +80,8 @@ Route::get('/di/journal', 'ResponsableDI\JournalController@show')->middleware(\A
 Route::post('/di/journal/accept', 'ResponsableDI\JournalController@accept')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::post('/di/journal/deny', 'ResponsableDI\JournalController@deny')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
+Route::get('/di/formations', 'ResponsableDI\FormationsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
 Route::get('/en_attente', function () {
     return view('auth.en_attente');
 });
