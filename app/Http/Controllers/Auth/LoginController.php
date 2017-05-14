@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -46,6 +47,10 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
+        $email = $request->email;
+        $user = User::where('email', $email)->first();
+        if ($user->attente_validation) return false;
+
         // TODO Gérer la vérification de la validation de l'inscription
         return $this->guard()->attempt(
             $this->credentials($request), $request->has('remember')
