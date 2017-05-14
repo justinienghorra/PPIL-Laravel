@@ -46,6 +46,21 @@
                 dataType: 'html'
             });
         });
+
+        $('.btn-deny').click(function (e) {
+            $.ajax({
+                url: "/di/journal/deny",
+                type: "POST",
+                data: "id_journal=" + $(this).attr('name'),
+                success: function() {
+                    alert('Success');
+                },
+                error: function () {
+                    alert('Fail');
+                },
+                dataType: 'html'
+            });
+        });
     });
 </script>
 </body>
