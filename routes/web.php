@@ -68,6 +68,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/profil', 'ProfilController@show');
+Route::post('/profil/email', 'ProfilController@postEmail');
 
 Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/annuaire.json', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);

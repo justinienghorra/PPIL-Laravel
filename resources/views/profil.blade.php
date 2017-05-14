@@ -77,10 +77,10 @@ Profil
                         <!--<input id="email" type="email" class="validate" value={!! $user->email !!}>
                         <label for="email">Votre Email</label>-->
 
-                        {!! Form::open(['url' => 'profil']) !!}
-                        {!! Form::email('email', $value = $user->email, $attributes = ['type' => 'email', 'class' => 'validate']) !!}
-                        {!! Form::label('email', 'Votre Email') !!}
-                        {!! Form::close() !!}
+                        {!! Form::open(['url' => 'profil/email']) !!}
+                            {!! Form::email('email', $value = $user->email, $attributes = ['class' => 'validate', 'id' => 'email']) !!}
+                            {!! Form::label('email', 'Votre Email') !!}
+
 
                         </div>
                     </div>
@@ -88,8 +88,9 @@ Profil
 
                     <div class="row center">
 
-                        <button type="submit" class="center btn btn-flat orange-text" href="#" id="" >Enregistrer les modifications</a>
-
+                    <!--<button type="submit" class="center btn btn-flat orange-text" href="#" id="" >Enregistrer les modifications</a>-->
+                            {!! Form::submit('Enregistrer les modifications', $attributes = ['class' => 'center btn btn-flat orange-text', 'href' => '#', 'id' => '']) !!}
+                        {!! Form::close() !!}
                     </div>
                     
                     </form>
