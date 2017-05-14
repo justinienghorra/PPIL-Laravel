@@ -16,11 +16,14 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $user = Auth::user();
-        if (! $user->estResponsableDI()) {
-            return redirect('/home');
-        }
+        if (Auth::check()) {
+            $user = Auth::user();
+            if (!$user->estResponsableDI()) {
+                return redirect('/home');
+            }
 
-        return $next($request);
+            return $next($request);
+        }
+        return redirect('/login');
     }
 }
