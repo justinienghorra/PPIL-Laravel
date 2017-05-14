@@ -70,6 +70,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/profil', 'ProfilController@show');
 Route::post('/profil/email', 'ProfilController@postEmail');
+Route::post('/profil/password', 'ProfilController@postPassword');
+
 
 Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/annuaire.json', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);
@@ -86,3 +88,5 @@ Route::post('/di/formations/add', 'ResponsableDI\FormationsController@add')->mid
 Route::get('/en_attente', function () {
     return view('auth.en_attente');
 });
+
+//Route::get('/formation/{nom_formation}', 'FormationController@show');

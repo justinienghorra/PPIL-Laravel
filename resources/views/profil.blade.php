@@ -112,34 +112,36 @@ Profil
                         <h5 class="header col s12 light">Modification du mot de passe</h5>
                     </div>
                     <div class="row">
-                        <form class="col s12">
-                       
 
-                        <div class="row">
+                            {!! Form::open(['url' => 'profil/password'], $attributes = ['class' => 'col s12']) !!}
 
-                            <div class="input-field col s10 offset-s1">
-                            <input id="password" type="password" class="validate">
-                            <label for="password">Nouveau mot de passe</label>
+                            <div class="row">
+                                <div class="input-field col s10 offset-s1">
+
+                                {!! Form::password('password', $attributes = ['class' => 'validate', 'id' => 'password']) !!}
+                                {!! Form::label('password', 'Nouveau mot de passe') !!}
+
+                                </div>
                             </div>
 
-                        </div>
-                        
-                        <div class="row">
-                            <div class="input-field col s10 offset-s1">
-                            <input id="password" type="password" class="validate">
-                            <label for="password">Confirmation du nouveau mot de passe</label>
+                            <div class="row">
+                                <div class="input-field col s10 offset-s1">
+
+                                    {!! Form::password('check_password', $attributes = ['class' => 'validate', 'id' => 'password']) !!}
+                                    {!! Form::label('check_password', 'Confirmation du nouveau mot de passe') !!}
+
+                                </div>
+                            </div>
+
+                            <div class="row center">
+                                {!! Form::submit('Enregistrer les modifications', $attributes = ['class' => 'center btn btn-flat blue-text', 'href' => '#', 'id' => '']) !!}
+                            </div>
+
+                            {!! Form::close() !!}
+
+                            {{ Session::get('password_message') }}
                             </div>
                         </div>
-                        
-
-                        
-
-                        <div class="row center">
-                            <a href="#" class="btn btn-flat blue-text" id="download-button" >Enregistrer les modifications</a>
-                        </div>
-                        
-                        </form>
-                    </div>
 
 
 
