@@ -70,7 +70,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/profil', 'ProfilController@show');
 Route::post('/profil/email', 'ProfilController@postEmail');
-Route::post('/profil/mdp', 'ProfilController@postMdp');
+Route::post('/profil/password', 'ProfilController@postPassword');
 
 
 Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);

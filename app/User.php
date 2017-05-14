@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function updateEmail($email){
         User::where('id', $this->id)->update(['email' => $email]);
     }
+
+    public function updatePassword($password){
+        User::where('id', $this->id)->update(['password' => $password]);
+    }
 }

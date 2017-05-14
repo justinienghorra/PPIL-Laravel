@@ -144,7 +144,7 @@ Profil
 
                         <div class="col s12">
 
-                            {!! Form::open(['url' => 'profil/mdp']) !!}
+                            {!! Form::open(['url' => 'profil/password']) !!}
 
                             <div class="row">
                                 <div class="input-field col s10 offset-s1">
@@ -158,8 +158,8 @@ Profil
                             <div class="row">
                                 <div class="input-field col s10 offset-s1">
 
-                                    {!! Form::password('password', $attributes = ['class' => 'validate', 'id' => 'password']) !!}
-                                    {!! Form::label('password', 'Confirmation du nouveau mot de passe') !!}
+                                    {!! Form::password('check_password', $attributes = ['class' => 'validate', 'id' => 'password']) !!}
+                                    {!! Form::label('check_password', 'Confirmation du nouveau mot de passe') !!}
 
                                 </div>
                             </div>
@@ -170,6 +170,7 @@ Profil
 
                             {!! Form::close() !!}
 
+                            {{ Session::get('password_message') }}
                             </div>
                         </div>
                     </div>

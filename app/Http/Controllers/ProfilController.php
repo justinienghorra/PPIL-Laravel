@@ -40,14 +40,27 @@ class ProfilController extends Controller
     }
 
     public function postEmail(Request $request){
-
-        // Retourne l'utilisateur courant authentifie...
         $user = Auth::user();
 
         $user->updateEmail($request->input('email'));
     }
 
-    public function postMdp(Request $request){
+    public function postPassword(Request $request){
+        //TODO : mettre un beau message sur la vue
+        if ($request->input('password') != $request->input('check_password')){
+
+            return redirect('profil')->with('password_message', 'Les deux mot de passe entrés sont différents');
+
+        }else {
+
+            $user = Auth::user();
+            $user->updatePassword(bcrypt($request->input('password')));
+
+            return redirect('profil')->with('password_message', 'Mot de passe modifié avec succé');
+        }
+
+
+
 
     }
 }
