@@ -69,7 +69,7 @@ class AnnuaireController extends Controller
             ,
             [
                 'file' => 'required',
-                'extension' => 'required|mimes:csv',
+                'extension' => 'required|in:csv',
             ]
         );
 
