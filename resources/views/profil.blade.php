@@ -112,7 +112,7 @@ Profil
                         <h5 class="header col s12 light">Modification du mot de passe</h5>
                     </div>
                     <div class="row">
-                        <form class="col s12">
+                        <!--<form class="col s12">
                        
 
                         <div class="row">
@@ -138,7 +138,40 @@ Profil
                             <a href="#" class="btn btn-flat blue-text" id="download-button" >Enregistrer les modifications</a>
                         </div>
                         
-                        </form>
+                        </form>-->
+
+
+
+                        <div class="col s12">
+
+                            {!! Form::open(['url' => 'profil/mdp']) !!}
+
+                            <div class="row">
+                                <div class="input-field col s10 offset-s1">
+
+                                {!! Form::password('password', $attributes = ['class' => 'validate', 'id' => 'password']) !!}
+                                {!! Form::label('password', 'Nouveau mot de passe') !!}
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s10 offset-s1">
+
+                                    {!! Form::password('password', $attributes = ['class' => 'validate', 'id' => 'password']) !!}
+                                    {!! Form::label('password', 'Confirmation du nouveau mot de passe') !!}
+
+                                </div>
+                            </div>
+
+                            <div class="row center">
+                                {!! Form::submit('Enregistrer les modifications', $attributes = ['class' => 'center btn btn-flat blue-text', 'href' => '#', 'id' => '']) !!}
+                            </div>
+
+                            {!! Form::close() !!}
+
+                            </div>
+                        </div>
                     </div>
 
 
