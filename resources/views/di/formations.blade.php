@@ -4,6 +4,11 @@
 </head>
 <body>
 
+<h4>Objet error (pour le frontend)</h4>
+<p>
+    {{ var_dump($errors) }}
+</p>
+
 <h1>Formations</h1>
 
 @if(isset($formations))
@@ -15,7 +20,11 @@
             <tr>
                 <td><a href="/formations/{{$formation->nom}}">{{$formation->nom}}</a></td>
                 <td>{{$formation->description}}</td>
-                <td>{{$formation->responsable->user->prenom . " " . $formation->responsable->user->nom }}</td>
+                @if(isset($formation->responsable->user))
+                    <td>{{$formation->responsable->user->prenom . " " . $formation->responsable->user->nom }}</td>
+                @else
+                    <td></td>
+                @endif
                 <td>
                     <form action="/di/formations/delete" method="post">
                         {{csrf_field()}}
@@ -43,7 +52,7 @@
     <label for="responsable">Responsable : </label>
     <select name="responsable" id="">
         @foreach($users as $user)
-            <option value="{{$user->email}}">{{ $user->prenom . " " . $user->nom }}</option>
+            <option value="{{$user->id}}">{{ $user->prenom . " " . $user->nom }}</option>
         @endforeach
     </select>
     <button type="submit">Ajouter</button>
