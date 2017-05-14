@@ -74,8 +74,14 @@ Profil
                     
                     <div class="row">
                         <div class="input-field col s10 offset-s1">
-                        <input id="email" type="email" class="validate" value={!! $user->email !!}>
-                        <label for="email">Votre Email</label>
+                        <!--<input id="email" type="email" class="validate" value={!! $user->email !!}>
+                        <label for="email">Votre Email</label>-->
+
+                        {!! Form::open(['url' => 'profil']) !!}
+                        {!! Form::email('email', $value = $user->email, $attributes = ['type' => 'email', 'class' => 'validate']) !!}
+                        {!! Form::label('email', 'Votre Email') !!}
+                        {!! Form::close() !!}
+
                         </div>
                     </div>
                     
