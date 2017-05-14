@@ -8,6 +8,7 @@ Projet PPIL - L3 Informatique - FST
     * Un utilisateur lambda : utilisateur.lambda@gmail.com | password
 * La vue du login est dispo sur /login - elle a été générée par Laravel (A modifier)
 * La vue register est dispo sur /register - elle a été générée par Laravel (A modifier)
+* + la vue sur /en_attente
 * La vue journal est dispo sur /di/journal (Quand on est loggé en resp DI)
 * La vue annuaire est dispo sur /di/annuaire (Quand on est loggé en resp DI)
 * La vue profil est dispo sur /profil
