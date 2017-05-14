@@ -57,6 +57,15 @@ Pour changer ça :
     * sudo ifconfig nomdel'interface:0 IP up
     * Ex : sudo ifconfig enp1s0:0 10.200.10.1 up
     * Ex : sudo ifconfig wlan0:0 10.200.10.1 up
+    
+## Serveur SMTP
+Dans le .env du dossier racine
+* MAIL_DRIVER=smtp
+* MAIL_HOST=smtp.mailtrap.io
+* MAIL_PORT=2525
+* MAIL_USERNAME=2604e9773d3819
+* MAIL_PASSWORD=b43c493b95c203
+* MAIL_ENCRYPTION=null
 
 ## Infos
 * Les routes sont dans routes/web.php
