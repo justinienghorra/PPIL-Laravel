@@ -27,4 +27,12 @@ class ProfilController extends Controller
         //TODO : modifier la vue en consequence avec le parametre (email deja change)
         return view('profil')->with('user', $user);
     }
+
+    public function postEmail(Request $request){
+
+        // Retourne l'utilisateur courant authentifie...
+        $user = Auth::user();
+
+        $user->updateEmail($request->input('email'));
+    }
 }

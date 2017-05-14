@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function statut() {
         return Statut::where('id', $this->id_statut)->first()->statut;
     }
+
+    public function updateEmail($email){
+        User::where('id', $this->id)->update(['email' => $email]);
+    }
 }
