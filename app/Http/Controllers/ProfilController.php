@@ -35,4 +35,8 @@ class ProfilController extends Controller
 
         $user->updateEmail($request->input('email'));
     }
+
+    public function postMdp(Request $request){
+
+    }
 }
