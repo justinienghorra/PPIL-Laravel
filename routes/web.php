@@ -73,3 +73,5 @@ Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(
 Route::get('/di/annuaire.json', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/annuaire.csv', 'ResponsableDI\AnnuaireController@getAnnuaireCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::post('/di/annuaire/importCSV', 'ResponsableDI\AnnuaireController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
+Route::get('/di/journal', 'ResponsableDI\JournalController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
