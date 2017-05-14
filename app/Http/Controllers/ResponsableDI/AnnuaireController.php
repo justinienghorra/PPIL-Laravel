@@ -76,6 +76,8 @@ class AnnuaireController extends Controller
                 '5' => ['required', 'string', Rule::in($this->statut_array)],
             ]);
 
+            //TODO gérer les mot de passe
+
             if ($validator->fails()) {
                 return redirect('/di/annuaire')->withErrors($validator);
             }
