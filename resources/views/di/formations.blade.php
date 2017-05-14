@@ -35,6 +35,7 @@
 
 <h2>Ajouter une formation</h2>
 <form method="post" action="/di/formations/add">
+    {{csrf_field()}}
     <label for="nom">Nom : </label>
     <input type="text" name="nom">
     <label for="description">Description : </label>

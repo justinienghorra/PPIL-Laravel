@@ -81,6 +81,7 @@ Route::post('/di/journal/accept', 'ResponsableDI\JournalController@accept')->mid
 Route::post('/di/journal/deny', 'ResponsableDI\JournalController@deny')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::get('/di/formations', 'ResponsableDI\FormationsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/formations/add', 'ResponsableDI\FormationsController@add')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::get('/en_attente', function () {
     return view('auth.en_attente');
