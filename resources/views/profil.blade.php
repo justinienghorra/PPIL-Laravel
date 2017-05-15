@@ -93,13 +93,18 @@ Profil
                         <h5 class="header col s12 light">Modifier votre photo</h5>
                     </div>
                     <div class="row center">
-                        <div class="col s12">
+                        {!! Form::open(['url' => 'profil/image', 'files' => true], $attributes = ['class' => 'col s12']) !!}
                             <img src="images/groot.png" alt="Votre photo" class="circle responsive-img">
-                        </div>
+
                     </div>
                     <div class="row">
-                        <a href="#" class="btn btn-flat blue-text">Importer</a>
-                        <a href="#" class=" right btn btn-flat green-text">Valider</a>
+                        <!--<a href="#" class="btn btn-flat blue-text">Importer</a>    ['url' => 'profil/image'], $attributes = ['class' => 'col s12']-->
+                        {!! Form::file('image', $attributes = ['class' => 'btn btn-flat blue-text']) !!}
+                        <!--<a href="#" class=" right btn btn-flat green-text">Valider</a>-->
+                        {!! Form::submit('Valider', $attributes = ['class' => 'right btn btn-flat green-text']) !!}
+                        {!! Form::close() !!}
+
+                        {{ Session::get('image_message') }}
                     </div>
 
 

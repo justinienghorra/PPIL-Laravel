@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Statut;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class ProfilController extends Controller
 {
@@ -60,7 +60,26 @@ class ProfilController extends Controller
         }
 
 
+    }
 
 
+
+    public function postImage(Request $request){
+        //TODO : modifier le bouton parcourir de la vue
+        $file = Input::file('image');
+
+        $extension = \File::extension($file->getClientOriginalExtension());
+        $extension = strtolower($extension);
+
+        //if ($extension == 'png' || $extension == 'jpg'){
+            $user = Auth::user();
+            //$file = $request->input('image');
+            //$file = Input::file('image');
+            $file->move(public_path().'/images/user_'.$user->id, 'profil.jpg');
+
+            return redirect('profil')->with('image_message', 'Image modifiée' . $extension);
+        /*} else{
+            return redirect('profil')->with('image_message', 'Format du fichier invalide: ' . $extension);
+        }*/
     }
 }
