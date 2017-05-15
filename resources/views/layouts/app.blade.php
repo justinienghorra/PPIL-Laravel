@@ -7,10 +7,10 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title></title>    
 
     <!-- Styles -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
     <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -25,25 +25,21 @@
 <body>
     <div id="app">
         <nav class="light-blue lighten-1" role="navigation">
-            <div class="nav-wrapper container">               
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">                     
-
-                  
-                    <div class="nav-wrapper container">
+            <div class="nav-wrapper container">                 
                 
                     <!-- Branding Image -->
 		                <a id="logo-container" href="#" class="brand-logo">
 		                 <img class="navbar-logo-connexion" src="/images/SGE.png" alt="">
-		                </a>
-                    
+		                </a>                  
 		   
                     <!-- Right Side Of Navbar -->
                     <ul class="right hide-on-med-and-down">
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
+                        @if (Auth::guest())  
+                                           
                             <li><a href="{{ route('login') }}">Connexion</a></li>
                             <li><a href="{{ route('register') }}">Inscription</a></li>
+                        
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -65,15 +61,22 @@
                                 </ul>
                             </li>
                         @endif
-                    </ul>
-                
+                    </ul>   
+
+                          <ul id="slide-out" class="side-nav">
+
+                            <li><a href="{{ route('login') }}">Connexion</a></li>
+                            <li><a href="{{ route('register') }}">Inscription</a></li>
+        
+                         </ul>
+                     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+
             </div>
         </nav>
 
         @yield('content')
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

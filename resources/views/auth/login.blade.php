@@ -68,4 +68,23 @@
         </div>
     </div>
 </div>
+
+  <script src="/js/jquery-2.1.1.min.js"></script>
+  <script src="/js/materialize.js"></script>
+
+    <script>
+    $( document ).ready(function(){
+      $('select').material_select();
+      $('.modal').modal();
+      $(".button-collapse").sideNav();
+      $('.collapsible').collapsible();
+      $('.dropdown-button').dropdown({ 
+        hover: true, // Activate on hover
+        belowOrigin: true,
+        constrainWidth: false,
+      });
+      $('.tooltipped').tooltip({delay: 50});
+    });
+    
+  </script>
 @endsection
