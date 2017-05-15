@@ -73,6 +73,8 @@ class FormationsController
 
     /**
      * Renvoie un CSV contenant la liste des formations
+     *
+     * @return Response
      */
     public function getFormationsCSV() {
         $formations = Formation::all();
@@ -85,5 +87,63 @@ class FormationsController
         }
         file_put_contents("/tmp/formations.csv", $str);
         return response()->download("/tmp/formations.csv");
+    }
+
+    /**
+     * Fonction chargé de l'imporation de CSV
+     *
+     *
+     */
+    public function importCSV(Request $req) {
+        $validator = Validator::make(
+            [
+                'file' => $req->file('file_csv'),
+                'extension' => strtolower($req->file('file_csv')->getClientOriginalExtension()),
+            ]
+            ,
+            [
+                'file' => 'required',
+                'extension' => 'required|in:csv',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect('/di/formations')->withErrors($validator);
+        }
+
+
+        $file = $req->file('file_csv');
+
+        $f = fopen($file->path(), "r");
+
+        $csv_content = fgetcsv($f);
+        while ($csv_content) {
+
+            $validator = Validator::make($csv_content, [
+                '0' => 'max:255|required|string|unique:formations,nom',
+                '1' => 'required|string|max:255',
+                '2' => 'string|max:255',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/di/formations')->withErrors($validator);
+            }
+
+            $formation = new Formation();
+            $formation->nom = $csv_content[0];
+            $formation->description = $csv_content[1];
+            $formation->save();
+            if (User::where('email', $csv_content[2])->count() == 1) {
+                $resp = new ResponsableFormation();
+                $resp->id_formation = $formation->id;
+                $resp->id_utilisateur = User::where('email', $csv_content[2])->firstOrFail()->id;
+                $resp->save();
+            }
+            $csv_content = fgetcsv($f);
+        }
+
+
+        fclose($f);
+        return redirect('/di/formations');
     }
 }

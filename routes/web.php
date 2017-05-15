@@ -86,6 +86,7 @@ Route::get('/di/formations', 'ResponsableDI\FormationsController@show')->middlew
 Route::post('/di/formations/add', 'ResponsableDI\FormationsController@add')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::post('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations.csv', 'ResponsableDI\FormationsController@getFormationsCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/formations/import', 'ResponsableDI\FormationsController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::get('/en_attente', function () {
     return view('auth.en_attente');
