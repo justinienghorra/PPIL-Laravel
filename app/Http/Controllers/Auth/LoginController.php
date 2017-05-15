@@ -49,7 +49,7 @@ class LoginController extends Controller
     {
         $email = $request->email;
         $user = User::where('email', $email)->first();
-        if ($user->attente_validation) return false;
+        if ($user && $user->attente_validation) return false;
 
         // TODO Gérer la vérification de la validation de l'inscription
         return $this->guard()->attempt(
