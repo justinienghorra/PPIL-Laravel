@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
 use Illuminate\View\View;
+use League\Csv\Reader;
 
 class FormationsController
 {
@@ -114,6 +115,84 @@ class FormationsController
 
         $file = $req->file('file_csv');
 
+        $csv = Reader::createFromPath($file->path());
+        //$csv = Reader::createFromPath('');
+        $csv->setDelimiter(';');
+
+        $res = $csv
+            ->addFilter(function ($row, $index) {
+                return $index > 0; //we don't take into account the header
+            })
+            ->addFilter(function ($row) {
+                return isset($row[1], $row[2]); //we make sure the data are present
+            })->fetch();
+
+        //dd($res);
+        $new_formations = array();
+        $new_responsables = array();
+        foreach ($res as $row) {
+            $validator = Validator::make([
+                'nom' => $row[0],
+                'description' => $row[1],
+            ], [
+                'nom' => 'max:255|required|string|unique:formations,nom',
+                'description' => 'required|string|max:255',
+            ]);
+
+            if ($validator->fails()) {
+
+                return redirect('/di/formations');
+            }
+
+            $formation = new Formation;
+            $formation->nom = $row[0];
+            $formation->description = $row[1];
+            $formation->save();
+            if (isset($row[2]) && is_string($row[2]) && strlen(trim($row[2])) > 2) {
+                $row[2] = trim($row[2]);
+                $validator_mail = Validator::make([
+                    'email' => trim($row[2]),
+                    //'email' => "jean.dupont@gmail.com",
+                ], [
+                    'email' => 'exists:users,email'
+                ]);
+
+                if ($validator_mail->fails()) {
+
+                    return redirect('/di/formations');
+                }
+
+                $resp = new ResponsableFormation;
+                $resp->id_formation = $formation->id;
+                //$user = User::select('email')->where('email', "jean.dupont@gmail.com")->first();
+                $user = User::where('email', trim($row[2]))->first();
+                $resp->id_utilisateur = $user->id;
+                $resp->save();
+
+                array_push($new_formations, $formation);
+                array_push($new_responsables, $resp);
+
+            } else {
+                array_push($new_formations, $formation);
+            }
+
+        }
+        print_r($new_formations);
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        print_r($new_responsables);
+
+        foreach ($new_formations as $formation) {
+            $formation->save();
+        }
+        foreach ($new_responsables as $resp) {
+            $resp->save();
+        }
+
+
+
+        /*
         $f = fopen($file->path(), "r");
 
         $csv_content = fgetcsv($f);
@@ -144,6 +223,7 @@ class FormationsController
 
 
         fclose($f);
+        */
         return redirect('/di/formations');
     }
 }
