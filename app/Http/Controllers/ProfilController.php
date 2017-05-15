@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Photos;
 use App\Statut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,9 +28,20 @@ class ProfilController extends Controller
 
         $statuts = Statut::all();
 
+        $photoUrl =  Photos::where('id_utilisateur', $user->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
+
+
         //TODO : modifier la vue en consequence avec le parametre (email deja change)
-        return view('profil')->with('user', $user)->with('statuts', $statuts);
+        return view('profil')->with('user', $user)->with('statuts', $statuts)->with('photoUrl', $tmp[1]);
     }
+
+
 
     public static function getStatut(){
         $user = Auth::user();
@@ -39,11 +51,15 @@ class ProfilController extends Controller
         return $statut->statut;
     }
 
+
+
     public function postEmail(Request $request){
         $user = Auth::user();
 
         $user->updateEmail($request->input('email'));
     }
+
+
 
     public function postPassword(Request $request){
         //TODO : mettre un beau message sur la vue
@@ -65,21 +81,35 @@ class ProfilController extends Controller
 
 
     public function postImage(Request $request){
+
         //TODO : modifier le bouton parcourir de la vue
+
+        $user = Auth::user();
         $file = Input::file('image');
 
-        $extension = \File::extension($file->getClientOriginalExtension());
-        $extension = strtolower($extension);
+        $infos = pathinfo($file->getClientOriginalName());
+        $extension = $infos['extension'];
 
-        //if ($extension == 'png' || $extension == 'jpg'){
-            $user = Auth::user();
-            //$file = $request->input('image');
-            //$file = Input::file('image');
+
+        if ($extension == 'png' || $extension == 'jpg'){
+
+            //on supprime l'ancienne adresse de l'image
+            Photos::where('id_utilisateur', $user->id)->delete();
+
+            //stocke l'adresse de l'image dans la BDD
+            Photos::creerImage(public_path().'/images/user_'.$user->id.'/profil.jpg', $user->id);
+
+            // stocke l'image
             $file->move(public_path().'/images/user_'.$user->id, 'profil.jpg');
 
-            return redirect('profil')->with('image_message', 'Image modifiée' . $extension);
-        /*} else{
+            $photoUrl =  Photos::where('id_utilisateur', $user->id)->first()->adresse;
+            $tmp = explode("images", $photoUrl);
+
+            return redirect('profil')->with('image_message', 'Image modifiée')->with('photoUrl', $tmp[1]);
+
+        } else{
+
             return redirect('profil')->with('image_message', 'Format du fichier invalide: ' . $extension);
-        }*/
+        }
     }
 }
