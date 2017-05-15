@@ -35,7 +35,6 @@ class FormationsController
         $validator = Validator::make($req->all(), [
             'nom' => 'required|string|max:255|unique:formations',
             'description' => 'required|string|max:255',
-            'responsable' => 'required|integer'
         ]);
 
         if (!$validator->fails()) {
@@ -43,10 +42,6 @@ class FormationsController
             $formation->nom = $req->nom;
             $formation->description = $req->description;
             $formation->save();
-            $respFormation = new ResponsableFormation();
-            $respFormation->id_formation = $formation->id;
-            $respFormation->id_utilisateur = User::where('id', $req->responsable)->first()->id;
-            $respFormation->save();
             return redirect('/di/formations');
         } else {
             return redirect('/di/formations')->withErrors($validator);

@@ -49,12 +49,6 @@
     <input type="text" name="nom">
     <label for="description">Description : </label>
     <input type="text" name="description">
-    <label for="responsable">Responsable : </label>
-    <select name="responsable" id="">
-        @foreach($users as $user)
-            <option value="{{$user->id}}">{{ $user->prenom . " " . $user->nom }}</option>
-        @endforeach
-    </select>
     <button type="submit">Ajouter</button>
 </form>
 
