@@ -66,8 +66,8 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'adresse' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
-
-            'statut' => ['required', 'string', Rule::in($this->statut_array)]
+            // TODO check si statut est dans statut_array
+            'statut' => ['required', 'string']
         ]);
     }
 
