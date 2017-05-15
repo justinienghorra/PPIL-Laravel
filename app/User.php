@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nom', 'email', 'password', 'prenom', 'adresse', 'civilite', 'attente_validation', 'id_statut',
     ];
 
     /**
@@ -34,4 +34,31 @@ class User extends Authenticatable
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * Retourne vrai si l'utilisateur est responsable DI
+     *
+     * @return boolean
+     */
+    public function estResponsableDI() {
+        $res = ResponsableDepInfo::where('id_utilisateur', $this->id)->count();
+        return $res > 0;
+    }
+
+    /**
+     * Retourne le statut
+     *
+     * @return string
+     */
+    public function statut() {
+        return Statut::where('id', $this->id_statut)->first()->statut;
+    }
+
+    public function updateEmail($email){
+        User::where('id', $this->id)->update(['email' => $email]);
+    }
+
+    public function updatePassword($password){
+        User::where('id', $this->id)->update(['password' => $password]);
+    }
 }

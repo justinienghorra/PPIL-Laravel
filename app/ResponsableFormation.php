@@ -12,4 +12,12 @@ class ResponsableFormation extends Model
      * @var string
      */
     protected $table = 'responsable_formations';
+
+    /**
+     * Retourne l'utilisateur associé
+     *
+     */
+    public function user() {
+        return $this->belongsTo('App\User', 'id_utilisateur');
+    }
 }

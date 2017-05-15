@@ -19,9 +19,9 @@ class CreateFormationsTable extends Migration
 
             $table->string('nom');
             $table->string('description');
-            $table->boolean('attente_validation');
-            $table->date('derniere_modif');
-            $table->integer('prochaine_modif_en_attente');
+            //$table->boolean('attente_validation');
+            //$table->date('derniere_modif');
+            //$table->integer('prochaine_modif_en_attente');
         });
     }
 

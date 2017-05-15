@@ -11,55 +11,82 @@
 |
 */
 
+// Vues de la partie modélisation du projet
 
 Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/', function() {
+Route::get('/conception/', function() {
    return view('mesUE');
 });
 
-Route::get('/mesUE', function() {
+Route::get('/conception/mesUE', function() {
     return view('mesUE');
 });
 
 
-Route::get('/mesEnseignements', function() {
+Route::get('/conception/mesEnseignements', function() {
     return view('mesEnseignements');
 });
 
-Route::get('mesFormations/L1Informatique', function() {
+Route::get('/conception/mesFormations/L1Informatique', function() {
     return view('L1Informatique');
 });
 
-Route::get('profil', function() {
-    return view('profil');
-});
-
-
-Route::get('recapEnseignants', function() {
+Route::get('/conception/recapEnseignants', function() {
     return view('recapEnseignants');
 });
 
 
-Route::get('journal', function() {
+Route::get('/conception/journal', function() {
     return view('journal');
 });
 
 
-Route::get('annuaire', function() {
+Route::get('/conception/annuaire', function() {
     return view('annuaire');
 });
 
-Route::get('connexion', function() {
+Route::get('/conception/connexion', function() {
     return view('connexion');
 });
 
-Route::get('inscription', function() {
+Route::get('/conception/inscription', function() {
     return view('inscription');
 });
 
-Route::get('reset', function() {
+Route::get('/conception/reset', function() {
     return view('reinitPassword');
 });
+
+// ------------------------------------------------
+
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/profil', 'ProfilController@show');
+Route::post('/profil/email', 'ProfilController@postEmail');
+Route::post('/profil/password', 'ProfilController@postPassword');
+
+
+Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::get('/di/annuaire.json', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::get('/di/annuaire.csv', 'ResponsableDI\AnnuaireController@getAnnuaireCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/annuaire/importCSV', 'ResponsableDI\AnnuaireController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
+Route::get('/di/journal', 'ResponsableDI\JournalController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/journal/accept', 'ResponsableDI\JournalController@accept')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/journal/deny', 'ResponsableDI\JournalController@deny')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
+Route::get('/di/formations', 'ResponsableDI\FormationsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/formations/add', 'ResponsableDI\FormationsController@add')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
+Route::get('/en_attente', function () {
+    return view('auth.en_attente');
+});
+
+//Route::get('/formation/{nom_formation}', 'FormationController@show');

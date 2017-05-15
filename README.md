@@ -1,6 +1,19 @@
 # PPIL-Laravel
 Projet PPIL - L3 Informatique - FST
 
+## Infos pour le frontend
+* ```php artisan migrate:refresh --seed ``` pour mettre à jour la base
+* Après ça, deux utilisateur sont créés :
+    * Le resp DI : jean.dupont@gmail.com | password
+    * Un utilisateur lambda : utilisateur.lambda@gmail.com | password
+* La vue du login est dispo sur /login - elle a été générée par Laravel (A modifier)
+* La vue register est dispo sur /register - elle a été générée par Laravel (A modifier)
+* + la vue sur /en_attente
+* La vue journal est dispo sur /di/journal (Quand on est loggé en resp DI)
+* La vue annuaire est dispo sur /di/annuaire (Quand on est loggé en resp DI)
+* La vue profil est dispo sur /profil
+* Les vues de la partie modélisation sont dispo sur /conception/xxxxxx
+
 ## Setup avec Docker/laradock
 * (Installer docker)
 * Cloner le projet
@@ -45,6 +58,15 @@ Pour changer ça :
     * sudo ifconfig nomdel'interface:0 IP up
     * Ex : sudo ifconfig enp1s0:0 10.200.10.1 up
     * Ex : sudo ifconfig wlan0:0 10.200.10.1 up
+    
+## Serveur SMTP
+Dans le .env du dossier racine
+* MAIL_DRIVER=smtp
+* MAIL_HOST=smtp.mailtrap.io
+* MAIL_PORT=2525
+* MAIL_USERNAME=2604e9773d3819
+* MAIL_PASSWORD=b43c493b95c203
+* MAIL_ENCRYPTION=null
 
 ## Infos
 * Les routes sont dans routes/web.php

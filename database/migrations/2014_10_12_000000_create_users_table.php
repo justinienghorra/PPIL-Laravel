@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('adresse');
             
             $table->boolean('attente_validation');
-            $table->date('date_derniere_modif');
+            //$table->date('date_derniere_modif');
 
         });
 
