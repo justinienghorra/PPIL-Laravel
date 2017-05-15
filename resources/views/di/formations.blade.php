@@ -1,6 +1,6 @@
 <html>
 <head>
-
+    <meta name="token" content="{{csrf_token()}}"/>
 </head>
 <body>
 
@@ -17,7 +17,7 @@
 
         @foreach($formations as $formation)
 
-            <tr>
+            <tr id="{{$formation->id}}">
                 <td><a href="/formations/{{$formation->nom}}">{{$formation->nom}}</a></td>
                 <td>{{$formation->description}}</td>
                 @if(isset($formation->responsable->user))
@@ -26,11 +26,7 @@
                     <td></td>
                 @endif
                 <td>
-                    <form action="/di/formations/delete" method="post">
-                        {{csrf_field()}}
-                        <input type="hidden" value="{{$formation->id}}">
-                        <button type="submit">Supprimer</button>
-                    </form>
+                    <button id="{{$formation->id}}" class="btn-delete-formation" type="submit">Supprimer</button>
                 </td>
             </tr>
 
@@ -42,15 +38,24 @@
 
 <hr>
 
+
+
 <h2>Ajouter une formation</h2>
-<form method="post" action="/di/formations/add">
-    {{csrf_field()}}
+<p>
+    AJAX :
+    <ul>
+        <li>Renvoie en json {message: success, formation: lesinfosdelaformation}</li>
+    </ul>
+</p>
+<div>
     <label for="nom">Nom : </label>
-    <input type="text" name="nom">
+    <input id="nom-formation-add"type="text" name="nom">
     <label for="description">Description : </label>
-    <input type="text" name="description">
-    <button type="submit">Ajouter</button>
-</form>
+    <input id="description-formation-add" type="text" name="description">
+    <button id="btn-add-formation" type="submit">Ajouter</button>
+</div>
+
+
 
 <hr>
 <h2>Importer un CSV</h2>
@@ -60,7 +65,58 @@
     <button type="submit">Envoyer</button>
 </form>
 <hr>
-<h2>Exportation</h2>
+<h2>Exportation en CSV</h2>
 <a href="/di/formations.csv">Exporter</a>
+
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN" : $('meta[name="token"]').attr('content')
+            }
+        });
+
+        $('#btn-add-formation').click(function (event) {
+           var nom = $('#nom-formation-add').val();
+           var desc = $('#description-formation-add').val();
+           $.ajax({
+               url: "/di/formations/add",
+               method: "POST",
+               data: "nom=" + nom + "&description=" +desc
+           })
+               .done(function (msg) {
+                   console.log(msg);
+                   alert('OK (RELOAD)')
+               })
+
+               .fail(function (xhr, msg) {
+                   console.log(xhr);
+                   console.log(msg);
+                   alert('ERREUR (VOIR  CONSOLE)')
+               });
+        });
+
+        $('.btn-delete-formation').click(function () {
+           var id_formation = $(this).attr('id');
+           $.ajax({
+               url: "/di/formations/delete",
+               method: "POST",
+               data: "id_formation=" + id_formation
+           })
+               .done(function (msg) {
+                   console.log(msg);
+                   alert('OK (RELOAD) Serveur : ' + msg.message);
+               })
+               .fail(function (xhr, msg) {
+                   console.log(msg);
+                   console.log(xhr);
+                   alert('ERREUR (VOIR CONSOLE)');
+
+               });
+        });
+    });
+</script>
 </body>
 </html>
