@@ -30,7 +30,7 @@
                 
  <!-- Branding Image -->
 		    <a id="logo-container" href="#" class="brand-logo">
-		      <img class="navbar-logo" src="/images/SGE.png" alt="">
+		      <img class="navbar-logo-connexion" src="/images/SGE.png" alt="">
 		    </a>
                     
 		   
