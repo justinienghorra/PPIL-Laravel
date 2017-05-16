@@ -212,7 +212,7 @@ class FormationsController
         if (!$validator->fails()) {
             $formation = Formation::where('id', $req->id_formation)->first();
             if ($formation->hasResponsable()) {
-
+                $formation->responsable->delete();
             }
             $resp = new ResponsableFormation;
             $resp->id_utilisateur = $req->id_utilisateur;
