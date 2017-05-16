@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profil;
 
+use App\Http\Controllers\Controller;
 use App\Photos;
 use App\Statut;
 use Illuminate\Http\Request;
@@ -74,8 +75,6 @@ class ProfilController extends Controller
 
             return redirect('profil')->with('password_message', 'Mot de passe modifié avec succé');
         }
-
-
     }
 
 
@@ -97,10 +96,10 @@ class ProfilController extends Controller
             Photos::where('id_utilisateur', $user->id)->delete();
 
             //stocke l'adresse de l'image dans la BDD
-            Photos::creerImage(public_path().'/images/user_'.$user->id.'/profil.jpg', $user->id);
+            Photos::creerImage(public_path().'/images/user_'.$user->id.'/profil.' . $extension, $user->id);
 
             // stocke l'image
-            $file->move(public_path().'/images/user_'.$user->id, 'profil.jpg');
+            $file->move(public_path().'/images/user_'.$user->id, 'profil.' . $extension);
 
             $photoUrl =  Photos::where('id_utilisateur', $user->id)->first()->adresse;
             $tmp = explode("images", $photoUrl);
@@ -109,7 +108,7 @@ class ProfilController extends Controller
 
         } else{
 
-            return redirect('profil')->with('image_message', 'Format du fichier invalide: ' . $extension);
+            return redirect('profil')->with('image_message', 'Format du fichier invalide: "' . $extension . '"');
         }
     }
 }

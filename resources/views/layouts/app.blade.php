@@ -35,7 +35,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="right hide-on-med-and-down">
                         <!-- Authentication Links -->
-                        @if (Auth::guest())  
+                        @if (Auth::guest())                          
                                            
                             <li><a href="{{ route('login') }}">Connexion</a></li>
                             <li><a href="{{ route('register') }}">Inscription</a></li>
@@ -52,36 +52,44 @@
                                                      document.getElementById('logout-form').submit();">
                                             Déconnexion 
                                         </a>
-
-                                         <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Accéder à votre profil
-                                        </a>
-
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
+                                    </li>                                         
+                                    <li>
+                                        <a href="/profil"> Accéder à votre profil </a>
                                     </li>
-                                </ul>                           
-                          @endif 
-                    </ul> 
+                                </ul>
+                                @endif 
+                    </ul>     
 
+                     @if (Auth::guest()) 
                         <ul id="slide-out" class="side-nav">
                             <li><a href="{{ route('login') }}">Connexion</a></li>
                             <li><a href="{{ route('register') }}">Inscription</a></li>        
                             </ul>
-                            <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>                  
-                       
-                      
-                        
+                                <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a> 
+                    @else
+                        <ul id="slide-out" class="side-nav">
+                            <li>
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                    Déconnexion 
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                            <li><a href="/profil">Acceder à votre profil</a></li>        
+                            </ul>
+                                <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a> 
+
+                            @endif                              
             </div>
-
-
         </nav>
         @yield('content')
     </div>
-
 </body>
 
   <script src="/js/jquery-2.1.1.min.js"></script>

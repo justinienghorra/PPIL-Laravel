@@ -44,9 +44,9 @@ class FormationsController
             $formation->nom = $req->nom;
             $formation->description = $req->description;
             $formation->save();
-            return response()->json(["message" => "success", "formation" => json_encode($formation)]);
+            return response()->json(["message" => "success", "formation" => $formation]);
         } else {
-            return response()->json(["message" => "errors", "errors" => json_encode($validator)]);
+            return response()->json(["message" => "errors", "errors" => $validator]);
         }
     }
 
@@ -65,6 +65,10 @@ class FormationsController
 
         if (!$validator->fails()) {
             $form = Formation::where('id', $req->id_formation)->first();
+            $resp = $form->responsable;
+            if ($resp) {
+                $resp->delete();
+            }
             $form->delete();
             return response()->json(["message" => "success"]);
         } else {
@@ -116,7 +120,6 @@ class FormationsController
         $file = $req->file('file_csv');
 
         $csv = Reader::createFromPath($file->path());
-        //$csv = Reader::createFromPath('');
         $csv->setDelimiter(';');
 
         $res = $csv
@@ -140,7 +143,7 @@ class FormationsController
             ]);
 
             if ($validator->fails()) {
-
+                $this->importRollback($new_formations, $new_responsables);
                 return redirect('/di/formations');
             }
 
@@ -152,19 +155,17 @@ class FormationsController
                 $row[2] = trim($row[2]);
                 $validator_mail = Validator::make([
                     'email' => trim($row[2]),
-                    //'email' => "jean.dupont@gmail.com",
                 ], [
                     'email' => 'exists:users,email'
                 ]);
 
                 if ($validator_mail->fails()) {
-
+                    $this->importRollback($new_formations, $new_responsables);
                     return redirect('/di/formations');
                 }
 
                 $resp = new ResponsableFormation;
                 $resp->id_formation = $formation->id;
-                //$user = User::select('email')->where('email', "jean.dupont@gmail.com")->first();
                 $user = User::where('email', trim($row[2]))->first();
                 $resp->id_utilisateur = $user->id;
                 $resp->save();
@@ -177,53 +178,49 @@ class FormationsController
             }
 
         }
-        print_r($new_formations);
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        print_r($new_responsables);
 
-        foreach ($new_formations as $formation) {
-            $formation->save();
-        }
-        foreach ($new_responsables as $resp) {
-            $resp->save();
-        }
-
-
-
-        /*
-        $f = fopen($file->path(), "r");
-
-        $csv_content = fgetcsv($f);
-        while ($csv_content) {
-
-            $validator = Validator::make($csv_content, [
-                '0' => 'max:255|required|string|unique:formations,nom',
-                '1' => 'required|string|max:255',
-                '2' => 'string|max:255',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect('/di/formations')->withErrors($validator);
-            }
-
-            $formation = new Formation();
-            $formation->nom = $csv_content[0];
-            $formation->description = $csv_content[1];
-            $formation->save();
-            if (User::where('email', $csv_content[2])->count() == 1) {
-                $resp = new ResponsableFormation();
-                $resp->id_formation = $formation->id;
-                $resp->id_utilisateur = User::where('email', $csv_content[2])->firstOrFail()->id;
-                $resp->save();
-            }
-            $csv_content = fgetcsv($f);
-        }
-
-
-        fclose($f);
-        */
         return redirect('/di/formations');
+    }
+
+    /**
+     * Annule les changements faits par l'importation en cas d'erreur
+     *
+     * @param $new_formations
+     * @param $new_responsable
+     */
+    private function importRollback($new_formations, $new_responsable) {
+        foreach ($new_responsable as $resp) {
+            $resp->delete();
+        }
+        foreach ($new_formations as $form) {
+            $form->delete();
+        }
+    }
+
+    /**
+     * Change le responsable d'une UE
+     *
+     * @param Request $req
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateResponsable(Request $req) {
+        $validator = Validator::make($req->all(), [
+            'id_utilisateur' => 'required|integer|exists:users,id',
+            'id_formation' => 'required|integer|exists:formations,id',
+        ]);
+
+        if (!$validator->fails()) {
+            $formation = Formation::where('id', $req->id_formation)->first();
+            if ($formation->hasResponsable()) {
+                $formation->responsable->delete();
+            }
+            $resp = new ResponsableFormation;
+            $resp->id_utilisateur = $req->id_utilisateur;
+            $resp->id_formation = $req->id_formation;
+            $resp->save();
+            return response()->json(["message" => "success"]);
+        } else {
+            return response()->json(["message" => "errors", "errors" => $validator]);
+        }
     }
 }

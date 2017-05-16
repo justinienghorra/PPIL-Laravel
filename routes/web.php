@@ -67,10 +67,10 @@ Route::get('/home', 'HomeController@index')->name('home');
  * Route pour le Profil  *
  *************************/
 
-Route::get('/profil', 'ProfilController@show');
-Route::post('/profil/email', 'ProfilController@postEmail');
-Route::post('/profil/password', 'ProfilController@postPassword');
-Route::post('/profil/image', 'ProfilController@postImage');
+Route::get('/profil', 'Profil\ProfilController@show');
+Route::post('/profil/email', 'Profil\ProfilController@postEmail');
+Route::post('/profil/password', 'Profil\ProfilController@postPassword');
+Route::post('/profil/image', 'Profil\ProfilController@postImage');
 
 /*********************************
  * Routes pour le Responsable UE *
@@ -91,8 +91,11 @@ Route::post('/di/journal/deny', 'ResponsableDI\JournalController@deny')->middlew
 Route::get('/di/formations', 'ResponsableDI\FormationsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::post('/di/formations/add', 'ResponsableDI\FormationsController@add')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::post('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::get('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations.csv', 'ResponsableDI\FormationsController@getFormationsCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::post('/di/formations/import', 'ResponsableDI\FormationsController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
+Route::post('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::get('/en_attente', function () {
     return view('auth.en_attente');
