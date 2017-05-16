@@ -11,15 +11,15 @@
         <div class="col l3 s12">
           <h5 class="white-text">Informations</h5>
           <ul>
-            <li><a class="white-text" href="#!">Votre profil</a></li>
-            <li><a class="white-text" href="#!">Nous contacter</a></li>
+            <li><a class="white-text" href="/profil">Votre profil</a></li>
+            <li><a class="white-text" href="/contact">Nous contacter</a></li>
           </ul>
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">A propos</h5>
           <ul>
-            <li><a class="white-text" href="#!">Université de Lorraine</a></li>
-            <li><a class="white-text" href="#!">Faculté des sciences</a></li>
+            <li><a class="white-text" href="http://www.univ-lorraine.fr/">Université de Lorraine</a></li>
+            <li><a class="white-text" href="http://fst.univ-lorraine.fr/">Faculté des sciences</a></li>
           </ul>
         </div>
       </div>

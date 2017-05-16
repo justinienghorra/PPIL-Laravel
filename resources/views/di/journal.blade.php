@@ -1,69 +1,78 @@
-<html>
-<head>
-    <!-- Important -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-<body>
-<h1>Journal</h1>
-@if (isset($events))
+@extends('layouts.admin')
+@section('title')
+Journal
+@stop
+@section('content')
 
-    <table border="1">
+    <div class="card">
+        <div class="card-content">
+            <h1>Journal</h1>
+            @if (isset($events))
 
-    @foreach($events as $event)
+                <table border="1">
 
-        <tr>
-           <td>{{ $event->toString() }} </td>
-            <td><button name="{{ $event->id }}" class="btn-accept">Accepter</button></td>
-            <td><button name="{{ $event->id }}" class="btn-deny">Refuser</button></td>
-        </tr>
+                    @foreach($events as $event)
+
+                        <tr>
+                            <td>{{ $event->toString() }} </td>
+                            <td>
+                                <button name="{{ $event->id }}" class="btn-accept">Accepter</button>
+                            </td>
+                            <td>
+                                <button name="{{ $event->id }}" class="btn-deny">Refuser</button>
+                            </td>
+                        </tr>
 
 
-    @endforeach
+                    @endforeach
 
-    </table>
+                </table>
 
 
-@endif
-<script src="/js/jquery-2.1.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                // Important
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+            @endif
+        </div>
+    </div>
 
-        $('.btn-accept').click(function (e) {
-            $.ajax({
-                url: "/di/journal/accept",
-                type: "POST",
-                data: "id_journal=" + $(this).attr('name'),
-                success: function() {
-                    alert('Success');
-                },
-                error: function () {
-                    alert('Fail');
-                },
-                dataType: 'html'
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    // Important
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.btn-accept').click(function (e) {
+                $.ajax({
+                    url: "/di/journal/accept",
+                    type: "POST",
+                    data: "id_journal=" + $(this).attr('name'),
+                    success: function () {
+                        alert('Success');
+                    },
+                    error: function () {
+                        alert('Fail');
+                    },
+                    dataType: 'html'
+                });
+            });
+
+            $('.btn-deny').click(function (e) {
+                $.ajax({
+                    url: "/di/journal/deny",
+                    type: "POST",
+                    data: "id_journal=" + $(this).attr('name'),
+                    success: function () {
+                        alert('Success');
+                    },
+                    error: function () {
+                        alert('Fail');
+                    },
+                    dataType: 'html'
+                });
             });
         });
-
-        $('.btn-deny').click(function (e) {
-            $.ajax({
-                url: "/di/journal/deny",
-                type: "POST",
-                data: "id_journal=" + $(this).attr('name'),
-                success: function() {
-                    alert('Success');
-                },
-                error: function () {
-                    alert('Fail');
-                },
-                dataType: 'html'
-            });
-        });
-    });
-</script>
-</body>
-</html>
+    </script>
+@stop
