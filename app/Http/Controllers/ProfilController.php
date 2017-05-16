@@ -58,9 +58,5 @@ class ProfilController extends Controller
 
             return redirect('profil')->with('password_message', 'Mot de passe modifié avec succé');
         }
-
-
-
-
     }
 }
