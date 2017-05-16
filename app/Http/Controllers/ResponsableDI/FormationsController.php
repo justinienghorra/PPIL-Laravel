@@ -8,7 +8,6 @@ use App\ResponsableFormation;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Redirect;
 use Validator;
 use Illuminate\View\View;
 use League\Csv\Reader;
@@ -83,9 +82,9 @@ class FormationsController
      */
     public function getFormationsCSV() {
         $formations = Formation::all();
-        $str = "nom,description,responsable";
+        $str = "nom;description;responsable";
         foreach ($formations as $formation) {
-            $str = $str . "\n" . $formation->nom . ", " . $formation->description . ", ";
+            $str = $str . "\n" . $formation->nom . "; " . $formation->description . "; ";
             if ($formation->hasResponsable()) {
                 $str = $str . $formation->responsable->user->email;
             }
@@ -118,10 +117,10 @@ class FormationsController
 
 
         $file = $req->file('file_csv');
-
+        $num_row = 0;
         $csv = Reader::createFromPath($file->path());
         $csv->setDelimiter(';');
-
+        $errors_custom = array();
         $res = $csv
             ->addFilter(function ($row, $index) {
                 return $index > 0; //we don't take into account the header
@@ -134,6 +133,7 @@ class FormationsController
         $new_formations = array();
         $new_responsables = array();
         foreach ($res as $row) {
+            $num_row++;
             $validator = Validator::make([
                 'nom' => $row[0],
                 'description' => $row[1],
@@ -143,8 +143,9 @@ class FormationsController
             ]);
 
             if ($validator->fails()) {
+                $errors_custom['ligne'] = $num_row;
                 $this->importRollback($new_formations, $new_responsables);
-                return redirect('/di/formations');
+                return redirect('/di/formations')->with('errors_custom', $errors_custom)->withErrors($validator);
             }
 
             $formation = new Formation;
@@ -160,8 +161,9 @@ class FormationsController
                 ]);
 
                 if ($validator_mail->fails()) {
+                    $errors_custom['ligne'] = $num_row;
                     $this->importRollback($new_formations, $new_responsables);
-                    return redirect('/di/formations');
+                    return redirect('/di/formations')->with('errors_custom', $errors_custom)->withErrors($validator);;
                 }
 
                 $resp = new ResponsableFormation;

@@ -48,9 +48,9 @@ class AnnuaireController extends Controller
      */
     protected function getAnnuaireCSV() {
         $users = User::all();
-        $str = "enseignant,statut,email";
+        $str = "enseignant;statut;email";
         foreach ($users as $user) {
-            $str = $str . "\n" . $user->prenom . " " . $user->nom . ", " . $user->statut() . ", " . $user->email;
+            $str = $str . "\n" . $user->prenom . " " . $user->nom . "; " . $user->statut() . "; " . $user->email;
         }
         file_put_contents("/tmp/annuaire.csv", $str);
         return response()->download("/tmp/annuaire.csv");
@@ -80,7 +80,8 @@ class AnnuaireController extends Controller
 
         $file = $request->file('file_csv');
         $new_users = array();
-
+        $errors_custom = array();
+        $num_row = 0;
         $csv = Reader::createFromPath($file->path());
         $csv->setDelimiter(';');
 
@@ -95,6 +96,8 @@ class AnnuaireController extends Controller
         //TODO checker le header
 
         foreach ($res as $row) {
+            $num_row++;
+
             $validator = Validator::make([
                 'civilite' => $row[0],
                 'prenom' => $row[1],
@@ -112,8 +115,9 @@ class AnnuaireController extends Controller
             ]);
 
             if ($validator->fails()) {
+                $errors_custom['ligne'] = $num_row;
                 $this->importRollback($new_users);
-                return redirect('/di/annuaire')->withErrors($validator);
+                return redirect('/di/annuaire')->with('errors_custom', $errors_custom)->withErrors($validator);
             }
 
             $user = new User;
@@ -123,7 +127,9 @@ class AnnuaireController extends Controller
             $user->email = $row[3];
             $user->adresse = $row[4];
             $user->id_statut = Statut::where('statut', $row[5])->first()->id;
-            //TODO gérer mot de passe et mail ?
+
+            // TODO gérer mot de passe et mail ?
+
             $user->password = bcrypt("password");
             $user->attente_validation = false;
             $user->save();

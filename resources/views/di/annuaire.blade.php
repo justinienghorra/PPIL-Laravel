@@ -8,6 +8,10 @@
 <h4>Objet error (pour le frontend)</h4>
 <p>
     {{ var_dump($errors) }}
+    <br>
+    @if(isset($errors_custom))
+        {{var_dump($errors_custom)}}
+    @endif
 </p>
 
 @if($users->count() > 0)
