@@ -18,7 +18,7 @@
                     <thead>
                     <th>Enseignant</th>
                     <th>Statut</th>
-                    <th>email</th>
+                    <th>Adresse mail</th>
                     </thead>
 
                     @foreach($users as $user)
@@ -26,6 +26,9 @@
                             <td>{{ $user->prenom . " " . $user->nom }}</td>
                             <td>{{ $user->statut() }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>
+                                <button id="{{$user->id}}" class="btn btn-flat red-text waves-light btn-delete-utilisateur">Supprimer</button>
+                            </td>
                         </tr>
                     @endforeach
 
