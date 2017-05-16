@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ResponsableFormation;
 
 use App\Formation;
 use App\Http\Controllers\Controller;
+use App\UniteeEnseignement;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,19 +19,12 @@ class FormationController extends Controller
 
     public function show($nom_formation){
 
-        /*$validator = Validator::make($req->all(), [
-            'nom_formation' => 'required|string|max:255',
-        ]);
-
-        $nom_formation = $req->nom;*/
-
         // Retourne l'utilisateur courant authentifie...
         $user = Auth::user();
 
-
-
         $formation = Formation::where('nom', '=', $nom_formation)->first();
+        $ues = UniteeEnseignement::where('id_formation', '=', $formation->id);
 
-        return view('respoFormation.formation')->with('user', $user)->with('formation', $formation);
+        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues]);
     }
 }
