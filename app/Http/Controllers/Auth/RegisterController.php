@@ -66,8 +66,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'adresse' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
-            // TODO check si statut est dans statut_array
-            'statut' => ['required', 'string']
+            'statut' => ['required', 'string', Rule::in($this->statut_array)]
         ]);
     }
 
@@ -90,7 +89,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
 
-            // TODO Gérer l'attente de validation
             'attente_validation' => true,
 
             'id_statut' => Statut::where('statut', $data['statut'])->first()->id,
