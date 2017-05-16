@@ -20,8 +20,12 @@ class EnseignantController extends Controller
 
     public function show(){
 
-        $user = Auth::user();
+        $user = \Auth::user();
 
-        return view('mesEnseignements')->with('user', $user);
+        //recuperation des enseignements de l'utilisateur
+        $enseignements = $user->getEnseignements();
+
+        return view('mesEnseignements')->with('user', $user)
+                                            ->with('enseignements', $enseignements);
     }
 }

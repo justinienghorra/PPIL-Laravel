@@ -3,13 +3,16 @@
 Liste des enseignements auxquels vous participez
 @stop
 @section('content')
-    
+
+
  <ul class="collapsible white" data-collapsible="expandable">
         <li class="collection-header orange-text"><h4 class="center">Liste des enseignements auxquels vous participez</h4></li>
-    
+ @foreach($enseignements as $enseignement)
     <li>
-    
-      <div class="collapsible-header "><strong class="orange-text">Compilation</strong><span class="right">L3 Informatique</span></div>
+
+
+
+      <div class="collapsible-header "><strong class="orange-text"> {!! $enseignement->nomUE !!}</strong><span class="right">{!! $enseignement->nomFormation !!}</span></div>
       <div class="collapsible-body white">
         <div class="row">
           
@@ -19,7 +22,7 @@ Liste des enseignements auxquels vous participez
                 
                 <!-- Contenu du premier EC -->
 
-                <p class="flow-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla malesuada lacus risus, at sagittis mi scelerisque vel. </p>
+                <p class="flow-text">{!! $enseignement->descriptionUE !!} </p>
                 
 
                 <h4 class="light">Synthèse</h4>
@@ -39,25 +42,25 @@ Liste des enseignements auxquels vous participez
                     <tbody>
                         <tr>
                           <th>Volume attendu</th>
-                          <td>12</td>
-                          <td>12</td>
-                          <td>12</td>
+                          <td>{!! $enseignement->cm_volume_attendu !!}</td>
+                          <td>{!! $enseignement->td_volume_attendu !!}</td>
+                          <td>{!! $enseignement->tp_volume_attendu !!}</td>
                         </tr>
                         <tr>
                           <th>Volume affecté</th>
-                          <td><span class=" green-text">12</span></td>
-                          <td><span class=" green-text">12</span></td>
-                          <td><span class=" green-text">12</span></td>
+                          <td><span class=" green-text">{!! $enseignement->cm_volume_affecte !!}</span></td>
+                          <td><span class=" green-text">{!! $enseignement->td_volume_affecte !!}</span></td>
+                          <td><span class=" green-text">{!! $enseignement->tp_volume_affecte !!}</span></td>
                         </tr>
                         <tr>
                           <th>Nombre de groupes attendus</th>
-                          <td></td>
-                          <td>2</td>
-                          <td>4</td>
+                          <td>{!! $enseignement->td_nb_groupes_attendus !!}</td>
+                          <td>{!! $enseignement->tp_nb_groupes_attendus !!}</td>
+                          <td>{!! $enseignement->cm_nb_groupes_attendus !!}</td>
                         </tr>
                         <tr>
                           <th>Nombre de groupes affecté</th>
-                          <td></td>
+                          <td>{!! $enseignement->td_nb_groupes_attendus !!}</td>
                           <td><span class=" green-text">2</span></td>
                           <td><span class=" red-text">3</span></td>
                         </tr>
@@ -122,14 +125,9 @@ Liste des enseignements auxquels vous participez
       
       </div>
     </li>
-    <li>
-      <div class="collapsible-header"><strong class="orange-text">Base de donnée </strong><span class="right">L3 Informatique</span></div>
-      <div class="collapsible-body white"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><strong class="orange-text">Optimisation</strong><span class="right">L3 Informatique</span></div>
-      <div class="collapsible-body white"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
+
+     @endforeach
+
   </ul>
         
 

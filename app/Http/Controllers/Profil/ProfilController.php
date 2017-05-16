@@ -22,6 +22,10 @@ class ProfilController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Affiche la vue du profil
+     * @return $this
+     */
     public function show(){
 
         // Retourne l'utilisateur courant authentifie...
@@ -59,7 +63,11 @@ class ProfilController extends Controller
     }
 
 
-
+    /**
+     * Met à jour le password dans la BDD
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postPassword(Request $request){
         //TODO : mettre un beau message sur la vue
         if ($request->input('password') != $request->input('check_password')){
@@ -76,7 +84,12 @@ class ProfilController extends Controller
     }
 
 
-
+    /**
+     * Sauvegarde de l'image importee sur le serveur et
+     * de l'adresse où est stocker l'image
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postImage(Request $request){
 
         //TODO : modifier le bouton parcourir de la vue
