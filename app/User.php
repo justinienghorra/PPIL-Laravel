@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $res > 0;
     }
 
+    public function estResponsableUE() {
+        $res = ResponsableUniteeEnseignement::where('id_utilisateur', '=', $this->id)->count();
+        return $res > 0;
+    }
+
     /**
      * Retourne le statut
      *

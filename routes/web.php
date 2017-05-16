@@ -25,6 +25,10 @@ Route::get('/conception/mesEnseignements', function() {
     return view('mesEnseignements');
 });
 
+Route::get('/conception/mesUE', function() {
+   return view('mesUE');
+});
+
 Route::get('/conception/mesFormations/L1Informatique', function() {
     return view('L1Informatique');
 });
@@ -72,10 +76,7 @@ Route::post('/profil/email', 'Profil\ProfilController@postEmail');
 Route::post('/profil/password', 'Profil\ProfilController@postPassword');
 Route::post('/profil/image', 'Profil\ProfilController@postImage');
 
-/*********************************
- * Routes pour le Responsable UE *
- *********************************/
-Route::get('/respoue/mesUE', 'ResponsableUE\MesUEController@show');
+Route::get('/respoUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
 
 
 
