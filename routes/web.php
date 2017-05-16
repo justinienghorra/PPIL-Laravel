@@ -21,11 +21,6 @@ Route::get('/conception/', function() {
    return view('mesUE');
 });
 
-Route::get('/conception/mesUE', function() {
-    return view('mesUE');
-});
-
-
 Route::get('/conception/mesEnseignements', function() {
     return view('mesEnseignements');
 });
@@ -68,9 +63,20 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
 
+/*************************
+ * Route pour le Profil  *
+ *************************/
+
 Route::get('/profil', 'ProfilController@show');
 Route::post('/profil/email', 'ProfilController@postEmail');
 Route::post('/profil/password', 'ProfilController@postPassword');
+Route::post('/profil/image', 'ProfilController@postImage');
+
+/*********************************
+ * Routes pour le Responsable UE *
+ *********************************/
+Route::get('/conception/mesUE', 'ResponsableUE\MesUEController@show');
+
 
 
 Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
@@ -92,4 +98,8 @@ Route::get('/en_attente', function () {
     return view('auth.en_attente');
 });
 
-//Route::get('/formation/{nom_formation}', 'FormationController@show');
+/*Route::get('/formation/{nom_formation}', function ($nom_formation) {
+    return view('ResponsableFormation\FormationController@show')->with('nom_formation', $nom_formation);
+});*/
+
+Route::get('/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);

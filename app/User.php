@@ -46,6 +46,26 @@ class User extends Authenticatable
     }
 
     /**
+     * Retourne vrai si l'utilisateur est responsable de la Formation $nom_formation
+     *
+     * @return boolean
+     */
+    public function estResponsableFormation($nom_formation) {
+        $id_formation = Formation::where('nom', '=', $nom_formation)->first();
+
+
+        if(is_null($id_formation)){
+            return false;
+        }
+
+        $id_formation = $id_formation->id;
+
+        $res = ResponsableFormation::where('id_utilisateur', '=', $this->id)->where('id_formation', '=', $id_formation)->count();
+
+        return $res > 0;
+    }
+
+    /**
      * Retourne le statut
      *
      * @return string
