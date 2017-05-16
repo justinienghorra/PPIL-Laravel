@@ -94,8 +94,7 @@
 
   <script src="/js/jquery-2.1.1.min.js"></script>
   <script src="/js/materialize.js"></script>    <script>
-    $( document ).ready(function(){
-      $('select').material_select();
+    $( document ).ready(function(){      
       $('.modal').modal();
       $(".button-collapse").sideNav();
       $('.collapsible').collapsible();
