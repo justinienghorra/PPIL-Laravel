@@ -75,7 +75,7 @@ Route::post('/profil/image', 'ProfilController@postImage');
 /*********************************
  * Routes pour le Responsable UE *
  *********************************/
-Route::get('/conception/mesUE', 'ResponsableUE\MesUEController@show');
+Route::get('/respoue/mesUE', 'ResponsableUE\MesUEController@show');
 
 
 

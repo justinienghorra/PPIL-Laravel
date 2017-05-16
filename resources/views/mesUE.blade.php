@@ -3,10 +3,10 @@
 Liste de vos UE
 @stop
 @section('content')
-    
+  
  <ul class="collapsible white" data-collapsible="expandable">
         <li class="collection-header orange-text"><h4 class="center">Liste de vos UE</h4></li>
-    
+     <!-- 
     <li>
     
       <div class="collapsible-header "><strong class="orange-text">Compilation</strong><span class="right">L3 Informatique</span></div>
