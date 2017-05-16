@@ -39,44 +39,66 @@
                                            
                             <li><a href="{{ route('login') }}">Connexion</a></li>
                             <li><a href="{{ route('register') }}">Inscription</a></li>
-                        
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
 
-                                <ul class="dropdown-menu" role="menu">
+
+                        @else                        
+                             <li><a class="dropdown-button" href="#!" data-activates="dropdown_fonctionnalite">Fonctionnalitées<i class="material-icons right">arrow_drop_down</i></a>
+                             </li>
+
+                                <ul id="dropdown_fonctionnalite" class="dropdown-content">
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Déconnexion
+                                            Déconnexion 
+                                        </a>
+
+                                         <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Accéder à votre profil
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>   
+                                </ul>                           
+                          @endif 
+                    </ul> 
 
-                          <ul id="slide-out" class="side-nav">
-
+                        <ul id="slide-out" class="side-nav">
                             <li><a href="{{ route('login') }}">Connexion</a></li>
-                            <li><a href="{{ route('register') }}">Inscription</a></li>
-        
-                         </ul>
-                     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-
-
+                            <li><a href="{{ route('register') }}">Inscription</a></li>        
+                            </ul>
+                            <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>                  
+                       
+                      
+                        
             </div>
-        </nav>
 
+
+        </nav>
         @yield('content')
     </div>
 
 </body>
+
+  <script src="/js/jquery-2.1.1.min.js"></script>
+  <script src="/js/materialize.js"></script>    <script>
+    $( document ).ready(function(){
+      $('select').material_select();
+      $('.modal').modal();
+      $(".button-collapse").sideNav();
+      $('.collapsible').collapsible();
+      $('.dropdown-button').dropdown({ 
+        hover: true, // Activate on hover
+        belowOrigin: true,
+        constrainWidth: false,
+      });
+      $('.tooltipped').tooltip({delay: 50});
+    });
+    
+  </script>
+
 </html>

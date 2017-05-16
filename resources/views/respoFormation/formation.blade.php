@@ -12,15 +12,16 @@
 
     <table border="1">
 
-        @foreach($formations as $formation)
 
-            <tr>
-                <td>{{$formation->nom}}</td>
-                <td>{{$formation->description}}</td>
-                <td>{{$formation->responsable->user->prenom . " " . $formation->responsable->user->nom }}</td>
-            </tr>
-
-        @endforeach
+        <tr>
+            <td>NOM</td>
+            <td>DESCRIPTION</td>
+            <td>RESPO</td>
+        </tr><tr>
+            <td>{{$formation->nom}}</td>
+            <td>{{$formation->description}}</td>
+            <td>{{$formation->responsable->user->prenom . " " . $formation->responsable->user->nom }}</td>
+        </tr>
 
     </table>
 

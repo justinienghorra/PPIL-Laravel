@@ -15,7 +15,23 @@ class Formation extends Model
      */
     protected $table = 'formations';
 
+    /**
+     * Retourne le responsable de la formation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function responsable() {
         return $this->hasOne('App\ResponsableFormation', 'id_formation');
     }
+
+    /**
+     * Retourne faux si la formation n'a pas de responsable
+     *
+     * @return bool
+     */
+    public function hasResponsable() {
+        return $this->responsable != null;
+    }
+
+
 }
