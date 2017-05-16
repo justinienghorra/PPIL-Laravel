@@ -49,6 +49,6 @@
     {{  $data }}
 @endif
 <h4>Format requis</h4>
-civilite,prenom,nom,email,adresse,statut
+civilite;prenom;nom;email;adresse;statut
 </body>
 </html>

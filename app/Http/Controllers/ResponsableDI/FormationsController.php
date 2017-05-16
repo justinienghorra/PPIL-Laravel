@@ -127,10 +127,10 @@ class FormationsController
                 return $index > 0; //we don't take into account the header
             })
             ->addFilter(function ($row) {
-                return isset($row[1], $row[2]); //we make sure the data are present
+                return isset($row[0], $row[1]); //we make sure the data are present
             })->fetch();
 
-        //dd($res);
+        //TODO checker le header
         $new_formations = array();
         $new_responsables = array();
         foreach ($res as $row) {

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use League\Csv\Reader;
 
 class AnnuaireController extends Controller
 {
@@ -78,42 +79,64 @@ class AnnuaireController extends Controller
 
 
         $file = $request->file('file_csv');
+        $new_users = array();
 
-        $f = fopen($file->path(), "r");
+        $csv = Reader::createFromPath($file->path());
+        $csv->setDelimiter(';');
 
-        $csv_content = fgetcsv($f);
-        while ($csv_content) {
+        $res = $csv
+            ->addFilter(function ($row, $index) {
+                return $index > 0; //we don't take into account the header
+            })
+            ->addFilter(function ($row) {
+                return isset($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]); //we make sure the data are present
+            })->fetch();
 
-            $validator = Validator::make($csv_content, [
-                '0' => ['required', 'string', Rule::in(['M, "Mme'])],
-                '1' => 'required|string|max:255',
-                '2' => 'required|string|max:255',
-                '3' => 'required|string|email|unique:users,email',
-                '4' => 'required|string',
-                '5' => ['required', 'string', Rule::in($this->statut_array)],
+        //TODO checker le header
+
+        foreach ($res as $row) {
+            $validator = Validator::make([
+                'civilite' => $row[0],
+                'prenom' => $row[1],
+                'nom' => $row[2],
+                'email' => trim($row[3]),
+                'adresse' => $row[4],
+                'statut' => $row[5],
+            ], [
+                'civilite' => ['required', 'string', Rule::in(['M, "Mme'])],
+                'prenom' => 'alpha|required|string|max:255',
+                'nom' => 'alpha|required|string|max:255',
+                'email' => 'required|string|email|unique:users,email',
+                'adresse' => 'required|string',
+                'statut' => ['required', 'string', Rule::in($this->statut_array)],
             ]);
 
-            //TODO gérer les mot de passe
-
             if ($validator->fails()) {
+                $this->importRollback($new_users);
                 return redirect('/di/annuaire')->withErrors($validator);
             }
 
             $user = new User;
-            $user->civilite = $csv_content[0];
-            $user->prenom = $csv_content[1];
-            $user->nom = $csv_content[2];
-            $user->email = $csv_content[3];
-            $user->adresse = $csv_content[4];
-            $user->id_statut = Statut::where('statut', $csv_content[5])->first()->id;
+            $user->civilite = $row[0];
+            $user->prenom = $row[1];
+            $user->nom = $row[2];
+            $user->email = $row[3];
+            $user->adresse = $row[4];
+            $user->id_statut = Statut::where('statut', $row[5])->first()->id;
+            //TODO gérer mot de passe et mail ?
             $user->password = bcrypt("password");
             $user->attente_validation = false;
             $user->save();
-            $csv_content = fgetcsv($f);
+            array_push($new_users, $user);
+
         }
 
-
-        fclose($f);
         return redirect('/di/annuaire');
+    }
+
+    private function importRollback($new_users) {
+        foreach ($new_users as $user) {
+            $user->delete();
+        }
     }
 }
