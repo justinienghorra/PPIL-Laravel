@@ -3,10 +3,10 @@
 Liste de vos UE
 @stop
 @section('content')
-  
+    
  <ul class="collapsible white" data-collapsible="expandable">
         <li class="collection-header orange-text"><h4 class="center">Liste de vos UE</h4></li>
-     <!-- 
+    
     <li>
     
       <div class="collapsible-header "><strong class="orange-text">Compilation</strong><span class="right">L3 Informatique</span></div>
@@ -18,7 +18,7 @@ Liste de vos UE
                 <h4 class="header light">Description</h4>
                 
                 <!-- Contenu du premier EC -->
-<!--
+
                 <p class="flow-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla malesuada lacus risus, at sagittis mi scelerisque vel. </p>
                 
 
@@ -118,20 +118,7 @@ Liste de vos UE
 
                 
                 <!-- Fin du Contenu du premier EC -->
-            <!--
-					</div>
-            
-          
-
-            <div class="row">
-                <a href="#modal_enseignants" class="btn  left btn-large btn-flat orange-text">Gérer les enseignants</a>
-                <a href="#modal_horaires" class="btn  right btn-large btn-flat blue-text">Gérer les horaires</a>
             </div>
-              
-            
-          
-
-          
       
       </div>
     </li>
@@ -148,139 +135,14 @@ Liste de vos UE
 
 
 
-
+  @include('includes.buttonExport')
 
     <!-- FIN CONTENT -->
   </div>
 
 </div>
-@include('includes.buttonImportExport')
   
-  </main>
+</main>
 
-<!-- MODAL EXPORT -->
-  <div id="modal_export" class="modal">
-    <div class="modal-content">
-      <h4>Exportation des données</h4>
-      <div class="row">
-        <div class="input-field col s12">
-          <select >
-            <option class="blue-text" value="1">PDF</option>
-            <option class="blue-text"  value="2">CSV</option>
-            <option class="blue-text" value="3">Excel</option>
-          </select>
-          <label>Format du fichier</label>
-        </div>
-      </div>
-      
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
-    </div>
-  </div>
-  <!-- END MODAL EXPORT -->
-
-  <!-- MODAL IMPORT -->
-  <div id="modal_import" class="modal">
-    <div class="modal-content">
-      <h4>Importation de données</h4>
-      
-      <div class="row">
-        <div class="input-field col s12">
-              <select>
-                <option cvalue="1">Compilation</option>
-                <option value="2">Base de données</option>
-                <option value="3">Optimisation</option>
-              </select>
-              <label>UE concernée</label>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="file-field input-field">
-          <div class="btn btn-flat purple-text">
-            <span>Fichier</span>
-            <input type="file">
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text">
-          </div>
-      </div>
-      </div>
-      
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat purple-text">Importer</a>
-    </div>
-  </div>
-  <!-- END MODAL IMPORT -->
-
-<!-- Modal modif -->
-  <div id="modal_horaires" class="modal">
-    <div class="modal-content">
-      <h4>Modification de l'UE Compilation</h4>
-      
-      <h5>Alvin</h5>
-      <h5 class="light">CM</h5>
-      <div class="row">
-        <div class="input-field col s6">
-          <input type="number">
-          <label for="">Nombre d'heures</label>
-        </div>
-      </div>
-      <h5 class="light">TD</h5>
-      <div class="row">
-        <div class="input-field col s6">
-          <input type="number">
-          <label for="">Nombre de groupes</label>
-        </div>
-        <div class="input-field col s6">
-          <input type="number">
-          <label for="">Heures par groupe</label>
-        </div>
-      </div>
-      <h5 class="light">TP</h5>
-      <div class="row">
-        <div class="input-field col s6">
-          <input type="number">
-          <label for="">Nombre de groupes</label>
-        </div>
-        <div class="input-field col s6">
-          <input type="number">
-          <label for="">Heures par groupe</label>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Confirmer</a>
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
-    </div>
-  </div>
-
-  <!-- End modal modif -->
-
-  <!-- Modal prof -->
-  <div id="modal_enseignants" class="modal">
-    <div class="modal-content">
-      <h4>Modification de l'UE Compilation</h4>
-      <ul class="collection with-header">
-        <li class="collection-header"><h4>Enseignants</h4></li>
-        <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons red-text">clear</i></a></div></li>
-        <li class="collection-item"><div>Chuck Norris<a href="#!" class="secondary-content"><i class="material-icons red-text">clear</i></a></div></li>
-        <li class="collection-item"><div>Mickey<a href="#!" class="secondary-content"><i class="material-icons red-text">clear</i></a></div></li>
-      </ul>
-      <div class="row">
-        <div class="input-field">
-        <div class="col s3"><div class="green-text btn btn-flat left"><span>Ajouter</span></div></div>
-        <div class="col s9"><input type="text"></div>
-        </div>
-      </div>
-      
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Confirmer</a>
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
-    </div>
-  </div>
 
 @stop
