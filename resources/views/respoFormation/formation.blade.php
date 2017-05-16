@@ -1,6 +1,6 @@
 <html>
 <head>
-
+    <meta name="token" content="{{csrf_token()}}"/>
 </head>
 <body>
 
@@ -93,10 +93,13 @@
         $('#btn-add-ue').click(function (event) {
             var nom = $('#nom-ue-add').val();
             var desc = $('#description-ue-add').val();
+
+            console.log('nom : ' + nom);
+            console.log('desc : ' + desc);
             $.ajax({
                 url: "/respoFormation/formation/{{$formation->nom}}/add",
                 method: "POST",
-                data: "nom=" + nom + "&description=" + desc + "&idformation='{{$formation->id}}'"
+                data: "nom=" + nom + "&description=" + desc
             })
                 .done(function (msg) {
                     console.log(msg);

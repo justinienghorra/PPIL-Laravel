@@ -98,6 +98,7 @@
         $('#btn-add-formation').click(function (event) {
             var nom = $('#nom-formation-add').val();
             var desc = $('#description-formation-add').val();
+
             $.ajax({
                 url: "/di/formations/add",
                 method: "POST",

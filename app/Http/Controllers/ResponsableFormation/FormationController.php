@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\ResponsableUniteeEnseignement;
 use App\UniteeEnseignement;
 use App\User;
+use Validator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FormationController extends Controller
@@ -38,22 +40,25 @@ class FormationController extends Controller
      *
      * @return mixed
      */
-    public function add(Request $req) {
+    public function add(Request $req, $nom_formation) {
 
         $validator = Validator::make($req->all(), [
             'nom' => 'required|string|max:255|unique:unitee_enseignements',
             'description' => 'required|string|max:255',
         ]);
 
+        // TODO valider formation
+        $formation = Formation::where('nom', $nom_formation)->first();
 
         if (!$validator->fails()) {
             $ue = new UniteeEnseignement();
             $ue->nom = $req->nom;
             $ue->description = $req->description;
+            $ue->id_formation = $formation->id;
             $ue->save();
             return response()->json(["message" => "success", "ue" => $ue]);
         } else {
-            return response()->json(["message" => "errors", "errors" => $validator]);
+            return response()->json(["message" => "errors", "errors" => $validator->messages()]);
         }
     }
 
