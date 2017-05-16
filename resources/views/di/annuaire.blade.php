@@ -47,7 +47,7 @@
     <div id="modal_export" class="modal">
         <div class="modal-content">
             <h4>Exportation des données</h4>
-            <p class="flow-text">Les données concernant les utilisateur seront exportées au format CSV</p>
+            <p >Les données concernant les utilisateur seront exportées au format CSV</p>
         </div>
 
 
@@ -61,10 +61,10 @@
         <div class="modal-content">
             <div class="row">
                 <h4>Importation des données</h4>
-                <p class="flow-text">Les données importées doivent être au format CSV. Un header doit être présent et le
+                <p >Les données importées doivent être au format CSV. Un header doit être présent et le
                     séparateur doit
                     être ;</p>
-                <p class="flow-text">Le format à respecter est le suivant : <br><strong>civilite ; prenom ; nom ; email
+                <p >Le format à respecter est le suivant : <br><strong>civilite ; prenom ; nom ; email
                         ; adresse ; statut</strong></p>
             </div>
             <div class="row">
