@@ -23,9 +23,9 @@ class CreateEnseignantDansUEsTable extends Migration
             $table->integer('tp_nb_groupes')->unsigned();
             $table->integer('ei_nb_groupes')->unsigned();
 
-            $table->integer('td_heures_par_groupes')->unsigned();
-            $table->integer('tp_heures_par_groupes')->unsigned();
-            $table->integer('ei_heures_par_groupes')->unsigned();
+            $table->integer('td_heures_par_groupe')->unsigned();
+            $table->integer('tp_heures_par_groupe')->unsigned();
+            $table->integer('ei_heures_par_groupe')->unsigned();
 
             $table->integer('id_utilisateur')->unsigned();
             $table->foreign('id_utilisateur')->references('id')->on('users');
