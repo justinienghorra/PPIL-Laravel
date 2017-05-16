@@ -54,15 +54,15 @@ Liste des enseignements auxquels vous participez
                         </tr>
                         <tr>
                           <th>Nombre de groupes attendus</th>
+                          <td>{!! $enseignement->cm_nb_groupes_attendus !!}</td>
                           <td>{!! $enseignement->td_nb_groupes_attendus !!}</td>
                           <td>{!! $enseignement->tp_nb_groupes_attendus !!}</td>
-                          <td>{!! $enseignement->cm_nb_groupes_attendus !!}</td>
                         </tr>
                         <tr>
                           <th>Nombre de groupes affecté</th>
-                          <td>{!! $enseignement->td_nb_groupes_attendus !!}</td>
-                          <td><span class=" green-text">2</span></td>
-                          <td><span class=" red-text">3</span></td>
+                          <td>{!! $enseignement->cm_nb_groupes_affectes !!}</td>
+                          <td><span class=" green-text">{!! $enseignement->td_nb_groupes_affectes !!}</span></td>
+                          <td><span class=" red-text">{!! $enseignement->tp_nb_groupes_affectes !!}</span></td>
                         </tr>
                     </tbody>
                   </table>
