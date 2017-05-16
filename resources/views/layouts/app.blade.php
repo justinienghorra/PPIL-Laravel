@@ -42,7 +42,7 @@
 
 
                         @else                        
-                             <li><a class="dropdown-button" href="#!" data-activates="dropdown_fonctionnalite">Fonctionnalitées<i class="material-icons right">arrow_drop_down</i></a>
+                             <li><a class="dropdown-button" href="#!" data-activates="dropdown_fonctionnalite">Options<i class="material-icons right">arrow_drop_down</i></a>
                              </li>
 
                                 <ul id="dropdown_fonctionnalite" class="dropdown-content">
