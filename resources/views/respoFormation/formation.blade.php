@@ -13,8 +13,9 @@
 
     <table border="1" id="tableau_formations">
 
-        @foreach($ues as $ue)
 
+
+        @foreach($ues as $ue)
             <tr id="{{$ue->id}}">
                 <td><a href="/ue/{{$ue->nom}}">{{$ue->nom}}</a></td>
                 <td>{{$ue->description}}</td>

@@ -24,9 +24,10 @@ class FormationController extends Controller
         $user = Auth::user();
 
         $formation = Formation::where('nom', '=', $nom_formation)->first();
-        $ues = UniteeEnseignement::where('id_formation', '=', $formation->id);
-        $respoUE = ResponsableUniteeEnseignement::where();
+        $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
+        $respoUE = ResponsableUniteeEnseignement::all();
+        $users = User::all();
 
-        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE]);
+        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users]);
     }
 }

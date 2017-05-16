@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
 
         // Ajout d'un respo UE Compil
         $user = new User;
-        $user->nom = "Respo";
+        $user->nom = "UserRespo";
         $user->prenom = "Compil";
         $user->email = "respo.compil@gmail.com";
         $user->password = bcrypt("password");
