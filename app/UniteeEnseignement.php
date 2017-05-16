@@ -12,4 +12,5 @@ class UniteeEnseignement extends Model
      * @var string
      */
     protected $table = 'unitee_enseignements';
+	
 }
