@@ -8,6 +8,10 @@
 <h4>Objet error (pour le frontend)</h4>
 <p>
     {{ var_dump($errors) }}
+    <br>
+    @if(isset($errors_custom))
+        {{var_dump($errors_custom)}}
+    @endif
 </p>
 
 @if($users->count() > 0)
@@ -49,6 +53,6 @@
     {{  $data }}
 @endif
 <h4>Format requis</h4>
-civilite,prenom,nom,email,adresse,statut
+civilite;prenom;nom;email;adresse;statut
 </body>
 </html>

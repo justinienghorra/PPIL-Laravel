@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use League\Csv\Reader;
 
 class AnnuaireController extends Controller
 {
@@ -47,9 +48,9 @@ class AnnuaireController extends Controller
      */
     protected function getAnnuaireCSV() {
         $users = User::all();
-        $str = "enseignant,statut,email";
+        $str = "enseignant;statut;email";
         foreach ($users as $user) {
-            $str = $str . "\n" . $user->prenom . " " . $user->nom . ", " . $user->statut() . ", " . $user->email;
+            $str = $str . "\n" . $user->prenom . " " . $user->nom . "; " . $user->statut() . "; " . $user->email;
         }
         file_put_contents("/tmp/annuaire.csv", $str);
         return response()->download("/tmp/annuaire.csv");
@@ -78,42 +79,70 @@ class AnnuaireController extends Controller
 
 
         $file = $request->file('file_csv');
+        $new_users = array();
+        $errors_custom = array();
+        $num_row = 0;
+        $csv = Reader::createFromPath($file->path());
+        $csv->setDelimiter(';');
 
-        $f = fopen($file->path(), "r");
+        $res = $csv
+            ->addFilter(function ($row, $index) {
+                return $index > 0; //we don't take into account the header
+            })
+            ->addFilter(function ($row) {
+                return isset($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]); //we make sure the data are present
+            })->fetch();
 
-        $csv_content = fgetcsv($f);
-        while ($csv_content) {
+        //TODO checker le header
 
-            $validator = Validator::make($csv_content, [
-                '0' => ['required', 'string', Rule::in(['M, "Mme'])],
-                '1' => 'required|string|max:255',
-                '2' => 'required|string|max:255',
-                '3' => 'required|string|email|unique:users,email',
-                '4' => 'required|string',
-                '5' => ['required', 'string', Rule::in($this->statut_array)],
+        foreach ($res as $row) {
+            $num_row++;
+
+            $validator = Validator::make([
+                'civilite' => $row[0],
+                'prenom' => $row[1],
+                'nom' => $row[2],
+                'email' => trim($row[3]),
+                'adresse' => $row[4],
+                'statut' => $row[5],
+            ], [
+                'civilite' => ['required', 'string', Rule::in(['M, "Mme'])],
+                'prenom' => 'alpha|required|string|max:255',
+                'nom' => 'alpha|required|string|max:255',
+                'email' => 'required|string|email|unique:users,email',
+                'adresse' => 'required|string',
+                'statut' => ['required', 'string', Rule::in($this->statut_array)],
             ]);
 
-            //TODO gérer les mot de passe
-
             if ($validator->fails()) {
-                return redirect('/di/annuaire')->withErrors($validator);
+                $errors_custom['ligne'] = $num_row;
+                $this->importRollback($new_users);
+                return redirect('/di/annuaire')->with('errors_custom', $errors_custom)->withErrors($validator);
             }
 
             $user = new User;
-            $user->civilite = $csv_content[0];
-            $user->prenom = $csv_content[1];
-            $user->nom = $csv_content[2];
-            $user->email = $csv_content[3];
-            $user->adresse = $csv_content[4];
-            $user->id_statut = Statut::where('statut', $csv_content[5])->first()->id;
+            $user->civilite = $row[0];
+            $user->prenom = $row[1];
+            $user->nom = $row[2];
+            $user->email = $row[3];
+            $user->adresse = $row[4];
+            $user->id_statut = Statut::where('statut', $row[5])->first()->id;
+
+            // TODO gérer mot de passe et mail ?
+
             $user->password = bcrypt("password");
             $user->attente_validation = false;
             $user->save();
-            $csv_content = fgetcsv($f);
+            array_push($new_users, $user);
+
         }
 
-
-        fclose($f);
         return redirect('/di/annuaire');
+    }
+
+    private function importRollback($new_users) {
+        foreach ($new_users as $user) {
+            $user->delete();
+        }
     }
 }
