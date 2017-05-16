@@ -44,9 +44,9 @@ class FormationsController
             $formation->nom = $req->nom;
             $formation->description = $req->description;
             $formation->save();
-            return response()->json(["message" => "success", "formation" => json_encode($formation)]);
+            return response()->json(["message" => "success", "formation" => $formation]);
         } else {
-            return response()->json(["message" => "errors", "errors" => json_encode($validator)]);
+            return response()->json(["message" => "errors", "errors" => $validator]);
         }
     }
 
@@ -120,7 +120,6 @@ class FormationsController
         $file = $req->file('file_csv');
 
         $csv = Reader::createFromPath($file->path());
-        //$csv = Reader::createFromPath('');
         $csv->setDelimiter(';');
 
         $res = $csv
@@ -195,6 +194,33 @@ class FormationsController
         }
         foreach ($new_formations as $form) {
             $form->delete();
+        }
+    }
+
+    /**
+     * Change le responsable d'une UE
+     *
+     * @param Request $req
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateResponsable(Request $req) {
+        $validator = Validator::make($req->all(), [
+            'id_utilisateur' => 'required|integer|exists:users,id',
+            'id_formation' => 'required|integer|exists:formations,id',
+        ]);
+
+        if (!$validator->fails()) {
+            $formation = Formation::where('id', $req->id_formation)->first();
+            if ($formation->hasResponsable()) {
+
+            }
+            $resp = new ResponsableFormation;
+            $resp->id_utilisateur = $req->id_utilisateur;
+            $resp->id_formation = $req->id_formation;
+            $resp->save();
+            return response()->json(["message" => "success"]);
+        } else {
+            return response()->json(["message" => "errors", "errors" => $validator]);
         }
     }
 }
