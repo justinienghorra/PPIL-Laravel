@@ -20,5 +20,16 @@ class FormationsTableSeeder extends Seeder
         $resp->id_formation = $formation->id;
         $resp->id_utilisateur = \App\User::where('email', 'utilisateur.lambda@gmail.com')->first()->id;
         $resp->save();
+		
+		$l3 = new \App\Formation;
+		$l3->nom = "L3 Informatique";
+		$l3->description = "Trop pas ouf";
+		$l3->save();
+		
+		$respl3 = new \App\ResponsableFormation();
+		$respl3->id_formation = $formation->id;
+        $respl3->id_utilisateur = \App\User::where('email', 'utilisateur.lambda@gmail.com')->first()->id;
+		$respl3->save();
+		
     }
 }

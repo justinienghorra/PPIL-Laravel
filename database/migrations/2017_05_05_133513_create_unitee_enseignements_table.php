@@ -22,8 +22,9 @@ class CreateUniteeEnseignementsTable extends Migration
 
             $table->integer('cm_volume_attendu')->unsigned();
             $table->integer('td_volume_attendu')->unsigned();
-            $table->integer('tp_volume_attendu')->unsigned();
+			$table->integer('td_volume_affecte')->unsigned();
 
+            $table->integer('tp_volume_attendu')->unsigned();
             $table->integer('tp_volume_affecte')->unsigned();
 
             $table->integer('ei_volume_attendu')->unsigned();
@@ -36,7 +37,7 @@ class CreateUniteeEnseignementsTable extends Migration
 
 
             $table->boolean('attente_validation');
-            $table->date('date_derniere_modif');
+            //$table->date('date_derniere_modif');
 
             $table->integer('id_formation')->unsigned();
             $table->foreign('id_formation')->references('id')->on('formations');
