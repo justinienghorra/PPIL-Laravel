@@ -21,11 +21,6 @@ Route::get('/conception/', function() {
    return view('mesUE');
 });
 
-Route::get('/conception/mesUE', function() {
-    return view('mesUE');
-});
-
-
 Route::get('/conception/mesEnseignements', function() {
     return view('mesEnseignements');
 });
@@ -76,6 +71,11 @@ Route::get('/profil', 'ProfilController@show');
 Route::post('/profil/email', 'ProfilController@postEmail');
 Route::post('/profil/password', 'ProfilController@postPassword');
 Route::post('/profil/image', 'ProfilController@postImage');
+
+/*********************************
+ * Routes pour le Responsable UE *
+ *********************************/
+Route::get('/conception/mesUE', 'ResponsableUE\MesUEController@show');
 
 
 
