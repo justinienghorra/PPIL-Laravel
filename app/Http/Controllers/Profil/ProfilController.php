@@ -37,8 +37,6 @@ class ProfilController extends Controller
             $tmp = explode("images", $url);
         }
 
-
-        //TODO : modifier la vue en consequence avec le parametre (email deja change)
         return view('profil')->with('user', $user)->with('statuts', $statuts)->with('photoUrl', $tmp[1]);
     }
 

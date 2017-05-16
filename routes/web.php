@@ -79,6 +79,15 @@ Route::get('/respoue/mesUE', 'ResponsableUE\MesUEController@show');
 
 
 
+/*******************************
+ * Route pour les Enseignants  *
+ *******************************/
+
+Route::get('/enseignant/mesEnseignements', 'Enseignant\EnseignantController@show');
+
+
+
+
 Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/annuaire.json', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/annuaire.csv', 'ResponsableDI\AnnuaireController@getAnnuaireCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
