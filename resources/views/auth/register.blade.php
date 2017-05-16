@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<br />
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register - Vue générée par Laravel avec Bootstrap - A modifier</div>
+                <div class="panel-heading">Inscription - Système de gestion des enseignements</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
@@ -61,11 +62,9 @@
                             <div class="col-md-6">
 
                                 <select id="statut" class="form-control" name="statut" value="{{ old('statut') }}" required autofocus>
-                                    <option>ATER</option>
-                                    <option>PRAG</option>
-                                    <option>Enseignant chercheur</option>
-                                    <option>Doctorant</option>
-                                    <option>Vacataire</option>
+                                    @foreach(\App\Statut::all() as $statut)
+                                        <option>{{$statut->statut}}</option>
+                                    @endforeach
                                 </select>
                                 @if ($errors->has('statut'))
                                     <span class="help-block">
@@ -138,4 +137,23 @@
         </div>
     </div>
 </div>
+
+  <script src="/js/jquery-2.1.1.min.js"></script>
+  <script src="/js/materialize.js"></script>
+
+    <script>
+    $( document ).ready(function(){      
+      $('.modal').modal();
+      $(".button-collapse").sideNav();
+      $('.collapsible').collapsible();
+      $('.dropdown-button').dropdown({ 
+        hover: true, // Activate on hover
+        belowOrigin: true,
+        constrainWidth: false,
+      });
+      $('.tooltipped').tooltip({delay: 50});
+    });
+    
+  </script>
+
 @endsection

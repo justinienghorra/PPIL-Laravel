@@ -60,7 +60,6 @@ class AnnuaireController extends Controller
      */
     protected function importCSV(Request $request) {
 
-        //TODO check le type du fichier
         $validator = Validator::make(
             [
                 'file' => $request->file('file_csv'),

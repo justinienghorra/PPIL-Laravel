@@ -17,7 +17,7 @@ class CreateFormationsTable extends Migration
             $table->increments('id');
             $table->timestamps();
 
-            $table->string('nom');
+            $table->string('nom')->unique();
             $table->string('description');
             //$table->boolean('attente_validation');
             //$table->date('derniere_modif');
