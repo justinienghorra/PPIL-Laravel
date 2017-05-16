@@ -229,7 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'ProfilController' => \App\Http\Controllers\ProfilController::class,
+        'ProfilController' => \App\Http\Controllers\Profil\ProfilController::class,
         'FormationController' => \App\Http\Controllers\FormationController::class
     ],
 

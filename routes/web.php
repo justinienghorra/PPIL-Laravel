@@ -67,10 +67,10 @@ Route::get('/home', 'HomeController@index')->name('home');
  * Route pour le Profil  *
  *************************/
 
-Route::get('/profil', 'ProfilController@show');
-Route::post('/profil/email', 'ProfilController@postEmail');
-Route::post('/profil/password', 'ProfilController@postPassword');
-Route::post('/profil/image', 'ProfilController@postImage');
+Route::get('/profil', 'Profil\ProfilController@show');
+Route::post('/profil/email', 'Profil\ProfilController@postEmail');
+Route::post('/profil/password', 'Profil\ProfilController@postPassword');
+Route::post('/profil/image', 'Profil\ProfilController@postImage');
 
 /*********************************
  * Routes pour le Responsable UE *

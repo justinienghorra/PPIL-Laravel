@@ -16,5 +16,7 @@ class Photos extends Model
         $photo->adresse = $adresse;
         $photo->id_utilisateur = $id_utilisateur;
         $photo->save();
+
+        return $photo;
     }
 }
