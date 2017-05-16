@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    @include('includes.head')
+    @include('includes.head')   
 </head>
 <body>
     @include('includes.header3')
@@ -16,7 +16,6 @@
 
             </div>
         </div>
-
     </main>
 
     @include('includes.footer')
