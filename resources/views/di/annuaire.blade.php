@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-    Formations
+    Annuaire
 @stop
 @section('content')
 
@@ -8,14 +8,9 @@
 
         <div class="card-content">
 
-            <h4>Objet error (pour le frontend)</h4>
-            <p>
-                {{ var_dump($errors) }}
-                <br>
-                @if(isset($errors_custom))
-                    {{var_dump($errors_custom)}}
-                @endif
-            </p>
+            <div class="row">
+                <h3 class="header s12 orange-text center">Annuaire</h3>
+            </div>
 
             @if($users->count() > 0)
 
@@ -38,25 +33,6 @@
 
             @endif
 
-            <br>
-            <br>
-            <br>
-            <h4>Exportation</h4>
-            <a href="/di/annuaire.csv">Export to csv</a>
-
-            <hr>
-            <h4>Importation</h4>
-            <form method="post" action="/di/annuaire/importCSV" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <input type="file" name="file_csv"/>
-                <button type="submit">Envoyer</button>
-            </form>
-
-            @if(isset ($data))
-                {{  $data }}
-            @endif
-            <h4>Format requis</h4>
-            civilite;prenom;nom;email;adresse;statut
 
             @include('includes.buttonImportExport')
         </div>
@@ -107,14 +83,40 @@
         <div class="modal-footer">
             <a onclick="submitImport() " href="#!" class="btn-large modal-action modal-close waves-effect waves-green btn-flat
                purple-text">Importer</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat btn-large red-text">Annuler</a>
+            <a href="#!"
+               class="modal-action modal-close waves-effect waves-green btn-flat btn-large red-text">Annuler</a>
         </div>
     </div>
+
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/materialize.js"></script>
 
     <script>
         function submitImport(event) {
             event.preventDefault();
             $('#form-import').submit();
         }
+    </script>
+
+    <script>
+
+        // Génération des toast d'erreur
+        $(document).ready(function () {
+                    @if (Session::get('messages') !== null && Session::get('messages')['succes'] !== null)
+            var toastContent = '<span>{{Session::get('messages')["succes"]}}</span>';
+            Materialize.toast(toastContent, 5000);
+                    @endif
+                    @foreach($errors->all() as $error)
+            var toastContent = '';
+            @if (Session::get('messages') !== null)
+                toastContent = '<span>{{$error}} (ligne {{Session::get('messages')["ligne"]}})</span>';
+            @else
+                toastContent = '<span>{{$error}}</span>';
+            @endif
+
+Materialize.toast(toastContent, 5000);
+            @endforeach
+        });
     </script>
 @stop
