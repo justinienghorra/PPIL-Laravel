@@ -74,6 +74,8 @@ class ProfilController extends Controller
 
             return redirect('profil')->with('password_message', 'Mot de passe modifié avec succé');
         }
+<<<<<<< HEAD
+=======
 
 
     }
@@ -111,5 +113,6 @@ class ProfilController extends Controller
 
             return redirect('profil')->with('image_message', 'Format du fichier invalide: ' . $extension);
         }
+>>>>>>> a9464e3fc9c5acf9e08316ab2ccebbdceb2fed31
     }
 }
