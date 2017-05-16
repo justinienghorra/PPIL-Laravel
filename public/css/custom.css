@@ -30,6 +30,11 @@ main {
     margin-top: 9px;
 }
 
+.navbar-logo-connexion {
+    height: 42px;
+    margin-top: -5px;
+}
+
 option.blue-text {
     color: 2196F3;
 }
