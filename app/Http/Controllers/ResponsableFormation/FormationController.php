@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ResponsableFormation;
 
 use App\Formation;
 use App\Http\Controllers\Controller;
+use App\ResponsableUniteeEnseignement;
 use App\UniteeEnseignement;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,8 @@ class FormationController extends Controller
 
         $formation = Formation::where('nom', '=', $nom_formation)->first();
         $ues = UniteeEnseignement::where('id_formation', '=', $formation->id);
+        $respoUE = ResponsableUniteeEnseignement::where();
 
-        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues]);
+        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE]);
     }
 }

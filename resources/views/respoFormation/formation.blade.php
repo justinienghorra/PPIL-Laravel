@@ -13,20 +13,20 @@
 
     <table border="1" id="tableau_formations">
 
-        @foreach($formations as $formation)
+        @foreach($ues as $ue)
 
-            <tr id="{{$formation->id}}">
-                <td><a href="/formations/{{$formation->nom}}">{{$formation->nom}}</a></td>
-                <td>{{$formation->description}}</td>
+            <tr id="{{$ue->id}}">
+                <td><a href="/ue/{{$ue->nom}}">{{$ue->nom}}</a></td>
+                <td>{{$ue->description}}</td>
                 <td>
                     <select id="responsable">
                         <option value="0" class="option-responsable"></option>
                         @foreach($users as $user)
                             <option class="option-responsable"
 
-                                    @if(isset($formation->responsable))
+                                    @if(isset($ue->responsable))
 
-                                    @if ($formation->responsable->user->id === $user->id)
+                                    @if ($ue->responsable->user->id === $user->id)
                                     selected="selected"
                                     @endif
 
@@ -39,7 +39,7 @@
                 </td>
 
                 <td>
-                    <button id="{{$formation->id}}" class="btn-delete-formation" type="submit">Supprimer</button>
+                    <button id="{{$ue->id}}" class="btn-delete-formation" type="submit">Supprimer</button>
                 </td>
             </tr>
 
