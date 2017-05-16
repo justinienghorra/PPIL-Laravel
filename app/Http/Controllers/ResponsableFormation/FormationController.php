@@ -16,21 +16,21 @@ class FormationController extends Controller
         $this->middleware('auth');
     }
 
-    public function show(){
+    public function show($nom_formation){
+
+        /*$validator = Validator::make($req->all(), [
+            'nom_formation' => 'required|string|max:255',
+        ]);
+
+        $nom_formation = $req->nom;*/
 
         // Retourne l'utilisateur courant authentifie...
         $user = Auth::user();
-        $formation = Formation::where('id', '=', IDFORMATION);
 
-        return view('profil')->with('user', $user)->with('formation', $formation);
-    }
 
-    public static function getResponsable(){
 
-        $user = Auth::user();
+        $formation = Formation::where('nom', '=', $nom_formation)->first();
 
-        $respo = User::where('id', '=', IDFORMATION)->first();
-
-        return $respo;
+        return view('respoFormation.formation')->with('user', $user)->with('formation', $formation);
     }
 }

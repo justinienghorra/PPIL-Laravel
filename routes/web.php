@@ -95,4 +95,8 @@ Route::get('/en_attente', function () {
     return view('auth.en_attente');
 });
 
-//Route::get('/formation/{nom_formation}', 'FormationController@show');
+/*Route::get('/formation/{nom_formation}', function ($nom_formation) {
+    return view('ResponsableFormation\FormationController@show')->with('nom_formation', $nom_formation);
+});*/
+
+Route::get('/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
