@@ -64,11 +64,23 @@ class AnnuaireController extends Controller
         $validator = Validator::make(
             [
                 'file' => $request->file('file_csv'),
-                'extension' => strtolower($request->file('file_csv')->getClientOriginalExtension()),
             ]
             ,
             [
                 'file' => 'required',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect('/di/annuaire')->withErrors($validator);
+        }
+
+        $validator = Validator::make(
+            [
+                'extension' => strtolower($request->file('file_csv')->getClientOriginalExtension()),
+            ]
+            ,
+            [
                 'extension' => 'required|in:csv',
             ]
         );
@@ -80,7 +92,7 @@ class AnnuaireController extends Controller
 
         $file = $request->file('file_csv');
         $new_users = array();
-        $errors_custom = array();
+        $messages = array();
         $num_row = 0;
         $csv = Reader::createFromPath($file->path());
         $csv->setDelimiter(';');
@@ -115,9 +127,11 @@ class AnnuaireController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $errors_custom['ligne'] = $num_row;
+                $messages['ligne'] = $num_row;
                 $this->importRollback($new_users);
-                return redirect('/di/annuaire')->with('errors_custom', $errors_custom)->withErrors($validator);
+                return redirect('/di/annuaire')
+                    ->with('messages', $messages)
+                    ->with('errors', $validator->errors());
             }
 
             $user = new User;
@@ -137,7 +151,8 @@ class AnnuaireController extends Controller
 
         }
 
-        return redirect('/di/annuaire');
+        $messages['succes'] = "Importation réussie";
+        return redirect('/di/annuaire')->with('messages', $messages);
     }
 
     private function importRollback($new_users) {

@@ -9,17 +9,9 @@
         <div class="card-content">
 
 
-            <h4>Objet error (pour le frontend)</h4>
-            <p>
-                {{ var_dump($errors) }}
-                <br>
-                @if(isset($errors_custom))
-                    {{var_dump($errors_custom)}}
-                @endif
-            </p>
-
-            <h1>Formations</h1>
-
+            <div class="row">
+                <h3 class="header s12 orange-text center">Formations</h3>
+            </div>
             @if(isset($formations))
 
                 <table class="bordered" id="tableau_formations">
@@ -37,9 +29,9 @@
 
                                                 @if(isset($formation->responsable))
 
-                                                @if ($formation->responsable->user->id === $user->id)
-                                                selected="selected"
-                                                @endif
+                                                    @if ($formation->responsable->user->id === $user->id)
+                                                    selected="selected"
+                                                    @endif
 
                                                 @endif
 
@@ -100,7 +92,7 @@
 
             $.ajaxSetup({
                 headers: {
-                    "X-CSRF-TOKEN": $('meta[name="token"]').attr('content')
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
