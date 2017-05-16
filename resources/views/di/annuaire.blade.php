@@ -27,7 +27,9 @@
                             <td>{{ $user->statut() }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                <button id="{{$user->id}}" class="btn btn-flat red-text waves-light btn-delete-utilisateur">Supprimer</button>
+                                <button id="{{$user->id}}"
+                                        class="btn btn-flat red-text waves-light btn-delete-utilisateur">Supprimer
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -106,19 +108,19 @@
 
         // Génération des toast d'erreur
         $(document).ready(function () {
-                    @if (Session::get('messages') !== null && Session::get('messages')['succes'] !== null)
-            var toastContent = '<span>{{Session::get('messages')["succes"]}}</span>';
-            Materialize.toast(toastContent, 5000);
-                    @endif
-                    @foreach($errors->all() as $error)
-            var toastContent = '';
-            @if (Session::get('messages') !== null)
-                toastContent = '<span>{{$error}} (ligne {{Session::get('messages')["ligne"]}})</span>';
-            @else
-                toastContent = '<span>{{$error}}</span>';
+            @if (Session::get('messages') !== null && Session::get('messages')['succes'] !== null)
+                var toastContent = '<span>{{Session::get('messages')["succes"]}}</span>';
+                Materialize.toast(toastContent, 5000);
             @endif
+            @foreach($errors->all() as $error)
+                var toastContent = '';
+                @if (Session::get('messages') !== null)
+                    toastContent = '<span>{{$error}} (ligne {{Session::get('messages')["ligne"]}})</span>';
+                @else
+                    toastContent = '<span>{{$error}}</span>';
+                @endif
 
-Materialize.toast(toastContent, 5000);
+                Materialize.toast(toastContent, 5000);
             @endforeach
         });
     </script>
