@@ -18,7 +18,7 @@ Liste de vos UE
                 <h4 class="header light">Description</h4>
                 
                 <!-- Contenu du premier EC -->
-
+<!--
                 <p class="flow-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla malesuada lacus risus, at sagittis mi scelerisque vel. </p>
                 
 
@@ -118,7 +118,8 @@ Liste de vos UE
 
                 
                 <!-- Fin du Contenu du premier EC -->
-            </div>
+            <!--
+					</div>
             
           
 
