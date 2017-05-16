@@ -88,13 +88,13 @@
            })
                .done(function (msg) {
                    console.log(msg);
-                   alert('OK (RELOAD)')
+
                })
 
                .fail(function (xhr, msg) {
                    console.log(xhr);
                    console.log(msg);
-                   alert('ERREUR (VOIR  CONSOLE)')
+
                });
         });
 
@@ -107,12 +107,14 @@
            })
                .done(function (msg) {
                    console.log(msg);
-                   alert('OK (RELOAD) Serveur : ' + msg.message);
+                   if (msg['message'] === 'success') {
+                       $('tr#'+id_formation).remove();
+                   }
                })
                .fail(function (xhr, msg) {
                    console.log(msg);
                    console.log(xhr);
-                   alert('ERREUR (VOIR CONSOLE)');
+
 
                });
         });

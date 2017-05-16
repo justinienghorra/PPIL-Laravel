@@ -65,6 +65,10 @@ class FormationsController
 
         if (!$validator->fails()) {
             $form = Formation::where('id', $req->id_formation)->first();
+            $resp = $form->responsable;
+            if ($resp) {
+                $resp->delete();
+            }
             $form->delete();
             return response()->json(["message" => "success"]);
         } else {
@@ -140,7 +144,7 @@ class FormationsController
             ]);
 
             if ($validator->fails()) {
-
+                $this->importRollback($new_formations, $new_responsables);
                 return redirect('/di/formations');
             }
 
@@ -152,19 +156,17 @@ class FormationsController
                 $row[2] = trim($row[2]);
                 $validator_mail = Validator::make([
                     'email' => trim($row[2]),
-                    //'email' => "jean.dupont@gmail.com",
                 ], [
                     'email' => 'exists:users,email'
                 ]);
 
                 if ($validator_mail->fails()) {
-
+                    $this->importRollback($new_formations, $new_responsables);
                     return redirect('/di/formations');
                 }
 
                 $resp = new ResponsableFormation;
                 $resp->id_formation = $formation->id;
-                //$user = User::select('email')->where('email', "jean.dupont@gmail.com")->first();
                 $user = User::where('email', trim($row[2]))->first();
                 $resp->id_utilisateur = $user->id;
                 $resp->save();
@@ -177,53 +179,22 @@ class FormationsController
             }
 
         }
-        print_r($new_formations);
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        print_r($new_responsables);
 
-        foreach ($new_formations as $formation) {
-            $formation->save();
-        }
-        foreach ($new_responsables as $resp) {
-            $resp->save();
-        }
-
-
-
-        /*
-        $f = fopen($file->path(), "r");
-
-        $csv_content = fgetcsv($f);
-        while ($csv_content) {
-
-            $validator = Validator::make($csv_content, [
-                '0' => 'max:255|required|string|unique:formations,nom',
-                '1' => 'required|string|max:255',
-                '2' => 'string|max:255',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect('/di/formations')->withErrors($validator);
-            }
-
-            $formation = new Formation();
-            $formation->nom = $csv_content[0];
-            $formation->description = $csv_content[1];
-            $formation->save();
-            if (User::where('email', $csv_content[2])->count() == 1) {
-                $resp = new ResponsableFormation();
-                $resp->id_formation = $formation->id;
-                $resp->id_utilisateur = User::where('email', $csv_content[2])->firstOrFail()->id;
-                $resp->save();
-            }
-            $csv_content = fgetcsv($f);
-        }
-
-
-        fclose($f);
-        */
         return redirect('/di/formations');
+    }
+
+    /**
+     * Annule les changements faits par l'importation en cas d'erreur
+     *
+     * @param $new_formations
+     * @param $new_responsable
+     */
+    private function importRollback($new_formations, $new_responsable) {
+        foreach ($new_responsable as $resp) {
+            $resp->delete();
+        }
+        foreach ($new_formations as $form) {
+            $form->delete();
+        }
     }
 }
