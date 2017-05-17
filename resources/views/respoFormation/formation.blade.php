@@ -25,6 +25,7 @@
                         @foreach($users as $user)
                             <option class="option-responsable"
 
+
                                     @if(isset($ue->responsable))
 
                                     @if ($ue->responsable->user->id === $user->id)

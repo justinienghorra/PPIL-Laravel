@@ -93,9 +93,9 @@ class FormationController extends Controller
      *
      * @return Response
      */
-    public function getFormationsCSV($id_formation) {
-        $ues = UniteeEnseignement::where('id_formation', $id_formation)->get();
-        $formation = Formation::where('id', $id_formation)->first();
+    public function getFormationsCSV($nom_formation) {
+        $formation = Formation::where('nom', $nom_formation)->first();
+        $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
 
         //TODO CM_VOLUME_AFFECTE
         $str = "nom;description;responsable;cm_volume_attendu;td_volume_attendu;td_volume_affecte;tp_volume_attendu;tp_volume_affecte;ei_volume_attendu;ei_volume_affecte;td_nb_groupes_attendus;tp_nb_groupes_attendus;ei_nb_groupes_attendus;attente_validation;formation";
@@ -103,8 +103,8 @@ class FormationController extends Controller
             $str = $str . "\n" . $ue->nom . "; " . $ue->description . "; ";
             if ($ue->hasResponsable()) {
                 $str = $str . $ue->responsable->user->email;
-                $str = $str . ';';
             }
+            $str = $str . ';';
 
             $str = $str . $ue->cm_volume_attendu . ';';
             $str = $str . $ue->td_volume_attendu . ';' . $ue->td_volume_affecte . ';';
