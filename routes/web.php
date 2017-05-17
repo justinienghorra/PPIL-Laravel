@@ -113,7 +113,8 @@ Route::post('/respoFormation/formation/{nom_formation}/add', 'ResponsableFormati
 Route::get('/respoFormation/formation/{nom_formation}/add', 'ResponsableFormation\FormationController@add')->middleware(\App\Http\Middleware\RespoFormation::class);
 Route::post('/respoFormation/formation/{nom_formation}/delete', 'ResponsableFormation\FormationController@delete')->middleware(\App\Http\Middleware\RespoFormation::class);
 Route::get('/respoFormation/formation/{nom_formation}/delete', 'ResponsableFormation\FormationController@delete')->middleware(\App\Http\Middleware\RespoFormation::class);
-Route::get('/respoFormation/formation/{nom_formation}.csv', 'ResponsableFormation\FormationController@getFormationsCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}/export', 'ResponsableFormation\FormationController@getFormationsCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/export', 'ResponsableFormation\FormationController@getFormationsCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
 Route::post('/respoFormation/formation/{nom_formation}/import', 'ResponsableFormation\FormationController@importCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
 
 Route::post('/respoFormation/formation/{nom_formation}/updateResponsable', 'ResponsableFormation\FormationController@updateResponsable')->middleware(\App\Http\Middleware\RespoFormation::class);

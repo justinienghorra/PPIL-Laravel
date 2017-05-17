@@ -99,11 +99,12 @@ class FormationController extends Controller
      */
     public function getFormationsCSV($nom_formation)
     {
+
         $formation = Formation::where('nom', $nom_formation)->first();
         $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
 
         //TODO CM_VOLUME_AFFECTE
-        $str = "nom;description;responsable;cm_volume_attendu;td_volume_attendu;td_volume_affecte;tp_volume_attendu;tp_volume_affecte;ei_volume_attendu;ei_volume_affecte;td_nb_groupes_attendus;tp_nb_groupes_attendus;ei_nb_groupes_attendus;attente_validation;formation";
+        $str = "nom;description;responsable;cm_volume_attendu;td_volume_attendu;td_volume_affecte;tp_volume_attendu;tp_volume_affecte;ei_volume_attendu;ei_volume_affecte;td_nb_groupes_attendus;tp_nb_groupes_attendus;ei_nb_groupes_attendus;attente_validation";
 
 
         foreach ($ues as $ue) {
@@ -122,11 +123,10 @@ class FormationController extends Controller
             $str = $str . $ue->tp_nb_groupes_attendus . ';';
             $str = $str . $ue->ei_nb_groupes_attendus . ';';
 
-            $str = $str . $ue->attente_validation . ';';
-            $str = $str . $formation->nom;
+            $str = $str . $ue->attente_validation;
+            //$str = $str . $formation->nom;
         }
 
-        dd($ues);
         file_put_contents("/tmp/" . $formation->nom . ".csv", $str);
         return response()->download("/tmp/" . $formation->nom . ".csv");
     }
@@ -160,7 +160,7 @@ class FormationController extends Controller
         $file = $req->file('file_csv');
         $num_row = 0;
         $csv = Reader::createFromPath($file->path());
-        $csv->setDelimiter(',');
+        $csv->setDelimiter(';');
         $errors_custom = array();
         $res = $csv
             ->addFilter(function ($row, $index) {

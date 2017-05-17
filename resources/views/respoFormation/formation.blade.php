@@ -79,7 +79,7 @@
 </form>
 <hr>
 <h2>Exportation en CSV</h2>
-<a href="/respoFormation/formation/{{$formation->nom}}.csv">Exporter</a>
+<a href="/respoFormation/formation/{{$formation->nom}}/export">Exporter</a>
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script>
