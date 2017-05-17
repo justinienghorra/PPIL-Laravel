@@ -52,7 +52,7 @@
 
 
         <div class="modal-footer">
-            <a href="/di/annuaire.csv" class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
+            <a href="/di/annuaire.csv" onclick="makeToast('Exportation réussie')" class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
         </div>
     </div>
@@ -86,12 +86,13 @@
 
 
         <div class="modal-footer">
-            <a onclick="submitImport() " href="#!" class="btn-large modal-action modal-close waves-effect waves-green btn-flat
+            <a onclick="submitImport(event) " href="#!" class="btn-large modal-action modal-close waves-effect waves-green btn-flat
                purple-text">Importer</a>
             <a href="#!"
                class="modal-action modal-close waves-effect waves-green btn-flat btn-large red-text">Annuler</a>
         </div>
     </div>
+
 
 
     <script src="/js/jquery-2.1.1.min.js"></script>
@@ -106,22 +107,65 @@
 
     <script>
 
-        // Génération des toast d'erreur
-        $(document).ready(function () {
-            @if (Session::get('messages') !== null && Session::get('messages')['succes'] !== null)
-                var toastContent = '<span>{{Session::get('messages')["succes"]}}</span>';
-                Materialize.toast(toastContent, 5000);
-            @endif
-            @foreach($errors->all() as $error)
-                var toastContent = '';
-                @if (Session::get('messages') !== null)
-                    toastContent = '<span>{{$error}} (ligne {{Session::get('messages')["ligne"]}})</span>';
-                @else
-                    toastContent = '<span>{{$error}}</span>';
-                @endif
+        function makeToast(str) {
+            var toastContent = '<span>' + str + '</span>';
+            Materialize.toast(toastContent, 5000);
+        }
 
-                Materialize.toast(toastContent, 5000);
+
+        $(document).ready(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            // Toast pour action réussie
+
+            @if (Session::get('messages') !== null && isset(Session::get('messages')['succes']))
+                makeToast('{{Session::get('messages')["succes"]}}');
+            @endif
+
+
+            // Toast pour les erreurs
+
+            @foreach($errors->all() as $error)
+                @if (Session::get('messages') !== null)
+                    makeToast('{{$error}} (ligne {{Session::get('messages')["ligne"]}})');
+                @else
+                    makeToast('{{$error}}');
+                @endif
             @endforeach
+
+
+            // Suppression des utilisateurs
+
+            $('.btn-delete-utilisateur').click(function (event) {
+                var btn = $(this);
+                btn.blur();
+                var id_utilisateur = btn.attr('id');
+                console.log('id_utilisateur : ' + id_utilisateur);
+                $.ajax({
+                    url: "/di/annuaire/delete",
+                    method: "POST",
+                    data: "id_utilisateur=" + id_utilisateur
+                })
+                    .done(function (msg) {
+                        console.log(msg);
+                        if (msg['message'] === 'success') {
+                            makeToast('Utilisateur supprimé')
+                        } else {
+                            makeToast('Echec : ' + msg['errors']);
+                        }
+                })
+                    .fail(function (xhr, msg) {
+                        console.log(msg);
+                        console.log(xhr);
+                        alert('ERREUR voir console <3');
+                    });
+            })
         });
     </script>
 @stop
