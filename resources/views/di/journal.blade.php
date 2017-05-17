@@ -7,11 +7,11 @@ Journal
 <div class="col s12">
         <div class="card-content grey lighten-5">
             <br>
-            <h2 class="center">Journal des modifications</h2>
+            <h3 class="header s12 orange-text center">Journal des modifications</h3>
             @if (isset($events))
 
 
-        <table class="responsive-table">
+        <table class="responsive-table bordered">
         <thead>
           <tr>
               <th>Type</th>

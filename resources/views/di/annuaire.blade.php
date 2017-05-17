@@ -14,7 +14,7 @@
 
             @if($users->count() > 0)
 
-                <table border="1" class="bordered">
+                <table border="1" class="responsive-table bordered">
                     <thead>
                     <th>Enseignant</th>
                     <th>Statut</th>
