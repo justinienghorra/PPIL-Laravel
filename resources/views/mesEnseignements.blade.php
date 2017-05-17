@@ -111,13 +111,13 @@ Liste des enseignements auxquels vous participez
                             <tr>
 
                                 <td>{!! $enseignant->nom . ' ' . $enseignant->prenom !!} </td>
-                                <td class="center">{!! $enseignant->cm_nb_heures !!}</td>
-                                <td class="center">{!! "??" !!}</td>
-                                <td class="center">{!! $enseignant->ei_heures_par_groupe !!}</td>
-                                <td class="center">{!! "??" !!}</td>
-                                <td class="center">{!! $enseignant->td_heures_par_groupe !!}</td>
-                                <td class="center">{!! "??" !!}</td>
-                                <td class="center">{!! $enseignant->tp_heures_par_groupe !!}</td>
+                                <td class="center">{!! $enseignant->cm_volume_affecte !!}</td>
+                                <td class="center">{!! $enseignant->ei_nb_groupes_affectes !!}</td>
+                                <td class="center">{!! $enseignant->ei_volume_affecte !!}</td>
+                                <td class="center">{!! $enseignant->td_nb_groupes_affectes !!}</td>
+                                <td class="center">{!! $enseignant->td_volume_affecte !!}</td>
+                                <td class="center">{!! $enseignant->tp_nb_groupes_affectes !!}</td>
+                                <td class="center">{!! $enseignant->tp_volume_affecte !!}</td>
                             </tr>
 
                         @endif
