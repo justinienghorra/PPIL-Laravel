@@ -14,42 +14,39 @@
             </div>
             @if(isset($formations))
 
-                <table class="bordered" id="tableau_formations">
+                @foreach($formations as $formation)
 
-                    @foreach($formations as $formation)
+                    <ul class="collection with-header">
+                        <li class="collection-header">
+                            <h4>{{$formation->nom}}
+                                <a href="#!" class="red-text secondary-content"><i class="material-icons">clear</i></a>
+                            </h4>
 
-                        <tr id="{{$formation->id}}">
-                            <td><a href="/formations/{{$formation->nom}}">{{$formation->nom}}</a></td>
-                            <td>{{$formation->description}}</td>
-                            <td>
-                                <select id="responsable">
-                                    <option value="0" class="option-responsable"></option>
-                                    @foreach($users as $user)
-                                        <option class="option-responsable"
+                        </li>
 
-                                                @if(isset($formation->responsable))
+                        <li class="collection-item">
+                            {{$formation->description}}
+                        </li>
 
-                                                    @if ($formation->responsable->user->id === $user->id)
-                                                    selected="selected"
-                                                    @endif
+                        <li class="collection-item">
+                            <span id="resp-{{$formation->id}}">
+                            @if(isset($formation->responsable))
+                                    {{$formation->responsable->user->prenom . " " .  $formation->responsable->user->nom}}
+                                @else
+                                    Aucun responsable
+                                @endif
+                            </span>
+                            <a href="#modal-{{$formation->id}}"
+                               class="btn-modif-responsable secondary-content btn btn-flat green-text">Modifier
+                                le responsable</a>
+                        </li>
 
-                                                @endif
 
-                                                value="{{$user->id}}">{{$user->prenom . " " . $user->nom }}</option>
-                                    @endforeach
-                                </select>
-                                <button class="btn-modifier-formation">Modifier</button>
-                            </td>
+                    </ul>
 
-                            <td>
-                                <button id="{{$formation->id}}" class="btn-delete-formation" type="submit">Supprimer
-                                </button>
-                            </td>
-                        </tr>
+                @endforeach
 
-                    @endforeach
 
-                </table>
 
             @endif
 
@@ -86,8 +83,64 @@
 
         </div>
     </div>
+
+    @foreach($formations as $formation)
+        <div id="modal-{{$formation->id}}" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <div class="row">
+                    <h4>Modification du responsable</h4>
+                    <p>
+                        Attention, vous allez modifier le responsable de {{$formation->nom}}
+                    </p>
+
+                    <ul class="collection collection-with-header">
+                        <li class="collection-header"><h4>Liste des utilisateurs</h4></li>
+                        @foreach($users as $user)
+                            <li class="collection-item collection-utilisateurs">{{$user->prenom . " " . $user->nom }}
+
+                                <a href="#!" onclick="modifResp(event, {{ $formation->id }} , {{ $user->id }})"
+                                   class="secondary-content"><i class="material-icons">send</i></a>
+                            </li>
+                        @endforeach
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script>
+
+        function makeToast(str) {
+            var toastContent = '<span>' + str + '</span>';
+            Materialize.toast(toastContent, 5000);
+        }
+
+        function modifResp(event, id_formation, id_utilisateur) {
+            console.log('Formation : ' + id_formation)
+            console.log('User : ' + id_utilisateur)
+            $.ajax({
+                url: "/di/formations/updateResponsable",
+                method: "post",
+                data: "id_utilisateur=" + id_utilisateur + "&id_formation=" + id_formation
+            }).done(function (msg) {
+                console.log(msg);
+                if (msg['message'] === 'success') {
+                    var user = msg['user'];
+                    $('#resp-' + id_formation).text(user['prenom'] + ' ' + user['nom']);
+                    makeToast("Modification du responsable réussie");
+                    $('#modal-' + id_formation).modal('close');
+                }
+            }).fail(function (xhr, msg) {
+                console.log(msg);
+                alert('Erreur, voir console :/')
+            })
+
+        }
+
         $(document).ready(function () {
 
             $.ajaxSetup({
