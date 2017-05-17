@@ -109,7 +109,7 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
 		                <tbody>
 		                	@foreach($enseignants[$ue->id] as $enseignant)
 		                	<tr>
-		                		<td class="center">{{/*$nomPrenomEnseignant[$enseignant->id_utilisateur]->nom . " ". $nomPrenomEnseignant[$enseignant->id_utilisateur]->nom*/ $enseignant->id_utilisateur}}</td>
+		                		<td class="center">{{$enseignant->prenom . " " . $enseignant->nom}}</td>
 		                		<td class="center">{{$enseignant->cm_nb_heures}}</td>
 		                		<td class="center">{{$enseignant->td_nb_groupes}}</td>
 		                		<td class="center">{{$enseignant->td_heures_par_groupe}}</td>

@@ -28,6 +28,9 @@ class MesUEController extends Controller
      */
      public function show() {
         $user = Auth::user();
+        $respoDI = $user->estResponsableDI();
+        $respoUE = $user->estResponsableUE();
+
         $uesTemp = ResponsableUniteeEnseignement::where('id_utilisateur', $user->id)->get();
 
         $ues = null;
@@ -42,18 +45,18 @@ class MesUEController extends Controller
             $ues[$id_ue] = UniteeEnseignement::where('id', '=', $id_ue)->first();
 
             //On récupère aussi tous les enseignants en lien avec l'UE
-            $enseignantsParUE[$id_ue] = EnseignantDansUE::where('id_ue', '=', $id_ue)->get(); //tableau 3D (id UE -> id enseignant -> données de l'enseignant en lien avec l'UE)
-
-            foreach($enseignantsParUE[$id_ue] as $enseignant) {
+            $enseignantsParUE[$id_ue] = EnseignantDansUE::where('id_ue', '=', $id_ue)->join('users', 'users.id', '=', 'enseignant_dans_u_es.id_ue')->get(); //tableau 3D (id UE -> id enseignant -> données de l'enseignant en lien avec l'UE)
+            
+            /*foreach($enseignantsParUE[$id_ue] as $enseignant) {
                 $id_enseignant = $enseignant->id_utilisateur;
 
                 //On récupère le nom et le prénom de l'enseignant
-                $nomPrenomEnseignant['id_enseignant'] = User::where('id', '=', $id_ue)->select('nom', 'prenom')->first();
-            }
+                $nomPrenomEnseignant['id_enseignant'] = User::where('id', '=', $id_ue)->join('users ', 'users.id', '=', $id_enseignant)->select('nom', 'prenom')->first();
+            }*/
 
-            }
+        }
 
-        return view('respoUE/affichageUEs')->with('user', $user)->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant);
+        return view('respoUE/affichageUEs')->with('user', $user)->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
      }
     
 }
