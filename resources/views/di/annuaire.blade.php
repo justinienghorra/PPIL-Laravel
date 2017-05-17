@@ -19,11 +19,14 @@
                     <th>Enseignant</th>
                     <th>Statut</th>
                     <th>Adresse mail</th>
+                    <th>Supprimer l'utilisateur</th>
                     </thead>
 
                     @foreach($users as $user)
                         <tr>
+			    
                             <td>{{ $user->prenom . " " . $user->nom }}</td>
+                            
                             <td>{{ $user->statut() }}</td>
                             <td>{{ $user->email }}</td>
                             <td>

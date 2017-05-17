@@ -8,6 +8,7 @@ use App\Statut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use App\User;
 
 class ProfilController extends Controller
 {
@@ -36,10 +37,13 @@ class ProfilController extends Controller
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
+        
+        $respoDI = $user->estResponsableDI();
+        $respoUE = $user->estResponsableUE();
 
 
         //TODO : modifier la vue en consequence avec le parametre (email deja change)
-        return view('profil')->with('user', $user)->with('statuts', $statuts)->with('photoUrl', $tmp[1]);
+        return view('profil')->with('user', $user)->with('statuts', $statuts)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
 
