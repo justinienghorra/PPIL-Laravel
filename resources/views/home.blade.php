@@ -11,7 +11,7 @@
                     voulez-vous faire ?</div>
 
                 <div class="panel-body">
-                     <a href="{{ route('logout') }}"onclick="event.preventDefault();   document.getElementById('logout-form').submit();">
+                     <a href="{{ route('logout') }}" onclick="event.preventDefault();   document.getElementById('logout-form').submit();">
                      Déconnexion 
                      </a>
                 </div>
