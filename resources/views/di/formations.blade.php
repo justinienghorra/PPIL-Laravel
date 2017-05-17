@@ -6,7 +6,7 @@
 
 
     <div class="card">
-        <div class="card-content">
+        <div class="card-content" id="content">
 
 
             <div class="row">
@@ -130,19 +130,20 @@
             <div class="row">
                 <h4>Ajout d'une formation</h4>
             </div>
-            <div class="row">
+            <form method="post" action="/di/formations/add" id="form-add" class="row">
+                {{csrf_field()}}
                 <div class="input-field col s12">
-                    <input id="add-nom"type="text">
+                    <input name="nom" id="add-nom" type="text">
                     <label for="">Nom</label>
                 </div>
                 <div class="input-field col s12">
-                    <input id="add-description" type="text">
+                    <input name="description" id="add-description" type="text">
                     <label for="">Description</label>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat green-text" onclick="ajoutFormation(event)">Confirmer</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat green-text" onclick="event.preventDefault();$('#form-add').submit()">Confirmer</a>
         </div>
     </div>
 
@@ -155,24 +156,6 @@
         function makeToast(str) {
             var toastContent = '<span>' + str + '</span>';
             Materialize.toast(toastContent, 5000);
-        }
-
-        function ajoutFormation(event) {
-            var nom = $('#add-nom').val();
-            var description = $('#add-description').val();
-            $.ajax({
-                url: "/di/formations/add",
-                method: "post",
-                data: "nom="+nom + "&description="+description
-            })
-                .done(function (msg) {
-                    if(msg['message'] === 'success') {
-                        makeToast("Ajout réussi");
-                    }
-            })
-                .fail(function(xhr, msg) {
-                    makeToast("Erreur serveur : " + xhr['status']);
-            });
         }
 
         function modifResp(event, id_formation, id_utilisateur) {

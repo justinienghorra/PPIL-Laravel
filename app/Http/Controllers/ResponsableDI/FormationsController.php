@@ -48,9 +48,9 @@ class FormationsController
             $formation->nom = $req->nom;
             $formation->description = $req->description;
             $formation->save();
-            return response()->json(["message" => "success", "formation" => $formation]);
+            return redirect();
         } else {
-            return response()->json(["message" => "errors", "errors" => $validator]);
+            return redirect('/di/formations')->withErrors($validator);
         }
     }
 
