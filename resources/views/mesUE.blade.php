@@ -83,11 +83,11 @@ Liste de vos UE
                   <tr>
                       <th></th>
                       
-                      <th class="center">Heure</th>
+                      <th class="center">Heures</th>
                       <th class="center">Nb de groupes</th>
-                      <th class="center">Heures par groupes</th>
+                      <th class="center">Heures par groupe</th>
                       <th class="center">Nombre de groupes</th>
-                      <th class="center">Heures par groupes</th>
+                      <th class="center">Heures par groupe</th>
                       
                   </tr>
                 </thead>
