@@ -14,30 +14,26 @@
 
             @if($users->count() > 0)
 
-                <table border="1" class="responsive-table bordered">
-                    <thead>
-                    <th>Enseignant</th>
-                    <th>Statut</th>
-                    <th>Adresse mail</th>
-                    <th>Supprimer l'utilisateur</th>
-                    </thead>
+                <ul class="collection with-header">
 
                     @foreach($users as $user)
-                        <tr>
-			    
-                            <td>{{ $user->prenom . " " . $user->nom }}</td>
-                            
-                            <td>{{ $user->statut() }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                <button id="{{$user->id}}"
-                                        class="btn btn-flat red-text waves-light btn-delete-utilisateur">Supprimer
-                                </button>
-                            </td>
-                        </tr>
+
+                        <li class="collection-header">
+                            <h4>{{ $user->prenom . " " . $user->nom }}</h4>
+
+                        </li>
+
+                        <li class="collection-item">{{ $user->statut() }}</li>
+                        <li class="collection-item">{{ $user->email }}</li>
+                        <li class="collection-item">
+                            <a id="{{$user->id}}"
+                               class="btn btn-flat red-text waves-light btn-delete-utilisateur">Supprimer
+                            </a>
+                        </li>
+
                     @endforeach
 
-                </table>
+                </ul>
 
             @endif
 
@@ -50,12 +46,13 @@
     <div id="modal_export" class="modal">
         <div class="modal-content">
             <h4>Exportation des données</h4>
-            <p >Les données concernant les utilisateur seront exportées au format CSV</p>
+            <p>Les données concernant les utilisateur seront exportées au format CSV</p>
         </div>
 
 
         <div class="modal-footer">
-            <a href="/di/annuaire.csv" onclick="makeToast('Exportation réussie')" class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
+            <a href="/di/annuaire.csv" onclick="makeToast('Exportation réussie')"
+               class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
         </div>
     </div>
@@ -64,10 +61,10 @@
         <div class="modal-content">
             <div class="row">
                 <h4>Importation des données</h4>
-                <p >Les données importées doivent être au format CSV. Un header doit être présent et le
+                <p>Les données importées doivent être au format CSV. Un header doit être présent et le
                     séparateur doit
                     être ;</p>
-                <p >Le format à respecter est le suivant : <br><strong>civilite ; prenom ; nom ; email
+                <p>Le format à respecter est le suivant : <br><strong>civilite ; prenom ; nom ; email
                         ; adresse ; statut</strong></p>
             </div>
             <div class="row">
@@ -137,9 +134,9 @@
             @foreach($errors->all() as $error)
                 @if (Session::get('messages') !== null)
                     makeToast('{{$error}} (ligne {{Session::get('messages')["ligne"]}})');
-                @else
-                    makeToast('{{$error}}');
-                @endif
+            @else
+makeToast('{{$error}}');
+            @endif
             @endforeach
 
 
@@ -148,6 +145,7 @@
             $('.btn-delete-utilisateur').click(function (event) {
                 var btn = $(this);
                 btn.blur();
+                btn.parent().parent().remove();
                 var id_utilisateur = btn.attr('id');
                 console.log('id_utilisateur : ' + id_utilisateur);
                 $.ajax({
@@ -162,7 +160,7 @@
                         } else {
                             makeToast('Echec : ' + msg['errors']);
                         }
-                })
+                    })
                     .fail(function (xhr, msg) {
                         console.log(msg);
                         console.log(xhr);
