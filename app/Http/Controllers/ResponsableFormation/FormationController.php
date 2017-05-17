@@ -75,6 +75,7 @@ class FormationController extends Controller
             'id_ue' => 'required|integer|exists:unitee_enseignements,id'
         ]);
 
+
         if (!$validator->fails()) {
             $form = UniteeEnseignement::where('id', $req->id_ue)->first();
             $resp = $form->responsable;

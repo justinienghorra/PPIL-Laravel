@@ -37,11 +37,11 @@
                                     value="{{$user->id}}">{{$user->prenom . " " . $user->nom }}</option>
                         @endforeach
                     </select>
-                    <button class="btn-modifier-formation">Modifier</button>
+                    <button class="btn-modifier-ue">Modifier</button>
                 </td>
 
                 <td>
-                    <button id="{{$ue->id}}" class="btn-delete-formation" type="submit">Supprimer</button>
+                    <button id="{{$ue->id}}" class="btn-delete-ue" type="submit">Supprimer</button>
                 </td>
             </tr>
 
@@ -127,7 +127,7 @@
         $('.btn-delete-ue').click(function () {
             var id_ue = $(this).attr('id');
             $.ajax({
-                url: "/respoUE/formation/{{$formation->nom}}/delete",
+                url: "/respoFormation/formation/{{$formation->nom}}/delete",
                 method: "POST",
                 data: "id_ue=" + id_ue
             })
@@ -139,6 +139,7 @@
                         alert('ECHEC :/')
                     }
                 })
+
                 .fail(function (xhr, msg) {
                     console.log(msg);
                     console.log(xhr);
