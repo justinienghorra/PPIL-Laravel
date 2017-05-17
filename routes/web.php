@@ -96,7 +96,7 @@ Route::post('/di/formations/add', 'ResponsableDI\FormationsController@add')->mid
 Route::post('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations.csv', 'ResponsableDI\FormationsController@getFormationsCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
-Route::post('/di/formations/import', 'ResponsableDI\FormationsController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/formations/importCSV', 'ResponsableDI\FormationsController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::post('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
