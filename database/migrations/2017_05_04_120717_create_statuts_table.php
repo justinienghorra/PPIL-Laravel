@@ -23,6 +23,12 @@ class CreateStatutsTable extends Migration
 
             // String représentant le statut
             $table->string('statut');
+
+            //Volume minimal statutaire
+            $table->integer('volumeMin')->unsigned();
+
+            //Volume maximal statutaire
+            $table->integer('volumeMax')->unsigned();
         });
     }
 
