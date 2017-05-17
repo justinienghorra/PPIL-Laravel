@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Enseignant;
 
 use App\EnseignantDansUE;
+use App\Photos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,13 +22,20 @@ class EnseignantController extends Controller
 
     public function show(){
 
-        $user = \Auth::user();
+        $userA = \Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
 
         //recuperation des enseignements de l'utilisateur
-        $enseignements = $user->getEnseignements();
+        $enseignements = $userA->getEnseignements();
+
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
 
 
-
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
 
         foreach ($enseignements as $enseignement){
             //on recupere les enseignants
@@ -38,8 +46,11 @@ class EnseignantController extends Controller
 
         }
 
-        return view('mesEnseignements')->with('user', $user)
+        return view('mesEnseignements')->with('userA', $userA)
                                             ->with('enseignements', $enseignements)
-                                            ->with('enseignantsArray', $enseignantsArray);
+                                            ->with('enseignantsArray', $enseignantsArray)
+                                            ->with('photoUrl', $tmp[1])
+                                            ->with('respoDI', $respoDI)
+                                            ->with('respoUE', $respoUE);
     }
 }
