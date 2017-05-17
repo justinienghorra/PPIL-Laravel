@@ -133,7 +133,7 @@ class FormationsController
         $num_row = 0;
         $csv = Reader::createFromPath($file->path());
         $csv->setDelimiter(';');
-        $errors_custom = array();
+        $messages = array();
         $res = $csv
             ->addFilter(function ($row, $index) {
                 return $index > 0; //we don't take into account the header
@@ -156,9 +156,9 @@ class FormationsController
             ]);
 
             if ($validator->fails()) {
-                $errors_custom['ligne'] = $num_row;
+                $messages['ligne'] = $num_row;
                 $this->importRollback($new_formations, $new_responsables);
-                return redirect('/di/formations')->with('errors_custom', $errors_custom)->withErrors($validator);
+                return redirect('/di/formations')->with('messages', $messages)->withErrors($validator);
             }
 
             $formation = new Formation;
@@ -174,9 +174,9 @@ class FormationsController
                 ]);
 
                 if ($validator_mail->fails()) {
-                    $errors_custom['ligne'] = $num_row;
+                    $messages['ligne'] = $num_row;
                     $this->importRollback($new_formations, $new_responsables);
-                    return redirect('/di/formations')->with('errors_custom', $errors_custom)->withErrors($validator);;
+                    return redirect('/di/formations')->with('messages', $messages)->withErrors($validator);;
                 }
 
                 $resp = new ResponsableFormation;
@@ -194,7 +194,8 @@ class FormationsController
 
         }
 
-        return redirect('/di/formations');
+        $messages['succes'] = "Importation réussie";
+        return redirect('/di/formations')->with('messages', $messages);
     }
 
     /**

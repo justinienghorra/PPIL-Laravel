@@ -221,6 +221,23 @@
 
         $(document).ready(function () {
 
+            // Toast pour action réussie
+
+            @if (Session::get('messages') !== null && isset(Session::get('messages')['succes']))
+                makeToast('{{Session::get('messages')["succes"]}}');
+            @endif
+
+
+            // Toast pour les erreurs
+
+            @foreach($errors->all() as $error)
+                @if (Session::get('messages') !== null)
+                    makeToast('{{$error}} (ligne {{Session::get('messages')["ligne"]}})');
+                @else
+                    makeToast('{{$error}}');
+                @endif
+            @endforeach
+
             $.ajaxSetup({
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
