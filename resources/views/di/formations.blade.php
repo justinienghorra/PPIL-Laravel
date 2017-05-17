@@ -50,24 +50,6 @@
 
             @endif
 
-            <blockquote>
-                <h2 class="header light">Ajouter une formation</h2>
-            </blockquote>
-            <p>
-                AJAX :
-            <ul>
-                <li>Renvoie en json {message: success, formation: lesinfosdelaformation}</li>
-            </ul>
-            </p>
-            <div>
-                <label for="nom">Nom : </label>
-                <input id="nom-formation-add" type="text" name="nom">
-                <label for="description">Description : </label>
-                <input id="description-formation-add" type="text" name="description">
-                <button id="btn-add-formation" type="submit">Ajouter</button>
-            </div>
-
-
             <hr>
             <h2>Importer un CSV</h2>
             <form method="post" action="/di/formations/import" enctype="multipart/form-data">
