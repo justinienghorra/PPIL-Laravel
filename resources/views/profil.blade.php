@@ -13,7 +13,7 @@ Profil
                 <br>
                 <div class="row center">
                 <h5 class="header col s12 light">Récapitulatif</h5>
-                <h5 class="header col s12 light">{{$user->civilite}}. {{$user->nom}} {{$user->prenom}}, vous êtes <span class="green-text light">{{ProfilController::getStatut()}}</span>.</h5>
+                <h5 class="header col s12 light">{{$userA->civilite}}. {{$userA->nom}} {{$userA->prenom}}, vous êtes <span class="green-text light">{{ProfilController::getStatut()}}</span>.</h5>
                 <h5 class="header col s12 light">Vous avez été affecté à <span class="blue-text">148 / 192</span> heures équivalent TD</h5>        
                 <div class="progress col s6 offset-s3">
                     <div class="determinate" style="width: 70%"></div>
@@ -34,13 +34,13 @@ Profil
                     <div class="row">
 
                         <div class="input-field col s3 offset-s1">
-                        {!! Form::text('nom', $value = $user->nom, $attributes = ['class' => 'validate', 'id' => 'nom']) !!}
+                        {!! Form::text('nom', $value = $userA->nom, $attributes = ['class' => 'validate', 'id' => 'nom']) !!}
                         {!! Form::label('nom', 'Votre Nom') !!}
                         </div>
 
 
                         <div class="input-field col s3">
-                            {!! Form::text('prenom', $value = $user->prenom, $attributes = ['class' => 'validate', 'id' => 'prenom']) !!}
+                            {!! Form::text('prenom', $value = $userA->prenom, $attributes = ['class' => 'validate', 'id' => 'prenom']) !!}
                             {!! Form::label('prenom', 'Votre Prenom') !!}
                         </div>
 
@@ -60,14 +60,14 @@ Profil
 
                     <div class="row">
                         <div class="input-field col s10 offset-s1">
-                            {!! Form::text('adresse', $value = $user->adresse, $attributes = ['class' => 'validate', 'id' => 'adresse']) !!}
+                            {!! Form::text('adresse', $value = $userA->adresse, $attributes = ['class' => 'validate', 'id' => 'adresse']) !!}
                             {!! Form::label('adresse', 'Votre Adresse') !!}
                         </div>
                     </div>
                     
                     <div class="row">
                         <div class="input-field col s10 offset-s1">
-                        {!! Form::email('email', $value = $user->email, $attributes = ['class' => 'validate', 'id' => 'email']) !!}
+                        {!! Form::email('email', $value = $userA->email, $attributes = ['class' => 'validate', 'id' => 'email']) !!}
                             {!! Form::label('email', 'Votre Email') !!}
                         </div>
                     </div>
