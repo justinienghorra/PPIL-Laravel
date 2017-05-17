@@ -196,7 +196,7 @@ class FormationController extends Controller
             ], [
                 'nom' => 'max:255|required|string',
                 'description' => 'required|string|max:255',
-                'responsable' => 'required|string|exists:users,email',
+                'responsable' => 'string|exists:users,email',
                 'cm_volume_attendu' => 'required|integer|min:0',
                 'td_volume_attendu' => 'required|integer|min:0',
                 'td_volume_affecte' => 'required|integer|min:0',
@@ -265,6 +265,10 @@ class FormationController extends Controller
             $ue->tp_nb_groupes_attendus = $row[11];
             $ue->ei_nb_groupes_attendus = $row[12];
             $ue->attente_validation = 1;
+
+            $formation = Formation::where('nom', $nom_formation)->first();
+            //dd($formation->id);
+            $ue->id_formation = $formation->id;
 
             $ue->save();
             array_push($new_ues, $ue);
