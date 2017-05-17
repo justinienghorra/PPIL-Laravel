@@ -13,4 +13,4 @@ laradock/
 composer.lock
 app-data/*
 composer.phar
-public/images/*
+
