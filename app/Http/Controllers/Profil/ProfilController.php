@@ -27,7 +27,10 @@ class ProfilController extends Controller
     }
 
 
-
+    /**
+     * Affiche la vue du profil
+     * @return $this
+     */
     public function show(){
 
 
@@ -56,6 +59,7 @@ class ProfilController extends Controller
         $statuts = Statut::all();
         
 
+
         return view('profil')
             ->with('userA', $userA)
             ->with('statuts', $statuts)
@@ -63,6 +67,7 @@ class ProfilController extends Controller
             ->with('photoUrl', $tmp[1])
             ->with('respoDI', $respoDI)
             ->with('respoUE', $respoUE);
+
 
     }
 
@@ -84,6 +89,7 @@ class ProfilController extends Controller
 
         $user->updateEmail($request->input('email'));
     }
+
 
 
 
@@ -132,6 +138,11 @@ class ProfilController extends Controller
 
 
 
+    /**
+     * Met à jour le password dans la BDD
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postPassword(Request $request){
         //TODO : mettre un beau message sur la vue
         if ($request->input('password') != $request->input('check_password')){
@@ -151,9 +162,12 @@ class ProfilController extends Controller
     }
 
 
-
-
-
+    /**
+     * Sauvegarde de l'image importee sur le serveur et
+     * de l'adresse où est stocker l'image
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postImage(Request $request){
 
         //TODO : modifier le bouton parcourir de la vue
@@ -164,11 +178,23 @@ class ProfilController extends Controller
         $infos = pathinfo($file->getClientOriginalName());
         $extension = $infos['extension'];
 
+        //recupere l'adresse de l'ancienne photo si elle existe
+        $anciennePhoto = Photos::where('id_utilisateur', $user->id)->first();
+
+        if ($anciennePhoto != null){
+            //on supprime l'ancienne adresse de l'image
+            Photos::where('id_utilisateur', $user->id)->delete();
+
+            $tmp = explode("images", $anciennePhoto->adresse);
+
+            //on delete l'ancienne photo de profil
+            \File::delete('images' . $tmp[1]);
+        }
+
 
         if ($extension == 'png' || $extension == 'jpg'){
 
-            //on supprime l'ancienne adresse de l'image
-            Photos::where('id_utilisateur', $user->id)->delete();
+
 
             //stocke l'adresse de l'image dans la BDD
             Photos::creerImage(public_path().'/images/user_'.$user->id.'/profil.' . $extension, $user->id);
