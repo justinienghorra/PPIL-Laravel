@@ -153,17 +153,19 @@
             console.log('User  : ' + id_utilisateur);
             console.log('ue  : ' + id_ue);
             $.ajax({
-                url: "/respoUE/formation/{{$formation->nom}}/updateResponsable",
+                url: "/respoFormation/formation/{{$formation->nom}}/updateResponsable",
                 method: "POST",
                 data: "id_utilisateur=" + id_utilisateur + "&id_ue=" +id_ue
-            }).done(function (msg) {
+            })
+                .done(function (msg) {
                 console.log(msg);
                 if (msg['message'] === 'success') {
                     //
                 } else {
                     alert('ECHEC :/')
                 }
-            }).fail(function (xhr, msg) {
+            })
+                .fail(function (xhr, msg) {
                 console.log(msg);
                 console.log(xhr);
                 alert('ERREUR voir console <3');

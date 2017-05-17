@@ -20,7 +20,8 @@ class FormationController extends Controller
         $this->middleware('auth');
     }
 
-    public function show($nom_formation){
+    public function show($nom_formation)
+    {
 
         // Retourne l'utilisateur courant authentifie...
         $user = Auth::user();
@@ -40,7 +41,8 @@ class FormationController extends Controller
      *
      * @return mixed
      */
-    public function add(Request $req, $nom_formation) {
+    public function add(Request $req, $nom_formation)
+    {
 
         $validator = Validator::make($req->all(), [
             'nom' => 'required|string|max:255|unique:unitee_enseignements',
@@ -94,7 +96,8 @@ class FormationController extends Controller
      *
      * @return Response
      */
-    public function getFormationsCSV($nom_formation) {
+    public function getFormationsCSV($nom_formation)
+    {
         $formation = Formation::where('nom', $nom_formation)->first();
         $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
 
@@ -112,15 +115,15 @@ class FormationController extends Controller
             $str = $str . $ue->tp_volume_attendu . ';' . $ue->tp_volume_affecte . ';';
             $str = $str . $ue->ei_volume_attendu . ';' . $ue->ei_volume_affecte . ';';
 
-            $str = $str . $ue->td_nb_groupes_attendus . ';' ;
-            $str = $str . $ue->tp_nb_groupes_attendus . ';' ;
-            $str = $str . $ue->ei_nb_groupes_attendus . ';' ;
+            $str = $str . $ue->td_nb_groupes_attendus . ';';
+            $str = $str . $ue->tp_nb_groupes_attendus . ';';
+            $str = $str . $ue->ei_nb_groupes_attendus . ';';
 
-            $str = $str . $ue->attente_validation . ';' ;
-            $str = $str . $formation->nom ;
+            $str = $str . $ue->attente_validation . ';';
+            $str = $str . $formation->nom;
         }
-        file_put_contents("/tmp/".$formation->nom.".csv", $str);
-        return response()->download("/tmp/".$formation->nom.".csv");
+        file_put_contents("/tmp/" . $formation->nom . ".csv", $str);
+        return response()->download("/tmp/" . $formation->nom . ".csv");
     }
 
     /**
@@ -128,7 +131,8 @@ class FormationController extends Controller
      *
      *
      */
-    public function importCSV(Request $req) {
+    public function importCSV(Request $req)
+    {
         $validator = Validator::make(
             [
                 'file' => $req->file('file_csv'),
@@ -221,7 +225,8 @@ class FormationController extends Controller
      * @param $new_ues
      * @param $new_responsable
      */
-    private function importRollback($new_ues, $new_responsable) {
+    private function importRollback($new_ues, $new_responsable)
+    {
         foreach ($new_responsable as $resp) {
             $resp->delete();
         }
@@ -236,21 +241,28 @@ class FormationController extends Controller
      * @param Request $req
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateResponsable(Request $req) {
+    public function updateResponsable(Request $req)
+    {
         $validator = Validator::make($req->all(), [
-            'id_utilisateur' => 'required|integer|exists:users,id',
+            'id_utilisateur' => 'required|integer',
             'id_ue' => 'required|integer|exists:unitee_enseignements,id',
         ]);
 
         if (!$validator->fails()) {
+
             $ue = UniteeEnseignement::where('id', $req->id_ue)->first();
             if ($ue->hasResponsable()) {
                 $ue->responsable->delete();
             }
-            $resp = new ResponsableUniteeEnseignement();
-            $resp->id_utilisateur = $req->id_utilisateur;
-            $resp->id_ue = $req->id_ue;
-            $resp->save();
+
+            if($req->id_utilisateur > 0) {
+
+                $resp = new ResponsableUniteeEnseignement();
+                $resp->id_utilisateur = $req->id_utilisateur;
+                $resp->id_ue = $req->id_ue;
+                $resp->save();
+            }
+
             return response()->json(["message" => "success"]);
         } else {
             return response()->json(["message" => "errors", "errors" => $validator]);
