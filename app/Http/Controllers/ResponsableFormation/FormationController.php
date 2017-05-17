@@ -24,13 +24,14 @@ class FormationController extends Controller
 
         $nom_formation = $req->nom;*/
 
-        // Retourne l'utilisateur courant authentifie...
-        $user = Auth::user();
-
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+	$respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
 
 
         $formation = Formation::where('nom', '=', $nom_formation)->first();
 
-        return view('respoFormation.formation')->with('user', $user)->with('formation', $formation);
+        return view('respoFormation.formation')->with('userA', $userA)->with('formation', $formation)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 }

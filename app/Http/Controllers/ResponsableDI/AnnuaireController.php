@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use League\Csv\Reader;
 
@@ -32,7 +33,12 @@ class AnnuaireController extends Controller
      */
     protected function show() {
         $users = User::all();
-        return \view('di.annuaire')->with('users', $users);
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+        
+        return \view('di.annuaire')->with('users', $users)->with('userA', $userA)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
     /**

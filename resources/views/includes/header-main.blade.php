@@ -48,7 +48,7 @@
       @if($respoDI)
         <li><a class="dropdown-button" href="#!" data-activates="dropdown_administration">Administration<i class="material-icons right">arrow_drop_down</i></a></li>
       @endif
-	<li><a class="dropdown-button" href="#!" data-activates="dropdown_user">{{$user->civilite}}. {{$user->nom}}<i class="material-icons right">arrow_drop_down</i></a></li>
+	<li><a class="dropdown-button" href="#!" data-activates="dropdown_user">{{$userA->civilite}}. {{$userA->nom}}<i class="material-icons right">arrow_drop_down</i></a></li>
         <li><img src="/images/groot.png" class="navbar-pic circle" alt=""></li>
       </ul>
 
