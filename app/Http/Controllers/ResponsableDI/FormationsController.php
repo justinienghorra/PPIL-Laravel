@@ -8,6 +8,7 @@ use App\ResponsableFormation;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\View\View;
 use League\Csv\Reader;
@@ -22,7 +23,11 @@ class FormationsController
     public function show() {
         $formations = Formation::all();
         $users = User::all();
-        return view('di.formations')->with(['formations' => $formations, 'users' => $users]);
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+        return view('di.formations')->with(['formations' => $formations, 'users' => $users])->with('userA', $userA)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
     /**
