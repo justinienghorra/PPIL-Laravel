@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\ResponsableDI;
 
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
 use App\Statut;
 use Illuminate\Support\Facades\Log;
 use App\User;
