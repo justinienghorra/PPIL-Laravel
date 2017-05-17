@@ -91,10 +91,10 @@
 
 
         <div class="modal-footer">
-            <a onclick="submitImport(event) " href="#!" class="btn-large modal-action modal-close waves-effect waves-green btn-flat
+            <a onclick="submitImport(event) " href="#!" class="btn-large modal-action modal-close waves-effect waves-light btn-flat
                purple-text">Importer</a>
             <a href="#!"
-               class="modal-action modal-close waves-effect waves-green btn-flat btn-large red-text">Annuler</a>
+               class="modal-action modal-close waves-effect waves-light btn-flat btn-large red-text">Annuler</a>
         </div>
     </div>
 
