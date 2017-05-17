@@ -76,7 +76,7 @@ Route::post('/profil/email', 'Profil\ProfilController@postEmail');
 Route::post('/profil/password', 'Profil\ProfilController@postPassword');
 Route::post('/profil/image', 'Profil\ProfilController@postImage');
 
-Route::get('/respoUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
 
 Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 

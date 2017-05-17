@@ -13,14 +13,6 @@ class CreateServiceStatutaireTable extends Migration
      */
     public function up()
     {
-        Schema::create('service_statutaire', function(Blueprint $table) {
-            // ID en autoincrement
-            $table->increments('id');
-
-            $table->string('intitule');
-
-            $table->integer('heures')->unsigned();
-        });
     }
 
     /**
@@ -30,6 +22,6 @@ class CreateServiceStatutaireTable extends Migration
      */
     public function down()
     {
-        Schema::drop('service_statutaire');
+        Schema::dropIfExists('service_statutaire');
     }
 }

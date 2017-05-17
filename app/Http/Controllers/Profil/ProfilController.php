@@ -25,12 +25,12 @@ class ProfilController extends Controller
 
     public function show(){
 
-        // Retourne l'utilisateur courant authentifie...
-        $user = Auth::user();
-
-        $statuts = Statut::all();
-
-        $photoUrl =  Photos::where('id_utilisateur', $user->id)->first();
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+	$respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+        
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
         if ($photoUrl != null){
@@ -38,12 +38,14 @@ class ProfilController extends Controller
             $tmp = explode("images", $url);
         }
         
-        $respoDI = $user->estResponsableDI();
-        $respoUE = $user->estResponsableUE();
+        $statuts = Statut::all();
+
+        
+        
 
 
         //TODO : modifier la vue en consequence avec le parametre (email deja change)
-        return view('profil')->with('user', $user)->with('statuts', $statuts)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('profil')->with('userA', $userA)->with('statuts', $statuts)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
 

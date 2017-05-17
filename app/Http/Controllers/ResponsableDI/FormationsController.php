@@ -6,8 +6,10 @@ namespace App\Http\Controllers\ResponsableDI;
 use App\Formation;
 use App\ResponsableFormation;
 use App\User;
+use App\Photos;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\View\View;
 use League\Csv\Reader;
@@ -22,7 +24,18 @@ class FormationsController
     public function show() {
         $formations = Formation::all();
         $users = User::all();
-        return view('di.formations')->with(['formations' => $formations, 'users' => $users]);
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
+        return view('di.formations')->with(['formations' => $formations, 'users' => $users])->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
     /**

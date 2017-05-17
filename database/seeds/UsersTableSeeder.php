@@ -46,7 +46,7 @@ class UsersTableSeeder extends Seeder
         $praglambda->email = "respoue@gmail.com";
         $praglambda->password = bcrypt("password");
         $praglambda->adresse = "51 Rue de la Liberté, 54000 Nancy";
-        $praglambda->civilite = "F";
+        $praglambda->civilite = "Mme";
         $praglambda->attente_validation = false;
         $praglambda->id_statut = \App\Statut::where('statut', 'PRAG')->first()->id;
         $praglambda->save();
@@ -68,7 +68,7 @@ class UsersTableSeeder extends Seeder
         $aterlambda->email = "ater.lambda@gmail.com";
         $aterlambda->password = bcrypt("password");
         $aterlambda->adresse = "55 Rue de la Liberté, 54000 Nancy";
-        $aterlambda->civilite = "F";
+        $aterlambda->civilite = "Mme";
         $aterlambda->attente_validation = false;
         $aterlambda->id_statut = \App\Statut::where('statut', 'ATER')->first()->id;
         $aterlambda->save();
