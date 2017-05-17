@@ -11,7 +11,7 @@
 
 <ul id="dropdown_enseignements" class="dropdown-content">
   @if($respoUE)
-  <li><a class="black-text"  href="/respoUE">Vos UE</a></li>
+  <li><a class="black-text"  href="/respoUE/mesUE">Vos UE</a></li>
   @endif
   <li><a class="black-text"  href="/mesEnseignements">Mes enseignements</a></li>
 </ul>
@@ -68,7 +68,7 @@
         <li><div class="divider"></div></li>
 	<li><a href="#" class="blue">Enseignement</a></li>
 	@if($respoUE)
-        <li><a href="mesUE">Vos UE</a></li>
+        <li><a href="/respoUE/mesUE">Vos UE</a></li>
         @endif
         <li><a href="mesEnseignements">Mes Enseignements</a></li>
         <li><div class="divider"></div></li>

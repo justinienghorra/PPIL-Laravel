@@ -13,7 +13,6 @@ Liste de vos UE
 
 				TODO
 
-Back-end : Nom enseignant
 Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp attendus/affectés, etc. 
 
 ------------------------------------>

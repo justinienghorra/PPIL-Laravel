@@ -31,8 +31,8 @@ class MesUEController extends Controller
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
-	$tmp = null;
-	$photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+	    $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         if ($photoUrl != null){
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
@@ -52,7 +52,7 @@ class MesUEController extends Controller
             $ues[$id_ue] = UniteeEnseignement::where('id', '=', $id_ue)->first();
 
             //On récupère aussi tous les enseignants en lien avec l'UE
-            $enseignantsParUE[$id_ue] = EnseignantDansUE::where('id_ue', '=', $id_ue)->join('users', 'users.id', '=', 'enseignant_dans_u_es.id_ue')->get(); //tableau 3D (id UE -> id enseignant -> données de l'enseignant en lien avec l'UE)
+            $enseignantsParUE[$id_ue] = EnseignantDansUE::where('id_ue', '=', $id_ue)->join('users', 'users.id', '=', 'enseignant_dans_u_es.id_utilisateur')->get(); //tableau 3D (id UE -> id enseignant -> données de l'enseignant en lien avec l'UE)
             
             /*foreach($enseignantsParUE[$id_ue] as $enseignant) {
                 $id_enseignant = $enseignant->id_utilisateur;
