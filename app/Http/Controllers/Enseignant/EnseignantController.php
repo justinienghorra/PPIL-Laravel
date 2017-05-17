@@ -25,6 +25,7 @@ class EnseignantController extends Controller
         $userA = \Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $tmp = null;
 
         //recuperation des enseignements de l'utilisateur
         $enseignements = $userA->getEnseignements();
@@ -36,6 +37,8 @@ class EnseignantController extends Controller
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
+
+        $enseignantsArray[] = null;
 
         foreach ($enseignements as $enseignement){
             //on recupere les enseignants
