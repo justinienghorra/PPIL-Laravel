@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Statut;
 use App\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -142,7 +142,7 @@ class AnnuaireController extends Controller
             $user->adresse = $row[4];
             $user->id_statut = Statut::where('statut', $row[5])->first()->id;
 
-            // TODO gérer mot de passe et mail ?
+            // TODO : gérer mot de passe et mail ?
 
             $user->password = bcrypt("password");
             $user->attente_validation = false;
@@ -155,9 +155,37 @@ class AnnuaireController extends Controller
         return redirect('/di/annuaire')->with('messages', $messages);
     }
 
+    /**
+     * Annule les changements fait par importCSV en cas d'erreur
+     *
+     * @param $new_users
+     */
     private function importRollback($new_users) {
         foreach ($new_users as $user) {
             $user->delete();
         }
     }
+
+    /**
+     * Suppression d'une utilisateur
+     *
+     * @param Request $req
+     *
+     * @return Response
+     */
+    public function delete(Request $req) {
+        $validator = Validator::make($req->all(), [
+            'id_utilisateur' => 'required|exists:users,id'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json(["message" => "errors", "errors" => json_encode($validator->messages())]);
+        }
+
+        $u = User::where('id', $req->id_utilisateur)->first();
+        $u->delete();
+        return response()->json(["message" => "success"]);
+    }
+
+
 }

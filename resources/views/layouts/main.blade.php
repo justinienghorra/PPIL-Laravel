@@ -4,7 +4,7 @@
     @include('includes.head')
 </head>
 <body>
-    @include('includes.header1')
+    @include('includes.header-main')
     <main>
 
         <div class="section no-pad-bot" id="index-banner">

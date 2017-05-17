@@ -4,32 +4,46 @@ Journal
 @stop
 @section('content')
 
-    <div class="card">
-        <div class="card-content">
-            <h1>Journal</h1>
+<div class="col s12">
+        <div class="card-content grey lighten-5">
+            <br>
+            <h3 class="header s12 orange-text center">Journal des modifications</h3>
             @if (isset($events))
 
-                <table border="1">
 
-                    @foreach($events as $event)
+        <table class="responsive-table bordered">
+        <thead>
+          <tr>
+              <th>Type</th>
+              <th>Nom</th>
+              <th>Prenom</th>
+               <th>Accepter</th>
+               <th>Refuser</th>
+          </tr>
+        </thead>
 
-                        <tr>
-                            <td>{{ $event->toString() }} </td>
-                            <td>
-                                <button name="{{ $event->id }}" class="btn-accept">Accepter</button>
-                            </td>
-                            <td>
-                                <button name="{{ $event->id }}" class="btn-deny">Refuser</button>
-                            </td>
-                        </tr>
+        <tbody>
 
+         @foreach($events as $event)
 
-                    @endforeach
+        <?php
+         $user = $event->toString();
+        ?>
 
-                </table>
+          <tr>
+            <td class="stripped">{{ $event->getType()}} </td>
+            <td>{{ $user['nom']}} </td>
+            <td>{{ $user['prenom']}} </td>
+            <td> <button name="{{ $event->id }}" class="waves-effect waves-light btn btn-accept">Accepter</button>  </td>
+            <td> <button name="{{ $event->id }}" class="waves-effect waves-light btn btn-deny">Refuser</button> </td>
+          </tr>         
+          
+            @endforeach
+        </tbody>
+      </table> 
+        @else 
 
-
-            @endif
+        @endif
         </div>
     </div>
 
