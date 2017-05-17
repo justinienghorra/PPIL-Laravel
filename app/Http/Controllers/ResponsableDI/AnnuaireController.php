@@ -5,7 +5,9 @@ namespace App\Http\Controllers\ResponsableDI;
 use App\Http\Controllers\Controller;
 
 use App\Statut;
+use Illuminate\Support\Facades\Log;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
@@ -30,7 +32,8 @@ class AnnuaireController extends Controller
      *
      * @return View
      */
-    protected function show() {
+    protected function show()
+    {
         $users = User::all();
         return \view('di.annuaire')->with('users', $users);
     }
@@ -38,15 +41,17 @@ class AnnuaireController extends Controller
     /**
      * Retourne la liste des utilisateurs au format json
      */
-    protected function getAnnuaireJSON() {
+    protected function getAnnuaireJSON()
+    {
         $users = User::all();
-        return json_encode($users);
+        return $users;
     }
 
     /**
      * Retourne la liste des utilisateurs au format json
      */
-    protected function getAnnuaireCSV() {
+    protected function getAnnuaireCSV()
+    {
         $users = User::all();
         $str = "enseignant;statut;email";
         foreach ($users as $user) {
@@ -59,7 +64,8 @@ class AnnuaireController extends Controller
     /**
      * Importation d'un fichier csv
      */
-    protected function importCSV(Request $request) {
+    protected function importCSV(Request $request)
+    {
 
         $validator = Validator::make(
             [
@@ -160,7 +166,8 @@ class AnnuaireController extends Controller
      *
      * @param $new_users
      */
-    private function importRollback($new_users) {
+    private function importRollback($new_users)
+    {
         foreach ($new_users as $user) {
             $user->delete();
         }
@@ -173,13 +180,22 @@ class AnnuaireController extends Controller
      *
      * @return Response
      */
-    public function delete(Request $req) {
+    public function delete(Request $req)
+    {
+
         $validator = Validator::make($req->all(), [
             'id_utilisateur' => 'required|exists:users,id'
         ]);
 
-        if($validator->fails()) {
-            return response()->json(["message" => "errors", "errors" => json_encode($validator->messages())]);
+        if ($validator->fails()) {
+            return response()->json(["message" => "errors", "errors" => $validator->messages()]);
+        }
+
+        $current_user = Auth::user();
+        Log::info("ID utilisateur : " . $req->id_utilisateur);
+        Log::info("ID current : " . $current_user->id);
+        if ($req->id_utilisateur == $current_user->id) {
+            return response()->json(["message" => "errors", "errors" => array("fail" => "Impossible de supprimer l'utilisateur connecté")]);
         }
 
         $u = User::where('id', $req->id_utilisateur)->first();

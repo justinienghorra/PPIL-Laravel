@@ -14,26 +14,31 @@
 
             @if($users->count() > 0)
 
-                <ul class="collection with-header">
 
-                    @foreach($users as $user)
+
+                @foreach($users as $user)
+
+                    <ul class="collection with-header" id="{{$user->id}}">
 
                         <li class="collection-header">
-                            <h4>{{ $user->prenom . " " . $user->nom }}</h4>
+                            <h4>
+                                {{ $user->prenom . " " . $user->nom }}
+                                <a href="#!" id="{{$user->id}}" class="btn-delete-utilisateur secondary-content red-text">
+                                    <i class="material-icons">
+                                        clear
+                                    </i>
+                                </a>
+                            </h4>
 
                         </li>
 
-                        <li class="collection-item">{{ $user->statut() }}</li>
-                        <li class="collection-item">{{ $user->email }}</li>
-                        <li class="collection-item">
-                            <a id="{{$user->id}}"
-                               class="btn btn-flat red-text waves-light btn-delete-utilisateur">Supprimer
-                            </a>
-                        </li>
+                        <li class="collection-item"><strong>Statut</strong><span class="black-text secondary-content">{{ $user->statut() }}</span></li>
+                        <li class="collection-item"><strong>Email</strong><span class="black-text secondary-content">{{ $user->email }}</span></li>
+                    </ul>
 
-                    @endforeach
+                @endforeach
 
-                </ul>
+
 
             @endif
 
@@ -143,9 +148,10 @@ makeToast('{{$error}}');
             // Suppression des utilisateurs
 
             $('.btn-delete-utilisateur').click(function (event) {
+                event.preventDefault();
                 var btn = $(this);
                 btn.blur();
-                btn.parent().parent().remove();
+
                 var id_utilisateur = btn.attr('id');
                 console.log('id_utilisateur : ' + id_utilisateur);
                 $.ajax({
@@ -156,9 +162,13 @@ makeToast('{{$error}}');
                     .done(function (msg) {
                         console.log(msg);
                         if (msg['message'] === 'success') {
-                            makeToast('Utilisateur supprimé')
+                            makeToast('Utilisateur supprimé');
+                            btn.parent().parent().parent().remove();
                         } else {
-                            makeToast('Echec : ' + msg['errors']);
+                            $.each(msg['errors'], function (key, value) {
+                                makeToast('Echec : ' + value);
+                            })
+
                         }
                     })
                     .fail(function (xhr, msg) {
