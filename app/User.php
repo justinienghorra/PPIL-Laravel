@@ -79,11 +79,48 @@ class User extends Authenticatable
         return Statut::where('id', $this->id_statut)->first()->statut;
     }
 
-    public function updateEmail($email){
+
+
+
+
+
+    public function updatePrenom($prenom) {
+        User::where('id', $this->id)->update(['prenom' => $prenom]);
+    }
+
+
+
+    public function updateNom($nom) {
+        User::where('id', $this->id)->update(['nom' => $nom]);
+    }
+
+
+
+    public function updateStatut($statut) {
+        User::where('id', $this->id)->update(['id_statut' => $statut]);
+    }
+
+
+
+    public function updateCivilite($civilite) {
+        User::where('id', $this->id)->update(['civilite' => $civilite]);
+    }
+
+
+
+    public function updateAdresse($adresse) {
+        User::where('id', $this->id)->update(['adresse' => $adresse]);
+    }
+
+
+
+    public function updateEmail($email) {
         User::where('id', $this->id)->update(['email' => $email]);
     }
 
-    public function updatePassword($password){
+
+
+    public function updatePassword($password) {
         User::where('id', $this->id)->update(['password' => $password]);
     }
 }

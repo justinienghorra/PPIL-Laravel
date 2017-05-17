@@ -72,13 +72,21 @@ Route::get('/home', 'HomeController@index')->name('home');
  *************************/
 
 Route::get('/profil', 'Profil\ProfilController@show');
-Route::post('/profil/email', 'Profil\ProfilController@postEmail');
+Route::post('/profil/updateInformations', 'Profil\ProfilController@postUpdateInformations');
 Route::post('/profil/password', 'Profil\ProfilController@postPassword');
 Route::post('/profil/image', 'Profil\ProfilController@postImage');
+
 
 Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
 
 Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
+
+
+
+
+Route::get('/respoUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
+
 
 
 
