@@ -14,6 +14,7 @@ use Validator;
 
 class ProfilController extends Controller
 {
+
     /**
      * Create a new controller instance.
      *
@@ -24,6 +25,8 @@ class ProfilController extends Controller
         //route accessible que si l'utilisateur est authentifié
         $this->middleware('auth');
     }
+
+
 
     public function show(){
 
@@ -51,13 +54,7 @@ class ProfilController extends Controller
         }
         
         $statuts = Statut::all();
-
         
-        
-
-
-
-
 
         return view('profil')
             ->with('userA', $userA)
@@ -184,9 +181,8 @@ class ProfilController extends Controller
             $messages = "Photographie de profil modifiée avec succès";
 
             return redirect('profil')
-                ->with('image_message', 'Image modifiée')
                 ->with('photoUrl', $tmp[1])
-                ->with('messages', $messages);;;
+                ->with('messages', $messages);
 
         } else{
 

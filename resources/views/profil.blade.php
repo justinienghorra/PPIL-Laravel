@@ -156,15 +156,13 @@ Profil
 
                             {!! Form::close() !!}
 
-                            {{ Session::get('password_message') }}
-
                             </div>
                         </div>
 
 
 
             </div>
-        
+
 
           
 
