@@ -16,10 +16,10 @@
 
                 @foreach($formations as $formation)
 
-                    <ul class="collection with-header">
+                    <ul id="collection-formation-{{$formation->id}}" class="collection with-header ">
                         <li class="collection-header">
                             <h4>{{$formation->nom}}
-                                <a href="#!" class="red-text secondary-content"><i class="material-icons">clear</i></a>
+                                <a href="#modal-suppression-{{$formation->id}}"  class="red-text secondary-content"><i class="material-icons">clear</i></a>
                             </h4>
 
                         </li>
@@ -50,10 +50,9 @@
 
             @endif
 
-            <hr>
-
-
-            <h2>Ajouter une formation</h2>
+            <blockquote>
+                <h2 class="header light">Ajouter une formation</h2>
+            </blockquote>
             <p>
                 AJAX :
             <ul>
@@ -110,6 +109,45 @@
         </div>
     @endforeach
 
+    @foreach($formations as $formation)
+        <div id="modal-suppression-{{$formation->id}}" class="modal">
+            <div class="modal-content">
+                <div class="row">
+                    <h4>Suppression de la formation</h4>
+                    <p>
+                        Attention, vous allez supprimer la formation {{$formation->nom}}
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat red-text" onclick="deleteFormation(event, {{$formation->id}})">Confirmer</a>
+            </div>
+        </div>
+    @endforeach
+
+    <div class="modal" id="modal_add">
+        <div class="modal-content">
+            <div class="row">
+                <h4>Ajout d'une formation</h4>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="add-nom"type="text">
+                    <label for="">Nom</label>
+                </div>
+                <div class="input-field col s12">
+                    <input id="add-description" type="text">
+                    <label for="">Description</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat green-text" onclick="ajoutFormation(event)">Confirmer</a>
+        </div>
+    </div>
+
+    @include('includes.buttonImportExportAdd')
+
 
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script>
@@ -117,6 +155,24 @@
         function makeToast(str) {
             var toastContent = '<span>' + str + '</span>';
             Materialize.toast(toastContent, 5000);
+        }
+
+        function ajoutFormation(event) {
+            var nom = $('#add-nom').val();
+            var description = $('#add-description').val();
+            $.ajax({
+                url: "/di/formations/add",
+                method: "post",
+                data: "nom="+nom + "&description="+description
+            })
+                .done(function (msg) {
+                    if(msg['message'] === 'success') {
+                        makeToast("Ajout réussi");
+                    }
+            })
+                .fail(function(xhr, msg) {
+                    makeToast("Erreur serveur : " + xhr['status']);
+            });
         }
 
         function modifResp(event, id_formation, id_utilisateur) {
@@ -135,10 +191,24 @@
                     $('#modal-' + id_formation).modal('close');
                 }
             }).fail(function (xhr, msg) {
-                console.log(msg);
-                alert('Erreur, voir console :/')
+                makeToast('Erreur serveur : ' + xhr['status'])
             })
+        }
 
+        function deleteFormation(event, id_formation) {
+            console.log('Delete Formation : ' + id_formation)
+            $.ajax({
+                url: "/di/formations/delete",
+                method: "post",
+                data: "id_formation="+id_formation
+            }).done(function (msg) {
+                if (msg['message'] === 'success') {
+                    $('#collection-formation-' + id_formation).remove();
+                    makeToast("Suppression de la formation réussie");
+                }
+            }).fail(function (xhr, msg) {
+                makeToast('Erreur serveur : ' + xhr['status'])
+            });
         }
 
         $(document).ready(function () {

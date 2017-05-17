@@ -47,7 +47,7 @@ class CreateUniteeEnseignementsTable extends Migration
             //$table->date('date_derniere_modif');
 
             $table->integer('id_formation')->unsigned();
-            $table->foreign('id_formation')->references('id')->on('formations');
+            $table->foreign('id_formation')->references('id')->on('formations')->onDelete('cascade');
 
         });
     }
