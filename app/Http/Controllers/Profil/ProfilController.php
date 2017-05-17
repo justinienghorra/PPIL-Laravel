@@ -32,6 +32,10 @@ class ProfilController extends Controller
 
         $statuts = Statut::all();
 
+        $civilite = User::select('civilite')->where('id', '=', $user->id)->first();
+        if ($civilite->civilite == "M") $civilites = array("M" => "M","Mme" => "Mme");
+        else $civilites = array("Mme" => "Mme", "M" => "M");
+
         $photoUrl =  Photos::where('id_utilisateur', $user->id)->first();
         $tmp = null;
 
@@ -45,7 +49,13 @@ class ProfilController extends Controller
 
 
         //TODO : modifier la vue en consequence avec le parametre (email deja change)
-        return view('profil')->with('user', $user)->with('statuts', $statuts)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('profil')
+            ->with('user', $user)
+            ->with('statuts', $statuts)
+            ->with('civilites', $civilites)
+            ->with('photoUrl', $tmp[1])
+            ->with('respoDI', $respoDI)
+            ->with('respoUE', $respoUE);
     }
 
 
@@ -57,6 +67,9 @@ class ProfilController extends Controller
 
         return $statut->statut;
     }
+
+
+
 
 
 
@@ -79,7 +92,7 @@ class ProfilController extends Controller
         $validator = Validator::make($request->all(), [
             'nom' => 'string|max:255|alpha',
             'prenom' => 'string|max:255|alpha',
-            'statut' => 'string',
+            'statut' => 'string', Rule::in(["ATER", "PRAG", "Enseignant chercheur", "Doctorant", "Vacataire", "Aucun"]),
             'civilite' => 'string', Rule::in(["M", "Mme"]),
             'adresse' => 'string|max:255',
             'email' => 'string|email|max:255'
@@ -90,14 +103,29 @@ class ProfilController extends Controller
             //  return redirect('profil/test')->withErrors($validator);
             dd($validator->messages());
             die;
+
+            // Faire un renvoi sur la page de profil
+            // en affichant un message d'erreur
+
+
         }
-
-        return redirect('profil');
-
+        else {
 
 
+            // Mise a jour des champs
+            $user->updateNom($request->input('nom'));
+            $user->updatePrenom($request->input('prenom'));
+            $user->updateStatut($request->input('statut') + 1);
+            $user->updateCivilite($request->input('civilite'));
+            $user->updateAdresse($request->input('adresse'));
+            $user->updateEmail($request->input('email'));
 
 
+            // Redirection sur le profil
+            // !!! Mettre un message de validation !!!
+            return redirect('profil');
+
+        }
     }
 
 
