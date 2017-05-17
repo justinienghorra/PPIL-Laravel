@@ -43,5 +43,9 @@ main {
 }
 
 option.blue-text {
-    color: 2196F3;
+    color: #2196F3;
+}
+
+.btn-modif-responsable {
+    margin-bottom: 10px;
 }

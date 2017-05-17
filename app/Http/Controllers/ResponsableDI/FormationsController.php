@@ -56,9 +56,9 @@ class FormationsController
             $formation->nom = $req->nom;
             $formation->description = $req->description;
             $formation->save();
-            return response()->json(["message" => "success", "formation" => $formation]);
+            return redirect();
         } else {
-            return response()->json(["message" => "errors", "errors" => $validator]);
+            return redirect('/di/formations')->withErrors($validator);
         }
     }
 
@@ -233,7 +233,7 @@ class FormationsController
             $resp->id_utilisateur = $req->id_utilisateur;
             $resp->id_formation = $req->id_formation;
             $resp->save();
-            return response()->json(["message" => "success"]);
+            return response()->json(["message" => "success", "user" => $resp->user]);
         } else {
             return response()->json(["message" => "errors", "errors" => $validator]);
         }

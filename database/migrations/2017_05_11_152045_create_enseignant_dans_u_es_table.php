@@ -31,7 +31,7 @@ class CreateEnseignantDansUEsTable extends Migration
             $table->foreign('id_utilisateur')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('id_ue')->unsigned();
-            $table->foreign('id_ue')->references('id')->on('unitee_enseignements');
+            $table->foreign('id_ue')->references('id')->on('unitee_enseignements')->onDelete('cascade');
 
         });
     }

@@ -140,7 +140,7 @@
                 @if (Session::get('messages') !== null)
                     makeToast('{{$error}} (ligne {{Session::get('messages')["ligne"]}})');
             @else
-makeToast('{{$error}}');
+            makeToast('{{$error}}');
             @endif
             @endforeach
 
