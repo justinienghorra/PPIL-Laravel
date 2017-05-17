@@ -8,6 +8,7 @@ use App\ResponsableUniteeEnseignement;
 use App\EnseignantDansUE;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Photos;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -27,11 +28,17 @@ class MesUEController extends Controller
      * @return View
      */
      public function show() {
-        $user = Auth::user();
-        $respoDI = $user->estResponsableDI();
-        $respoUE = $user->estResponsableUE();
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+	$tmp = null;
+	$photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
 
-        $uesTemp = ResponsableUniteeEnseignement::where('id_utilisateur', $user->id)->get();
+        $uesTemp = ResponsableUniteeEnseignement::where('id_utilisateur', $userA->id)->get();
 
         $ues = null;
         $enseignantsParUE = null;
@@ -56,7 +63,7 @@ class MesUEController extends Controller
 
         }
 
-        return view('respoUE/affichageUEs')->with('user', $user)->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('respoUE/affichageUEs')->with('userA', $userA)->with('photoUrl', $tmp[1])->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
      }
     
 }
