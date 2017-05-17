@@ -131,6 +131,15 @@ Liste des enseignements auxquels vous participez
       </div>
     </li>
 
+
+        @foreach($enseignantsArray as $key => $enseignants)
+
+            @foreach($enseignants as $enseignant)
+                 {!! $enseignant->nom !!}
+
+            @endforeach
+        @endforeach
+
      @endforeach
 
   </ul>

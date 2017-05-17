@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Enseignant;
 
+use App\EnseignantDansUE;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -25,7 +26,20 @@ class EnseignantController extends Controller
         //recuperation des enseignements de l'utilisateur
         $enseignements = $user->getEnseignements();
 
+
+
+
+        foreach ($enseignements as $enseignement){
+            //on recupere les enseignants
+            $enseignants = EnseignantDansUE::getEnseignantsDansUE($enseignement->id_ue);
+            //array_push($enseignantsArray, $enseignants);
+            //$enseignantsArray = array_add($enseignement->id_ue, $enseignement);
+            $enseignantsArray[$enseignement->id_ue] = $enseignants;
+
+        }
+
         return view('mesEnseignements')->with('user', $user)
-                                            ->with('enseignements', $enseignements);
+                                            ->with('enseignements', $enseignements)
+                                            ->with('enseignantsArray', $enseignantsArray);
     }
 }

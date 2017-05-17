@@ -12,4 +12,10 @@ class EnseignantDansUE extends Model
      * @var string
      */
     protected $table = 'enseignant_dans_u_es';
+
+    public static function getEnseignantsDansUE($id_ue){
+        return EnseignantDansUE::where('id_ue', $id_ue)
+                                ->join('users', 'enseignant_dans_u_es.id_utilisateur', 'users.id')
+                                ->get();
+    }
 }
