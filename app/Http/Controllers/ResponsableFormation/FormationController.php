@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\ResponsableUniteeEnseignement;
 use App\UniteeEnseignement;
 use App\User;
+use League\Csv\Reader;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,7 @@ class FormationController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-        // TODO valider formation
+
         $formation = Formation::where('nom', $nom_formation)->first();
 
         if (!$validator->fails()) {
@@ -103,6 +104,8 @@ class FormationController extends Controller
 
         //TODO CM_VOLUME_AFFECTE
         $str = "nom;description;responsable;cm_volume_attendu;td_volume_attendu;td_volume_affecte;tp_volume_attendu;tp_volume_affecte;ei_volume_attendu;ei_volume_affecte;td_nb_groupes_attendus;tp_nb_groupes_attendus;ei_nb_groupes_attendus;attente_validation;formation";
+
+
         foreach ($ues as $ue) {
             $str = $str . "\n" . $ue->nom . "; " . $ue->description . "; ";
             if ($ue->hasResponsable()) {
@@ -122,6 +125,8 @@ class FormationController extends Controller
             $str = $str . $ue->attente_validation . ';';
             $str = $str . $formation->nom;
         }
+
+        dd($ues);
         file_put_contents("/tmp/" . $formation->nom . ".csv", $str);
         return response()->download("/tmp/" . $formation->nom . ".csv");
     }
@@ -131,7 +136,7 @@ class FormationController extends Controller
      *
      *
      */
-    public function importCSV(Request $req)
+    public function importCSV(Request $req, $nom_formation)
     {
         $validator = Validator::make(
             [
@@ -146,47 +151,83 @@ class FormationController extends Controller
         );
 
         if ($validator->fails()) {
-            //TODO NomFormation
-            return redirect('/respoFormation/formation/')->withErrors($validator);
+            return redirect('/respoFormation/formation/' . $nom_formation)->withErrors($validator);
         }
+
+        $formation = Formation::where('nom', $nom_formation)->first();
 
 
         $file = $req->file('file_csv');
         $num_row = 0;
         $csv = Reader::createFromPath($file->path());
-        $csv->setDelimiter(';');
+        $csv->setDelimiter(',');
         $errors_custom = array();
         $res = $csv
             ->addFilter(function ($row, $index) {
                 return $index > 0; //we don't take into account the header
             })
             ->addFilter(function ($row) {
-                return isset($row[0], $row[1]); //we make sure the data are present
+                return true; //we make sure the data are present
             })->fetch();
 
         //TODO checker le header
-        $new_formations = array();
+        $new_ues = array();
         $new_responsables = array();
+
+
         foreach ($res as $row) {
             $num_row++;
             $validator = Validator::make([
                 'nom' => $row[0],
                 'description' => $row[1],
+                'responsable' => trim($row[2]),
+                'cm_volume_attendu' => $row[3],
+                'td_volume_attendu' => $row[4],
+                'td_volume_affecte' => $row[5],
+                'tp_volume_attendu' => $row[6],
+                'tp_volume_affecte' => $row[7],
+                'ei_volume_attendu' => $row[8],
+                'ei_volume_affecte' => $row[9],
+                'td_nb_groupes_attendus' => $row[10],
+                'tp_nb_groupes_attendus' => $row[11],
+                'ei_nb_groupes_attendus' => $row[12],
+                'attente_validation' => $row[13],
+
             ], [
-                'nom' => 'max:255|required|string|unique:formations,nom',
+                'nom' => 'max:255|required|string',
                 'description' => 'required|string|max:255',
+                'responsable' => 'required|string|exists:users,email',
+                'cm_volume_attendu' => 'required|integer|min:0',
+                'td_volume_attendu' => 'required|integer|min:0',
+                'td_volume_affecte' => 'required|integer|min:0',
+                'tp_volume_attendu' => 'required|integer|min:0',
+                'tp_volume_affecte' => 'required|integer|min:0',
+                'ei_volume_attendu' => 'required|integer|min:0',
+                'ei_volume_affecte' => 'required|integer|min:0',
+                'td_nb_groupes_attendus' => 'required|integer|min:0',
+                'tp_nb_groupes_attendus' => 'required|integer|min:0',
+                'ei_nb_groupes_attendus' => 'required|integer|min:0',
+                'attente_validation' => 'required|boolean',
             ]);
 
             if ($validator->fails()) {
+
+                dd($validator);
+
                 $errors_custom['ligne'] = $num_row;
-                $this->importRollback($new_formations, $new_responsables);
-                return redirect('/di/formations')->with('errors_custom', $errors_custom)->withErrors($validator);
+                $this->importRollback($new_ues, $new_responsables);
+                return redirect('/respoFormation/formation/' . $nom_formation)->with('errors_custom', $errors_custom)->withErrors($validator);
             }
 
-            $ue = new Formation;
+
+
+            $ue = new UniteeEnseignement();
             $ue->nom = $row[0];
             $ue->description = $row[1];
             $ue->save();
+
+
+
             if (isset($row[2]) && is_string($row[2]) && strlen(trim($row[2])) > 2) {
                 $row[2] = trim($row[2]);
                 $validator_mail = Validator::make([
@@ -197,26 +238,40 @@ class FormationController extends Controller
 
                 if ($validator_mail->fails()) {
                     $errors_custom['ligne'] = $num_row;
-                    $this->importRollback($new_formations, $new_responsables);
-                    return redirect('/di/formations')->with('errors_custom', $errors_custom)->withErrors($validator);;
+                    $this->importRollback($new_ues, $new_responsables);
+                    return redirect('/respoFormation/formation/' . $formation->nom)->with('errors_custom', $errors_custom)->withErrors($validator);;
                 }
 
-                $resp = new ResponsableFormation;
-                $resp->id_formation = $ue->id;
+                $resp = new ResponsableUniteeEnseignement();
+                $resp->id_ue = $ue->id;
                 $user = User::where('email', trim($row[2]))->first();
                 $resp->id_utilisateur = $user->id;
                 $resp->save();
 
-                array_push($new_formations, $ue);
+
+
                 array_push($new_responsables, $resp);
 
-            } else {
-                array_push($new_formations, $ue);
             }
+
+            $ue->cm_volume_attendu = $row[3];
+            $ue->td_volume_attendu = $row[4];
+            $ue->td_volume_affecte = $row[5];
+            $ue->tp_volume_attendu = $row[6];
+            $ue->tp_volume_affecte = $row[7];
+            $ue->ei_volume_attendu = $row[8];
+            $ue->ei_volume_affecte = $row[9];
+            $ue->td_nb_groupes_attendus = $row[10];
+            $ue->tp_nb_groupes_attendus = $row[11];
+            $ue->ei_nb_groupes_attendus = $row[12];
+            $ue->attente_validation = 1;
+
+            $ue->save();
+            array_push($new_ues, $ue);
 
         }
 
-        return redirect('/di/formations');
+        return redirect('/respoFormation/formation/' . $nom_formation);
     }
 
     /**
@@ -255,7 +310,7 @@ class FormationController extends Controller
                 $ue->responsable->delete();
             }
 
-            if($req->id_utilisateur > 0) {
+            if ($req->id_utilisateur > 0) {
 
                 $resp = new ResponsableUniteeEnseignement();
                 $resp->id_utilisateur = $req->id_utilisateur;

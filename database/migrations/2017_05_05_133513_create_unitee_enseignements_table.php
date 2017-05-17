@@ -39,7 +39,7 @@ class CreateUniteeEnseignementsTable extends Migration
             $table->boolean('attente_validation')->default(false);
             //$table->date('date_derniere_modif');
 
-            $table->integer('id_formation')->unsigned();
+            $table->integer('id_formation')->unsigned()->nullable();
             $table->foreign('id_formation')->references('id')->on('formations');
 
         });

@@ -106,6 +106,8 @@ Route::get('/en_attente', function () {
  ******************************************/
 
 Route::get('/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
 
 Route::post('/respoFormation/formation/{nom_formation}/add', 'ResponsableFormation\FormationController@add')->middleware(\App\Http\Middleware\RespoFormation::class);
 Route::get('/respoFormation/formation/{nom_formation}/add', 'ResponsableFormation\FormationController@add')->middleware(\App\Http\Middleware\RespoFormation::class);
