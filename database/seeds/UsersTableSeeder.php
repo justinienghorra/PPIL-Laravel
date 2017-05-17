@@ -42,8 +42,8 @@ class UsersTableSeeder extends Seeder
 
         $praglambda = new User;
         $praglambda->nom = "Prag";
-        $praglambda->prenom = "Lambda";
-        $praglambda->email = "utilisatrice.lambda@gmail.com";
+        $praglambda->prenom = "RespoUE";
+        $praglambda->email = "respoue@gmail.com";
         $praglambda->password = bcrypt("password");
         $praglambda->adresse = "51 Rue de la Liberté, 54000 Nancy";
         $praglambda->civilite = "F";

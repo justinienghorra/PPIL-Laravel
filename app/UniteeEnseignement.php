@@ -12,5 +12,22 @@ class UniteeEnseignement extends Model
      * @var string
      */
     protected $table = 'unitee_enseignements';
-	
+
+	/**
+     * Retourne le responsable de l'UE
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function responsable() {
+        return $this->hasOne('App\ResponsableUniteeEnseignement', 'id_ue');
+    }
+
+    /**
+     * Retourne faux si l'UE n'a pas de responsable
+     *
+     * @return bool
+     */
+    public function hasResponsable() {
+        return $this->responsable != null;
+    }
 }
