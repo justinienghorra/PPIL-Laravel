@@ -10,8 +10,6 @@ Liste des enseignements auxquels vous participez
  @foreach($enseignements as $enseignement)
     <li>
 
-
-
       <div class="collapsible-header "><strong class="orange-text"> {!! $enseignement->nomUE !!}</strong><span class="right">{!! $enseignement->nomFormation !!}</span></div>
       <div class="collapsible-body white">
         <div class="row">
@@ -79,9 +77,10 @@ Liste des enseignements auxquels vous participez
                 <table class="hide-on-med-and-down bordered">
                 <thead>
                   <tr>
-                      
+
                       <th class="center">Nom</th>
                       <th class="center">CM</th>
+                      <th class="center" colspan="2">EI</th>
                       <th class="center" colspan="2">TD</th>
                       <th  class="center"colspan="2">TP</th>
                   </tr>
@@ -90,55 +89,55 @@ Liste des enseignements auxquels vous participez
                 <thead>
                   <tr>
                       <th></th>
-                      
+
                       <th class="center">Heure</th>
-                      <th class="center">Nb de groupes</th>
+                      <th class="center">Nombre de groupes</th>
                       <th class="center">Heures par groupes</th>
                       <th class="center">Nombre de groupes</th>
                       <th class="center">Heures par groupes</th>
-                      
+                      <th class="center">Nombre de groupes</th>
+                      <th class="center">Heures par groupes</th>
+
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
-                    
-                    <td>Alvin Eclair</td>
-                    <td class="center">8</td>
-                    <td class="center">1</td>
-                    <td class="center">6</td>
-                    <td class="center">1</td>
-                    <td class="center">12</td>
-                  </tr>
-                  <tr>
-                    
-                    <td>Alan Jellybean</td>
-                    <td class="center">4</td>
-                    <td class="center">1</td>
-                    <td class="center">6</td>
-                    <td class="center">1</td>
-                    <td class="center">12</td>
-                  </tr>
-                  
-                  
+
+                @foreach($enseignantsArray as $key => $enseignants)
+
+                    @foreach($enseignants as $enseignant)
+                        @if($enseignant->id_ue == $enseignement->id_unit_ens)
+
+                            <tr>
+
+                                <td>{!! $enseignant->nom . ' ' . $enseignant->prenom !!} </td>
+                                <td class="center">{!! $enseignant->cm_nb_heures !!}</td>
+                                <td class="center">{!! "??" !!}</td>
+                                <td class="center">{!! $enseignant->ei_heures_par_groupe !!}</td>
+                                <td class="center">{!! "??" !!}</td>
+                                <td class="center">{!! $enseignant->td_heures_par_groupe !!}</td>
+                                <td class="center">{!! "??" !!}</td>
+                                <td class="center">{!! $enseignant->tp_heures_par_groupe !!}</td>
+                            </tr>
+
+                        @endif
+                    @endforeach
+                @endforeach
+
+
+
                 </tbody>
               </table>
 
-                
+
                 <!-- Fin du Contenu du premier EC -->
             </div>
-      
+
       </div>
     </li>
 
 
-        @foreach($enseignantsArray as $key => $enseignants)
 
-            @foreach($enseignants as $enseignant)
-                 {!! $enseignant->nom !!}
-
-            @endforeach
-        @endforeach
 
      @endforeach
 

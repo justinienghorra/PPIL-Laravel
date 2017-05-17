@@ -92,7 +92,7 @@ class User extends Authenticatable
         return EnseignantDansUE::where('id_utilisateur', $this->id)
                             ->join('unitee_enseignements', 'enseignant_dans_u_es.id_ue', 'unitee_enseignements.id')
                             ->join('formations', 'unitee_enseignements.id_formation', 'formations.id')
-                            ->selectRaw('unitee_enseignements.nom as nomUE, unitee_enseignements.description as descriptionUE,
+                            ->selectRaw('enseignant_dans_u_es.id_ue as id_unit_ens  , unitee_enseignements.nom as nomUE, unitee_enseignements.description as descriptionUE,
                              formations.nom as nomFormation, formations.description as descriptionFormation, unitee_enseignements.*, formations.*')
                             ->get();
     }

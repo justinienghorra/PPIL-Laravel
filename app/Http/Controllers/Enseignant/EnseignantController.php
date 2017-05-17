@@ -31,10 +31,10 @@ class EnseignantController extends Controller
 
         foreach ($enseignements as $enseignement){
             //on recupere les enseignants
-            $enseignants = EnseignantDansUE::getEnseignantsDansUE($enseignement->id_ue);
+            $enseignants = EnseignantDansUE::getEnseignantsDansUE($enseignement->id_unit_ens);
             //array_push($enseignantsArray, $enseignants);
             //$enseignantsArray = array_add($enseignement->id_ue, $enseignement);
-            $enseignantsArray[$enseignement->id_ue] = $enseignants;
+            $enseignantsArray[$enseignement->id_unit_ens] = $enseignants;
 
         }
 
