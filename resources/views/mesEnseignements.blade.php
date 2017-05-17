@@ -34,6 +34,7 @@ Liste des enseignements auxquels vous participez
                     <thead>
                         <tr>
                           <th></th>
+                          <th>EI</th>
                           <th>CM</th>
                           <th>TD</th>
                           <th>TP</th>
@@ -42,24 +43,28 @@ Liste des enseignements auxquels vous participez
                     <tbody>
                         <tr>
                           <th>Volume attendu</th>
+                          <td>{!! $enseignement->ei_volume_attendu !!}</td>
                           <td>{!! $enseignement->cm_volume_attendu !!}</td>
                           <td>{!! $enseignement->td_volume_attendu !!}</td>
                           <td>{!! $enseignement->tp_volume_attendu !!}</td>
                         </tr>
                         <tr>
                           <th>Volume affecté</th>
+                          <td>{!! $enseignement->ei_volume_affecte !!}</td>
                           <td><span class=" green-text">{!! $enseignement->cm_volume_affecte !!}</span></td>
                           <td><span class=" green-text">{!! $enseignement->td_volume_affecte !!}</span></td>
                           <td><span class=" green-text">{!! $enseignement->tp_volume_affecte !!}</span></td>
                         </tr>
                         <tr>
                           <th>Nombre de groupes attendus</th>
+                          <td>{!! $enseignement->ei_nb_groupes_attendus !!}</td>
                           <td>{!! $enseignement->cm_nb_groupes_attendus !!}</td>
                           <td>{!! $enseignement->td_nb_groupes_attendus !!}</td>
                           <td>{!! $enseignement->tp_nb_groupes_attendus !!}</td>
                         </tr>
                         <tr>
                           <th>Nombre de groupes affecté</th>
+                          <td>{!! $enseignement->ei_nb_groupes_affectes !!}</td>
                           <td>{!! $enseignement->cm_nb_groupes_affectes !!}</td>
                           <td><span class=" green-text">{!! $enseignement->td_nb_groupes_affectes !!}</span></td>
                           <td><span class=" red-text">{!! $enseignement->tp_nb_groupes_affectes !!}</span></td>

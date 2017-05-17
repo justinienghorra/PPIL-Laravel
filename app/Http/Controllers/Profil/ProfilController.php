@@ -100,11 +100,23 @@ class ProfilController extends Controller
         $infos = pathinfo($file->getClientOriginalName());
         $extension = $infos['extension'];
 
+        //recupere l'adresse de l'ancienne photo si elle existe
+        $anciennePhoto = Photos::where('id_utilisateur', $user->id)->first();
+
+        if ($anciennePhoto != null){
+            //on supprime l'ancienne adresse de l'image
+            Photos::where('id_utilisateur', $user->id)->delete();
+
+            $tmp = explode("images", $anciennePhoto->adresse);
+
+            //on delete l'ancienne photo de profil
+            \File::delete('images' . $tmp[1]);
+        }
+
 
         if ($extension == 'png' || $extension == 'jpg'){
 
-            //on supprime l'ancienne adresse de l'image
-            Photos::where('id_utilisateur', $user->id)->delete();
+
 
             //stocke l'adresse de l'image dans la BDD
             Photos::creerImage(public_path().'/images/user_'.$user->id.'/profil.' . $extension, $user->id);
