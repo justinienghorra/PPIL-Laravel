@@ -183,4 +183,33 @@ Profil
 
     </div>
 
+
+        <script src="/js/jquery-2.1.1.min.js"></script>
+        <script src="/js/materialize.js"></script>
+
+        <script>
+
+            function makeToast(str) {
+                var toastContent = '<span>' + str + '</span>';
+                Materialize.toast(toastContent, 4000, 'rounded');
+            }
+
+
+            $(document).ready(function () {
+
+                $.ajaxSetup({
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                @if (Session::get('messages') !== null)
+                    makeToast('{{Session::get('messages')}}');
+                @endif
+
+            });
+        </script>
+
+
+
 @stop

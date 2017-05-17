@@ -71,8 +71,6 @@ class ProfilController extends Controller
 
 
 
-
-
     public function postEmail(Request $request){
         $user = Auth::user();
 
@@ -100,17 +98,11 @@ class ProfilController extends Controller
 
         // Si la verification a echoue
         if ($validator->fails()) {
-            //  return redirect('profil/test')->withErrors($validator);
-            dd($validator->messages());
-            die;
-
-            // Faire un renvoi sur la page de profil
-            // en affichant un message d'erreur
-
-
+            $messages = "Impossible de modifier vos informations, un des champs spécifiés n'est pas valide";
+            return redirect('profil')
+                ->with('messages', $messages);
         }
         else {
-
 
             // Mise a jour des champs
             $user->updateNom($request->input('nom'));
@@ -120,16 +112,13 @@ class ProfilController extends Controller
             $user->updateAdresse($request->input('adresse'));
             $user->updateEmail($request->input('email'));
 
+            $messages = "Informations modifiées avec succès";
 
-            // Redirection sur le profil
-            // !!! Mettre un message de validation !!!
-            return redirect('profil');
+            return redirect('profil')
+                ->with('messages', $messages);
 
         }
     }
-
-
-
 
 
 
@@ -145,10 +134,15 @@ class ProfilController extends Controller
 
             $user = Auth::user();
             $user->updatePassword(bcrypt($request->input('password')));
+            $messages = "Mot de passe modifié avec succès";
 
-            return redirect('profil')->with('password_message', 'Mot de passe modifié avec succé');
+            return redirect('profil')
+                ->with('password_message', 'Mot de passe modifié avec succé')
+                ->with('messages', $messages);;
         }
     }
+
+
 
 
 
@@ -176,8 +170,12 @@ class ProfilController extends Controller
 
             $photoUrl =  Photos::where('id_utilisateur', $user->id)->first()->adresse;
             $tmp = explode("images", $photoUrl);
+            $messages = "Photographie de profil modifiée avec succès";
 
-            return redirect('profil')->with('image_message', 'Image modifiée')->with('photoUrl', $tmp[1]);
+            return redirect('profil')
+                ->with('image_message', 'Image modifiée')
+                ->with('photoUrl', $tmp[1])
+                ->with('messages', $messages);;;
 
         } else{
 
