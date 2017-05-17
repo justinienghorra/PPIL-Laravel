@@ -28,7 +28,7 @@ Profil
                 </div>
                 <div class="row">
 
-                    {!! Form::open(['url' => 'profil/email'], $attributes = ['class' => 'col s12']) !!}
+                    {!! Form::open(['url' => 'profil/updateInformations'], $attributes = ['class' => 'col s12']) !!}
                     
 
                     <div class="row">

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\User;
+use Illuminate\Validation\Rule;
+use Validator;
 
 class ProfilController extends Controller
 {
@@ -63,6 +65,45 @@ class ProfilController extends Controller
 
         $user->updateEmail($request->input('email'));
     }
+
+
+
+
+
+    public function postUpdateInformations(Request $request) {
+
+        // Authentification de l'utilisateur
+        $user = Auth::user();
+
+        // Validation des champs
+        $validator = Validator::make($request->all(), [
+            'nom' => 'string|max:255|alpha',
+            'prenom' => 'string|max:255|alpha',
+            'statut' => 'string',
+            'civilite' => 'string', Rule::in(["M", "Mme"]),
+            'adresse' => 'string|max:255',
+            'email' => 'string|email|max:255'
+        ]);
+
+        // Si la verification a echoue
+        if ($validator->fails()) {
+            //  return redirect('profil/test')->withErrors($validator);
+            dd($validator->messages());
+            die;
+        }
+
+        return redirect('profil');
+
+
+
+
+
+    }
+
+
+
+
+
 
 
 
