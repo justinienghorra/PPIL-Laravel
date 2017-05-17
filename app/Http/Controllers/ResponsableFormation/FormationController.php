@@ -6,6 +6,7 @@ namespace App\Http\Controllers\ResponsableFormation;
 use App\Formation;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Photos;
 use Illuminate\Support\Facades\Auth;
 
 class FormationController extends Controller
@@ -28,10 +29,17 @@ class FormationController extends Controller
         $userA = Auth::user();
 	$respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
 
 
         $formation = Formation::where('nom', '=', $nom_formation)->first();
 
-        return view('respoFormation.formation')->with('userA', $userA)->with('formation', $formation)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('respoFormation.formation')->with('userA', $userA)->with('photoUrl', $tmp[1])->with('formation', $formation)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 }

@@ -30,8 +30,6 @@ class ProfilController extends Controller
 	$respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
         
-        $statuts = Statut::all();
-
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
@@ -39,6 +37,9 @@ class ProfilController extends Controller
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
+        
+        $statuts = Statut::all();
+
         
         
 

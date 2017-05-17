@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Statut;
 use App\User;
+use App\Photos;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
@@ -37,8 +38,15 @@ class AnnuaireController extends Controller
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
         
-        return \view('di.annuaire')->with('users', $users)->with('userA', $userA)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return \view('di.annuaire')->with('users', $users)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
     /**

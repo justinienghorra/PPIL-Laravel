@@ -6,6 +6,7 @@ namespace App\Http\Controllers\ResponsableDI;
 use App\Formation;
 use App\ResponsableFormation;
 use App\User;
+use App\Photos;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,14 @@ class FormationsController
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
-        return view('di.formations')->with(['formations' => $formations, 'users' => $users])->with('userA', $userA)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
+        return view('di.formations')->with(['formations' => $formations, 'users' => $users])->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
     /**

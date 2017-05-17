@@ -7,6 +7,7 @@ namespace App\Http\Controllers\ResponsableDI;
 use App\Http\Controllers\Controller;
 use App\Journal;
 use App\User;
+use App\Photos;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,14 @@ class JournalController extends Controller
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
-        return view('di.journal')->with('events', $events)->with('userA', $userA)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
+        return view('di.journal')->with('events', $events)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
     /**
