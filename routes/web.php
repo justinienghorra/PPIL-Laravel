@@ -86,7 +86,7 @@ Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@sho
  * Route pour les Enseignants  *
  *******************************/
 
-Route::get('/enseignant/mesEnseignements', 'Enseignant\EnseignantController@show');
+Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
 
 
 
