@@ -24,11 +24,11 @@ class RecapEnseignantsController extends Controller
         $statut = Statut::all(); 
         $users = User::all();
 
-        $tableauHeureTotale = null;
+        $tableauHeureTotale = array();
         
 
-        $usersStatut = DB::table('users')
-                        ->join('statuts', 'users.id_statut', '=', 'statuts.id')
+        $usersStatut = DB::table('statuts')
+                        ->join('users', 'users.id_statut', '=', 'statuts.id')
                         ->get();
 
         $usersHeure = DB::table('users')
@@ -52,7 +52,6 @@ class RecapEnseignantsController extends Controller
 
         }
 
-
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
@@ -66,7 +65,5 @@ class RecapEnseignantsController extends Controller
         }
 
         return view('di/recapEnseignants')->with(['usersHeure' => $usersHeure, 'usersStatut' => $usersStatut, 'enseignantDansUE' => $enseignantDansUE, 'tableauHeureTotale' => $tableauHeureTotale])->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
-    }
-
-   
+    }  
 }
