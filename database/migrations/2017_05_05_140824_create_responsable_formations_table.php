@@ -21,7 +21,7 @@ class CreateResponsableFormationsTable extends Migration
             $table->foreign('id_utilisateur')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('id_formation')->unsigned();
-            $table->foreign('id_formation')->references('id')->on('formations');
+            $table->foreign('id_formation')->references('id')->on('formations')->onDelete('cascade');
         });
     }
 

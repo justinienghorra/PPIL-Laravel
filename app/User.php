@@ -79,11 +79,58 @@ class User extends Authenticatable
         return Statut::where('id', $this->id_statut)->first()->statut;
     }
 
-    public function updateEmail($email){
+
+
+
+
+
+    public function updatePrenom($prenom) {
+        User::where('id', $this->id)->update(['prenom' => $prenom]);
+    }
+
+
+
+    public function updateNom($nom) {
+        User::where('id', $this->id)->update(['nom' => $nom]);
+    }
+
+
+
+    public function updateStatut($statut) {
+        User::where('id', $this->id)->update(['id_statut' => $statut]);
+    }
+
+
+
+    public function updateCivilite($civilite) {
+        User::where('id', $this->id)->update(['civilite' => $civilite]);
+    }
+
+
+
+    public function updateAdresse($adresse) {
+        User::where('id', $this->id)->update(['adresse' => $adresse]);
+    }
+
+
+
+    public function updateEmail($email) {
         User::where('id', $this->id)->update(['email' => $email]);
     }
 
-    public function updatePassword($password){
+
+
+    public function updatePassword($password) {
         User::where('id', $this->id)->update(['password' => $password]);
+    }
+
+
+    public function getEnseignements(){
+        return EnseignantDansUE::where('id_utilisateur', $this->id)
+                            ->join('unitee_enseignements', 'enseignant_dans_u_es.id_ue', 'unitee_enseignements.id')
+                            ->join('formations', 'unitee_enseignements.id_formation', 'formations.id')
+                            ->selectRaw('enseignant_dans_u_es.id_ue as id_unit_ens  , unitee_enseignements.nom as nomUE, unitee_enseignements.description as descriptionUE,
+                             formations.nom as nomFormation, formations.description as descriptionFormation, unitee_enseignements.*, formations.* ,enseignant_dans_u_es.*')
+                            ->get();
     }
 }

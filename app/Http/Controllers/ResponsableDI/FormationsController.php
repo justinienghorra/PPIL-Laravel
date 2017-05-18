@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\ResponsableDI;
 
-
+use Illuminate\Support\Facades\Log;
 use App\Formation;
 use App\ResponsableFormation;
 use App\User;
@@ -21,17 +21,18 @@ class FormationsController
      *
      * @return View
      */
-    public function show() {
+    public function show()
+    {
         $formations = Formation::all();
         $users = User::all();
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
-        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $photoUrl = Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
-        if ($photoUrl != null){
+        if ($photoUrl != null) {
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
@@ -45,7 +46,8 @@ class FormationsController
      *
      * @return mixed
      */
-    public function add(Request $req) {
+    public function add(Request $req)
+    {
         $validator = Validator::make($req->all(), [
             'nom' => 'required|string|max:255|unique:formations',
             'description' => 'required|string|max:255',
@@ -56,9 +58,9 @@ class FormationsController
             $formation->nom = $req->nom;
             $formation->description = $req->description;
             $formation->save();
-            return response()->json(["message" => "success", "formation" => $formation]);
+            return redirect('/di/formations');
         } else {
-            return response()->json(["message" => "errors", "errors" => $validator]);
+            return redirect('/di/formations')->withErrors($validator);
         }
     }
 
@@ -93,7 +95,8 @@ class FormationsController
      *
      * @return Response
      */
-    public function getFormationsCSV() {
+    public function getFormationsCSV()
+    {
         $formations = Formation::all();
         $str = "nom;description;responsable";
         foreach ($formations as $formation) {
@@ -111,7 +114,8 @@ class FormationsController
      *
      *
      */
-    public function importCSV(Request $req) {
+    public function importCSV(Request $req)
+    {
         $validator = Validator::make(
             [
                 'file' => $req->file('file_csv'),
@@ -133,7 +137,7 @@ class FormationsController
         $num_row = 0;
         $csv = Reader::createFromPath($file->path());
         $csv->setDelimiter(';');
-        $errors_custom = array();
+        $messages = array();
         $res = $csv
             ->addFilter(function ($row, $index) {
                 return $index > 0; //we don't take into account the header
@@ -156,15 +160,18 @@ class FormationsController
             ]);
 
             if ($validator->fails()) {
-                $errors_custom['ligne'] = $num_row;
+                Log::info('Importation formations : fail nom/description');
+                $messages['ligne'] = $num_row;
                 $this->importRollback($new_formations, $new_responsables);
-                return redirect('/di/formations')->with('errors_custom', $errors_custom)->withErrors($validator);
+                return redirect('/di/formations')->with('messages', $messages)->with('errors', $validator->errors());
             }
 
             $formation = new Formation;
             $formation->nom = $row[0];
             $formation->description = $row[1];
+            Log::info('Ajout de la formation : ' . $formation->nom);
             $formation->save();
+            array_push($new_formations, $formation);
             if (isset($row[2]) && is_string($row[2]) && strlen(trim($row[2])) > 2) {
                 $row[2] = trim($row[2]);
                 $validator_mail = Validator::make([
@@ -174,9 +181,12 @@ class FormationsController
                 ]);
 
                 if ($validator_mail->fails()) {
-                    $errors_custom['ligne'] = $num_row;
+                    $messages['ligne'] = $num_row;
+                    Log::info('Importation formations : fail email responsable');
                     $this->importRollback($new_formations, $new_responsables);
-                    return redirect('/di/formations')->with('errors_custom', $errors_custom)->withErrors($validator);;
+                    return redirect('/di/formations')
+                        ->with('messages', $messages)
+                        ->with('errors', $validator_mail->errors());
                 }
 
                 $resp = new ResponsableFormation;
@@ -185,16 +195,13 @@ class FormationsController
                 $resp->id_utilisateur = $user->id;
                 $resp->save();
 
-                array_push($new_formations, $formation);
                 array_push($new_responsables, $resp);
-
-            } else {
-                array_push($new_formations, $formation);
             }
 
         }
 
-        return redirect('/di/formations');
+        $messages['success'] = "Importation réussie";
+        return redirect('/di/formations')->with('messages', $messages);
     }
 
     /**
@@ -203,7 +210,9 @@ class FormationsController
      * @param $new_formations
      * @param $new_responsable
      */
-    private function importRollback($new_formations, $new_responsable) {
+    private function importRollback($new_formations, $new_responsable)
+    {
+        Log::info('Roolback formations');
         foreach ($new_responsable as $resp) {
             $resp->delete();
         }
@@ -218,7 +227,8 @@ class FormationsController
      * @param Request $req
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateResponsable(Request $req) {
+    public function updateResponsable(Request $req)
+    {
         $validator = Validator::make($req->all(), [
             'id_utilisateur' => 'required|integer|exists:users,id',
             'id_formation' => 'required|integer|exists:formations,id',
@@ -233,7 +243,7 @@ class FormationsController
             $resp->id_utilisateur = $req->id_utilisateur;
             $resp->id_formation = $req->id_formation;
             $resp->save();
-            return response()->json(["message" => "success"]);
+            return response()->json(["message" => "success", "user" => $resp->user]);
         } else {
             return response()->json(["message" => "errors", "errors" => $validator]);
         }
