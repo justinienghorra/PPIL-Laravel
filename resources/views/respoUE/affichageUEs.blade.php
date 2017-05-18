@@ -21,8 +21,7 @@ Liste de vos UE
 <!----------------------------------- 
 
 				TODO
-Back-end : Calcul des volumes affectés
-Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp attendus/affectés, etc. 
+Back-end : modifier heures + ajouter/supprimer enseignant
 
 ------------------------------------>
 
@@ -66,6 +65,13 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
 					<h4 class="light">Synthèse</h4>
 	            </blockquote>	
 	        </div>
+	        <div class="row">
+	        	<p>Ajout enseignant (pas encore front-end)</p>
+	        	@foreach($users as $user)
+	        		<a href="/respoUE/addEnseignant/{{$user->id}}/{{$ue->id}}">{{ $user->nom." ".$user->prenom }}</a><br/>
+	        	@endforeach
+	        </div>
+
             <div class="row">
             	<table class="bordered">
 	            	<thead>

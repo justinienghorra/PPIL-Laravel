@@ -77,7 +77,12 @@ Route::post('/profil/password', 'Profil\ProfilController@postPassword');
 Route::post('/profil/image', 'Profil\ProfilController@postImage');
 
 
+/***************************
+ * Route pour les Respo UE *
+ ***************************/
 Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
+
+Route::get('/respoUE/addEnseignant/{id_enseignant}/{id_ue}', 'ResponsableUE\MesUEController@addEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
 
 Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
@@ -87,7 +92,6 @@ Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@sho
  *******************************/
 
 Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
-
 
 
 

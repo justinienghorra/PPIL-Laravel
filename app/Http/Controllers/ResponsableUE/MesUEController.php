@@ -9,6 +9,7 @@ use App\EnseignantDansUE;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Photos;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,9 @@ class MesUEController extends Controller
      *
      * @return View
      */
-     public function show() {
+     public function show() 
+     {
+        $users = User::all();
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
@@ -56,7 +59,18 @@ class MesUEController extends Controller
 
         }
 
-        return view('respoUE/affichageUEs')->with('userA', $userA)->with('photoUrl', $tmp[1])->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('respoUE/affichageUEs')->with('userA', $userA)->with('photoUrl', $tmp[1])->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('users', $users)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
      }
+
+    public function addEnseignant($id_enseignant, $id_ue)
+    {
+        $enseignantDsUE = new EnseignantDansUE();
+        $enseignantDsUE->id_utilisateur = $id_enseignant;
+        $enseignantDsUE->id_ue = $id_ue;
+        $enseignantDsUE->save();
+        return redirect('/respoUE/mesUE');
+    }
+
+
     
 }
