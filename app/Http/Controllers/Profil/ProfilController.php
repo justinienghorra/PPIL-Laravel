@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profil;
 use App\Http\Controllers\Controller;
 use App\Photos;
 use App\Statut;
+use App\EnseignantDansUE;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -36,7 +37,7 @@ class ProfilController extends Controller
 
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
-	    $respoDI = $userA->estResponsableDI();
+	$respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
         
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
@@ -58,7 +59,16 @@ class ProfilController extends Controller
         
         $statuts = Statut::all();
         
-
+	
+        $uesUserA = EnseignantDansUE::where('id_utilisateur', $userA->id)->get();
+        $heurestotals = 0;
+        foreach ($uesUserA as $ue) {
+        
+        $heurestotals = $heurestotals + $ue->cm_nb_heures*1.5 + ($ue->td_nb_groupes*$ue->td_heures_par_groupe)
+			+ ($ue->tp_nb_groupes*$ue->tp_heures_par_groupe)*1.5
+			+ ($ue->ei_nb_groupes*$ue->ei_heures_par_groupe)*1.25;
+        
+        }
 
         return view('profil')
             ->with('userA', $userA)
@@ -66,7 +76,8 @@ class ProfilController extends Controller
             ->with('civilites', $civilites)
             ->with('photoUrl', $tmp[1])
             ->with('respoDI', $respoDI)
-            ->with('respoUE', $respoUE);
+            ->with('respoUE', $respoUE)
+            ->with('heuresTotals', $heurestotals);
 
 
     }
@@ -81,6 +92,13 @@ class ProfilController extends Controller
         return $statut->statut;
     }
 
+    public static function getStatutVolumeMin(){
+        $user = Auth::user();
+
+        $statut = Statut::select('volumeMin')->where('id', '=', $user->id_statut)->first();
+
+        return $statut->volumeMin;
+    }
 
 
 
