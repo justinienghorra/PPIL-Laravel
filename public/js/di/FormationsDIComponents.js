@@ -1,8 +1,8 @@
 Vue.config.delimiters = ['${', '}'];
 Vue.component('formations-modal-suppression', {
     delimiters: ['${', '}'],
-    props: ['formationarg', 'deleteformation'],
-    template: '<div :id="formationarg.id" class="modal"> \
+    props: ['formationarg', 'deleteformation', 'getmodalsuppid'],
+    template: '<div :id="getmodalsuppid(formationarg.id)" class="modal"> \
                 <div class="modal-content"> \
                     <div class="row"> \
                         <h4>Suppression de la formation</h4> \
@@ -20,19 +20,19 @@ Vue.component('formations-modal-suppression', {
 
 Vue.component('formations-modal-modification-responsable', {
     delimiters: ['${', '}'],
-    props: ['formation', 'users'],
-    template: '<div class="modal modal-fixed-footer"> \
+    props: ['formationarg', 'users', 'getmodalmodifid', 'modifierresponsable'],
+    template: '<div :id="getmodalmodifid(formationarg.id)" class="modal modal-fixed-footer"> \
                     <div class="modal-content">\
                         <div class="row">\
                             <h4>Modification du responsable</h4>\
                             <p>\
-                                Attention, vous allez modifier le responsable de ${formation.nom} \
+                                Attention, vous allez modifier le responsable de ${formationarg.nom} \
                             </p>\
                             <ul class="collection collection-with-header">\
                                 <li class="collection-header"><h4>Liste des utilisateurs</h4></li>\
-                                <li v-for"(user, index_user) in users" class="collection-item collection-utilisateurs">\
+                                <li v-for="(user, index) in users" class="collection-item">\
                                     ${ user.prenom + " " + user.nom }\
-                                    <a href="#!" @click="modifResponsable(formation.id, user.id)"\
+                                    <a href="#!" @click.prevent="modifierresponsable(formationarg.id, user.id)"\
                                         class="secondary-content"><i class="material-icons">send</i></a>\
                                 </li>\
                             </ul>\
@@ -44,12 +44,12 @@ Vue.component('formations-modal-modification-responsable', {
 
 Vue.component('formations-main', {
     delimiters: ['${', '}'],
-    props: ['formationarg', 'responsable', 'openmodal'],
+    props: ['formationarg', 'responsable', 'openmodal', 'getmodalsuppid', 'getmodalmodifid'],
     template: '<ul class="collection with-header ">\
                     <li class="collection-header">\
                         <h4>\
                             ${ formationarg.nom } \
-                            <a href="#!" @click="openmodal(formationarg.id)" class="red-text secondary-content"><i class="material-icons">clear</i></a> \
+                            <a href="#!" @click="openmodal(getmodalsuppid(formationarg.id))" class="red-text secondary-content"><i class="material-icons">clear</i></a> \
                         </h4>\
                     </li>\
                     <li class="collection-item">\
@@ -60,7 +60,7 @@ Vue.component('formations-main', {
                             ${ responsable(formationarg.id) }\
                         </span>\
                         <a href="#!"\
-                            class="btn-modif-responsable secondary-content btn btn-flat green-text">Modifier\
+                            @click.prevent="openmodal(getmodalmodifid(formationarg.id))" class="btn-modif-responsable secondary-content btn btn-flat green-text">Modifier\
                                     le responsable</a>\
                     </li>\
             </ul>'
@@ -87,7 +87,7 @@ Vue.component('formations-modal-ajout', {
                         </form>\
                     </div>\
                 <div class="modal-footer">\
-                    <a href="#!" class="modal-action  waves-effect waves-light btn-flat green-text" @click.prevent(alert(\"fuck\"))>Confirmer</a>\
+                    <a href="#!" v-on:click="submitformadd" class="modal-action  waves-effect waves-light btn-flat green-text" >Confirmer</a>\
                 </div>\
         </div>'
 });

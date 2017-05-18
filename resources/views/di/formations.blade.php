@@ -15,10 +15,28 @@
 
             <div id="liste-formation">
                 <div v-for="formation in formations">
-                    <formations-main :openmodal="openModal" :responsable="responsable" :formationarg="formation"></formations-main>
-                    <formations-modal-suppression  :deleteformation="deleteFormation" :formationarg="formation"></formations-modal-suppression>
+                    <formations-main
+                            :getmodalmodifid="getModalModifId"
+                            :getmodalsuppid="getModalSuppId"
+                            :openmodal="openModal"
+                            :responsable="responsable"
+                            :formationarg="formation">
+                    </formations-main>
+                    <formations-modal-suppression
+                            :getmodalsuppid="getModalSuppId"
+                            :deleteformation="deleteFormation"
+                            :formationarg="formation">
+                    </formations-modal-suppression>
+                    <formations-modal-modification-responsable
+                        :formationarg="formation"
+                        :users="users"
+                        :modifierresponsable="modifierResponsable"
+                        :getmodalmodifid="getModalModifId">
+                    </formations-modal-modification-responsable>
                 </div>
+
                 <formations-modal-ajout :token="token" :submitformadd="submitFormAdd"></formations-modal-ajout>
+
             </div>
 
 
@@ -109,6 +127,7 @@
                 },
 
                 openModal: function(id_formation) {
+                    console.log('modal open');
                     $('#'+id_formation).modal('open');
                 },
 
@@ -136,14 +155,47 @@
                     $.each(this.formations, function(index, value) {
                         if (value.id === id_formation) {
                             Vue.delete(formations, index);
+                            return;
                         }
                     });
                 },
 
                 submitFormAdd: function() {
-                    alert('OK');
                     $('#form-add').submit();
-                }
+                },
+
+                getModalSuppId: function(id_formation) {
+                    return 'modal-supp-' + id_formation;
+                },
+
+                getModalModifId: function(id_formation) {
+                    return 'modal-modif-' + id_formation;
+                },
+
+                modifierResponsable(id_formation, id_utilisateur) {
+                    console.log('Formation : ' + id_formation)
+                    console.log('User : ' + id_utilisateur)
+                    var getModalModifId = this.getModalModifId;
+                    var getFormationWithId = this.getFormation;
+                    $.ajax({
+                        url: "/di/formations/updateResponsable",
+                        method: "post",
+                        data: "id_utilisateur=" + id_utilisateur + "&id_formation=" + id_formation
+                    }).done(function (msg) {
+                        console.log(msg);
+                        if (msg['message'] === 'success') {
+                            var formation = getFormationWithId(id_formation);
+                            formation.id_responsable = id_utilisateur;
+                            makeToast("Modification du responsable réussie");
+                            console.log('id : ' + getModalModifId(id_formation));
+                            $('#' + getModalModifId(id_formation)).modal('close');
+                        } else {
+
+                        }
+                    }).fail(function (xhr, msg) {
+                        makeToast('Erreur serveur : ' + xhr['status'])
+                    })
+                },
             }
         });
 
