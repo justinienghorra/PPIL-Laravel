@@ -17,8 +17,8 @@ Journal
               <th>Type</th>
               <th>Nom</th>
               <th>Prenom</th>
-               <th>Accepter</th>
-               <th>Refuser</th>
+              <th>Accepter</th>
+              <th>Refuser</th>
           </tr>
         </thead>
 
