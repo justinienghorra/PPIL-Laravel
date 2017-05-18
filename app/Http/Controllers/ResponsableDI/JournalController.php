@@ -61,7 +61,16 @@ class JournalController extends Controller
                         break;
                 }
             }
+        } else {
+            $messages = array();
+            $messages['message'] = "errors";
+            $messages['errors'] = $validator->errors();
+            return response()->json($messages);
         }
+
+        $messages = array();
+        $messages['message'] = "success";
+        return response()->json($messages);
     }
 
     /**
@@ -88,6 +97,15 @@ class JournalController extends Controller
                         break;
                 }
             }
+        } else {
+            $messages = array();
+            $messages['message'] = "errors";
+            $messages['errors'] = $validator->errors();
+            return response()->json($messages);
         }
+
+        $messages = array();
+        $messages['message'] = "success";
+        return response()->json($messages);
     }
 }
