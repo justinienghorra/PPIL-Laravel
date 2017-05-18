@@ -12,6 +12,8 @@
             <div class="row">
                 <h3 class="header s12 orange-text center">Formations</h3>
             </div>
+
+
             @if(isset($formations))
 
                 @foreach($formations as $formation)
@@ -170,7 +172,9 @@
     @include('includes.buttonImportExportAdd')
 
 
+
     <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/materialize.js"></script>
     <script>
 
         function makeToast(str) {
@@ -223,8 +227,8 @@
 
             // Toast pour action réussie
 
-            @if (Session::get('messages') !== null && isset(Session::get('messages')['succes']))
-                makeToast('{{Session::get('messages')["succes"]}}');
+            @if (Session::get('messages') !== null && isset(Session::get('messages')['success']))
+                makeToast('{{Session::get('messages')["success"]}}');
             @endif
 
 
@@ -254,7 +258,7 @@
                 })
                     .done(function (msg) {
                         console.log(msg);
-                        if (msg['message'] === 'success') {
+                        if (msg['messages'] === 'success') {
                             var tab = $('#tableau_formations');
                             var str = '<tr id="' + msg['formation']['id'] + '">';
                             str = str + '<td><a href="/formations/' + msg['formation']['nom'] + '">' + msg['formation']['nom'] + '</a></td>';
