@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.main')
 @section('title')
 Récapitulatif des enseignants
 @stop
@@ -25,7 +25,23 @@ Récapitulatif des enseignants
               </tr>
             </thead>
             <tbody>
+               @foreach($usersStatut as $userStatut)
+               {{ $userStatut->nom.$userStatut->statut }}
+               @endforeach
+
+              @foreach($usersHeure as $userHeure)
+               {{ $userHeure->nom.$userHeure->cm_nb_heures }}
+               @endforeach
+
+
+               {{$usersHeure}}
+
+              {{var_dump($tableauHeureTotale)}}
+
+
+
                 <tr>
+
                   <td>Chuck Norris</td>
                   <td>Enseignant chercheur</td>
                   <td>192</td>
