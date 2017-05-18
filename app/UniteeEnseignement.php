@@ -30,4 +30,8 @@ class UniteeEnseignement extends Model
     public function hasResponsable() {
         return $this->responsable != null;
     }
+
+    public function enseignants() {
+        return $this->hasMany('App\EnseignantDansUE', 'id_ue');
+    }
 }
