@@ -178,6 +178,7 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
 		        </div>
                 <!-- end collapsible body -->
                 <a href="#modal-gerer-enseignants-{{$ue->id}}" class="btn btn-flat green-text waves-effect waves-light">Gérer les enseignants</a>
+                <a href="#modal-gerer-horaires-{{$ue->id}}" class="right btn btn-flat blue-text waves-effect waves-light">Gérer les horaires</a>
                 <!-------------------------->
 		    </div>
 
@@ -188,6 +189,15 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
         <div class="modal" id="modal-gerer-enseignants-{{$ue->id}}">
             <div class="modal-content">
                 <h4>Gestion des enseignants de l'UE {{$ue->nom}}</h4>
+                <ul class="collection with-header">
+                    <li class="collection-header"><h4>Liste des enseignants</h4></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-gerer-horaires-{{$ue->id}}">
+            <div class="modal-content">
+                <h4>Gestion des horaires de l'UE {{$ue->nom}}</h4>
             </div>
         </div>
 
