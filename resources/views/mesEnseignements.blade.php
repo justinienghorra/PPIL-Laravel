@@ -104,24 +104,25 @@ Liste des enseignements auxquels vous participez
                 <tbody>
 
                 @foreach($enseignantsArray as $key => $enseignants)
+                    @if($enseignants != null)
+                        @foreach($enseignants as $enseignant)
+                            @if($enseignant->id_ue == $enseignement->id_unit_ens)
 
-                    @foreach($enseignants as $enseignant)
-                        @if($enseignant->id_ue == $enseignement->id_unit_ens)
+                                <tr>
 
-                            <tr>
+                                    <td>{!! $enseignant->nom . ' ' . $enseignant->prenom !!} </td>
+                                    <td class="center">{!! $enseignant->cm_volume_affecte !!}</td>
+                                    <td class="center">{!! $enseignant->ei_nb_groupes_affectes !!}</td>
+                                    <td class="center">{!! $enseignant->ei_volume_affecte !!}</td>
+                                    <td class="center">{!! $enseignant->td_nb_groupes_affectes !!}</td>
+                                    <td class="center">{!! $enseignant->td_volume_affecte !!}</td>
+                                    <td class="center">{!! $enseignant->tp_nb_groupes_affectes !!}</td>
+                                    <td class="center">{!! $enseignant->tp_volume_affecte !!}</td>
+                                </tr>
 
-                                <td>{!! $enseignant->nom . ' ' . $enseignant->prenom !!} </td>
-                                <td class="center">{!! $enseignant->cm_volume_affecte !!}</td>
-                                <td class="center">{!! $enseignant->ei_nb_groupes_affectes !!}</td>
-                                <td class="center">{!! $enseignant->ei_volume_affecte !!}</td>
-                                <td class="center">{!! $enseignant->td_nb_groupes_affectes !!}</td>
-                                <td class="center">{!! $enseignant->td_volume_affecte !!}</td>
-                                <td class="center">{!! $enseignant->tp_nb_groupes_affectes !!}</td>
-                                <td class="center">{!! $enseignant->tp_volume_affecte !!}</td>
-                            </tr>
-
-                        @endif
-                    @endforeach
+                            @endif
+                        @endforeach
+                    @endif
                 @endforeach
 
 
