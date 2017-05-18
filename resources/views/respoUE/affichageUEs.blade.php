@@ -21,7 +21,7 @@ Liste de vos UE
 <!----------------------------------- 
 
 				TODO
-Back-end : modifier heures + ajouter/supprimer enseignant
+Back-end : modifier heures + supprimer enseignant
 
 ------------------------------------>
 
@@ -149,6 +149,7 @@ Back-end : modifier heures + ajouter/supprimer enseignant
 		                      <th class="center" colspan="2">TD</th>
 		                      <th class="center" colspan="2">TP</th>
 		                      <th class="center" colspan="2">EI</th>
+		                      <th></th>
 		                  </tr>
 		                </thead>
 
@@ -163,7 +164,7 @@ Back-end : modifier heures + ajouter/supprimer enseignant
 		                      <th class="center">Heures par groupe</th>
 		                      <th class="center">Nombre de groupes</th>
 		                      <th class="center">Heures par groupe</th>
-		                      
+		                      <th></th>
 		                  </tr>
 		                </thead>
 		                <tbody>
@@ -177,9 +178,11 @@ Back-end : modifier heures + ajouter/supprimer enseignant
 		                		<td class="center">{{$enseignant->tp_heures_par_groupe}}</td>
 		                		<td class="center">{{$enseignant->ei_nb_groupes}}</td>
 		                		<td class="center">{{$enseignant->ei_heures_par_groupe}}</td>
+		                		<td class="center"><a href="/respoUE/deleteEnseignant/{{$enseignant->id_utilisateur}}/{{$ue->id}}">Supprimer</a></td>
 		                	</tr>
-		          		</tbody>
+		                	
 		                	@endforeach
+		          		</tbody>
 		            </table>
 		        </div>
 		    </div>

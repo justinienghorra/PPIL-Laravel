@@ -28,14 +28,14 @@ class MesUEController extends Controller
      *
      * @return View
      */
-     public function show() 
-     {
+    public function show() 
+    {
         $users = User::all();
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
         $tmp = null;
-	    $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         if ($photoUrl != null){
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
@@ -60,7 +60,7 @@ class MesUEController extends Controller
         }
 
         return view('respoUE/affichageUEs')->with('userA', $userA)->with('photoUrl', $tmp[1])->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('users', $users)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
-     }
+    }
 
     public function addEnseignant($id_enseignant, $id_ue)
     {
@@ -71,6 +71,11 @@ class MesUEController extends Controller
         return redirect('/respoUE/mesUE');
     }
 
-
+    public function deleteEnseignant($id_enseignant, $id_ue)
+    {
+        $enseignantDsUE = EnseignantDansUE::where(['id_utilisateur' => $id_enseignant, 'id_ue' => $id_ue ])->first();
+        $enseignantDsUE->delete();
+        return redirect('/respoUE/mesUE');
+    }
     
 }

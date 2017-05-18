@@ -84,7 +84,8 @@ Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\
 
 Route::get('/respoUE/addEnseignant/{id_enseignant}/{id_ue}', 'ResponsableUE\MesUEController@addEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
 
-Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::get('respoUE/deleteEnseignant/{id_enseignant}/{id_ue}', 'ResponsableUE\MesUEController@deleteEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
+
 
 
 /*******************************
@@ -115,6 +116,8 @@ Route::post('/di/formations/importCSV', 'ResponsableDI\FormationsController@impo
 
 Route::post('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
+Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::get('/en_attente', function () {
     return view('auth.en_attente');
