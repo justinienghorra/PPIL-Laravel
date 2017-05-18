@@ -176,12 +176,25 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
 		                	@endforeach
 		            </table>
 		        </div>
+                <!-- end collapsible body -->
+                <a href="#modal-gerer-enseignants-{{$ue->id}}" class="btn btn-flat green-text waves-effect waves-light">Gérer les enseignants</a>
+                <!-------------------------->
 		    </div>
 
   	</li>
-@endforeach
+
+        <!-- Génération modals -->
+
+        <div class="modal" id="modal-gerer-enseignants-{{$ue->id}}">
+            <div class="modal-content">
+                <h4>Gestion des enseignants de l'UE {{$ue->nom}}</h4>
+            </div>
+        </div>
+
+     @endforeach
       
   </ul>
+
 
 
 @stop
