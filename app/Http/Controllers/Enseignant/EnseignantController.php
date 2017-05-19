@@ -25,6 +25,8 @@ class EnseignantController extends Controller
 
         //recuperation des enseignements de l'utilisateur
         $enseignements = $user->getEnseignements();
+        $enseignantDansUE = $user->enseignantDansUE;
+
 
 
 
@@ -40,6 +42,7 @@ class EnseignantController extends Controller
 
         return view('mesEnseignements')->with('user', $user)
                                             ->with('enseignements', $enseignements)
-                                            ->with('enseignantsArray', $enseignantsArray);
+                                            ->with('enseignantsArray', $enseignantsArray)
+                                            ->with('enseignantDansUE', $enseignantDansUE);
     }
 }

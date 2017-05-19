@@ -96,4 +96,8 @@ class User extends Authenticatable
                              formations.nom as nomFormation, formations.description as descriptionFormation, unitee_enseignements.*, formations.*')
                             ->get();
     }
+
+    public function enseignantDansUE() {
+        return $this->hasMany('App\EnseignantDansUE', 'id_utilisateur');
+    }
 }

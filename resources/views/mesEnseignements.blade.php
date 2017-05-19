@@ -127,7 +127,8 @@
                         </table>
 
                         <br>
-                        <a href="#gerer-mes-horaires-{{$enseignement->id}}" class="right btn btn-flat green-text">Gérer mes horaires</a>
+                        <a href="#gerer-mes-horaires-{{$enseignement->id}}" class="right btn btn-flat green-text">Gérer
+                            mes horaires</a>
                         <!-- Fin du Contenu du premier EC -->
                     </div>
 
@@ -150,10 +151,52 @@
 
     <!-- Génération des modals -->
 
-    @foreach($enseignements as $enseignement)
-        <div class="modal" id="gerer-mes-horaires-{{$enseignement->id}}">
+    @foreach($enseignantDansUE as $enseignantDansUE)
+        <div class="modal" id="gerer-mes-horaires-{{$enseignantDansUE->id}}">
             <div class="modal-content">
-                <h4>Modification de vos horaires pour l'UE {{$enseignement->nom}}</h4>
+                <h4>Modification de vos horaires pour l'UE {{$enseignantDansUE->enseignement->nom}}</h4>
+                {!! Form::open(['url' => '#!']) !!}
+                <div class="row">
+                    {!! Form::hidden('id_utilisateur', $enseignantDansUE->user->id) !!}
+                    <div class="col s6">
+                        {!! Form::label('cm_volume_affecte', 'CM : Nombre d\'heures affectées') !!}
+                        {!! Form::number('cm_volume_affecte', $value = $enseignantDansUE->cm_nb_heures) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        {!! Form::label('td_nb_groupes', 'TD : Nombre de groupes') !!}
+                        {!! Form::number('td_nb_groupes', $value = $enseignantDansUE->td_nb_groupes) !!}
+                    </div>
+                    <div class="col s6">
+                        {!! Form::label('td_heures_par_groupe', 'TD : Heures par groupe') !!}
+                        {!! Form::number('td_heures_par_groupe', $value = $enseignantDansUE->td_heures_par_groupe) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        {!! Form::label('tp_nb_groupes', 'TP : Nombre de groupes') !!}
+                        {!! Form::number('tp_nb_groupes', $value = $enseignantDansUE->tp_nb_groupes) !!}
+                    </div>
+                    <div class="col s6">
+                        {!! Form::label('tp_heures_par_groupe', 'TP : Heures par groupe') !!}
+                        {!! Form::number('tp_heures_par_groupe', $value = $enseignantDansUE->tp_heures_par_groupe) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
+                        {!! Form::number('ei_nb_groupes', $value = $enseignantDansUE->td_nb_groupes) !!}
+                    </div>
+                    <div class="col s6">
+                        {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
+                        {!! Form::number('ei_heures_par_groupe', $value = $enseignantDansUE->td_heures_par_groupe) !!}
+                    </div>
+                    <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires')"
+                            class="btn btn-flat green-text right" type="submit">Valider - TODO : Backend
+                    </button>
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     @endforeach
