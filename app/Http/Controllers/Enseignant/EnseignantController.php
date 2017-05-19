@@ -44,7 +44,7 @@ class EnseignantController extends Controller
         foreach ($enseignements as $enseignement){
             //on recupere les enseignants
             $enseignants = EnseignantDansUE::getEnseignantsDansUE($enseignement->id_unit_ens);
-
+            $enseignement->getTDNbHeuresAffectees();
             //recupere les volumes affectes des TP, TD... de chaque UE
             //$volumeAffecte = EnseignantDansUE::getVolumeAffectee($enseignement->id_unit_ens);
 
