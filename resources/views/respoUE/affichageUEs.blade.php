@@ -189,12 +189,14 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
         <div class="modal" id="modal-gerer-enseignants-{{$ue->id}}">
             <div class="modal-content">
                 <h4>Gestion des enseignants de l'UE {{$ue->nom}}</h4>
-                <ul class="collection with-header">
-                    <li class="collection-header"><h4>Liste des enseignants</h4></li>
-                    @foreach($ue->enseignants as $enseignant)
-                        <li class="collection-item">{{$enseignant->user->prenom . " " . $enseignant->user->nom}}</li>
-                    @endforeach
-                </ul>
+                <div class="row">
+                    <form action="" class="col s12">
+                    </form>
+                </div>
+
+
+
+
             </div>
         </div>
 
