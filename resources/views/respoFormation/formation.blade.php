@@ -367,6 +367,55 @@ function redOrGreen($attendu, $affecte)
         </div>
     </div>
 
+    <div id="modal_export" class="modal">
+        <div class="modal-content">
+            <h4>Exportation des données</h4>
+            <p>Les données concernant les utilisateur seront exportées au format CSV</p>
+        </div>
+
+
+        <div class="modal-footer">
+            <a href="/di/formations.csv" onclick="makeToast('Exportation réussie')"
+               class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
+        </div>
+    </div>
+
+    <div id="modal_import" class="modal">
+        <div class="modal-content">
+            <div class="row">
+                <h4>Importation des données</h4>
+                <p>Les données importées doivent être au format CSV. Un header doit être présent et le
+                    séparateur doit
+                    être ;</p>
+                <p>Le format à respecter est le suivant : <br><strong>nom ; description ; email du responsable</strong></p>
+            </div>
+            <div class="row">
+                <form id="form-import" method="post" action="/di/formations/importCSV" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="file-field input-field">
+                        <div class="btn purple">
+                            <span>Choisir un fichier</span>
+                            <input type="file" name="file_csv">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+            <a onclick="submitImport(event) " href="#!" class="btn-large modal-action modal-close waves-effect waves-light btn-flat
+               purple-text">Importer</a>
+            <a href="#!"
+               class="modal-action modal-close waves-effect waves-light btn-flat btn-large red-text">Annuler</a>
+        </div>
+    </div>
+
     <!-- End modal -->
 
 
