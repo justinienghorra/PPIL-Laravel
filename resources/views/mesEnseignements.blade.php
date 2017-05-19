@@ -23,11 +23,12 @@
         <li class="collection-header orange-text"><h4 class="center">Liste des enseignements auxquels vous
                 participez</h4>
         </li>
-        @foreach($enseignements as $enseignement)
+
+        {{--@foreach($enseignantDansUEs as $enseignant)
             <li>
                 <div class="active collapsible-header "><strong
-                            class="orange-text"> {!! $enseignement->nomUE !!}</strong><span
-                            class="right">{!! $enseignement->nomFormation !!}</span>
+                            class="orange-text"> {!! $enseignant->enseignant->nom !!}</strong><span
+                            class="right">{!! $enseignant->enseignant->formation->nom !!}</span>
                 </div>
                 <div class="collapsible-body white">
                     <div class="row">
@@ -38,7 +39,7 @@
 
                             <!-- Contenu du premier EC -->
 
-                            <p class="flow-text">{!! $enseignement->descriptionUE !!} </p>
+                            <p class="flow-text">{!! $enseignant->descriptionUE !!} </p>
 
 
                             <h4 class="light">Synthèse</h4>
@@ -56,9 +57,9 @@
                             <tbody>
                             <tr>
                                 <th>Volume attendu</th>
-                                <td>{!! $enseignement->ei_volume_attendu !!}</td>
-                                <td>{!! $enseignement->cm_volume_attendu !!}</td>
-                                <td>{!! $enseignement->td_volume_attendu !!}</td>
+                                <td>{!! $enseignant->ei_volume_attendu !!}</td>
+                                <td>{!! $enseignant->cm_volume_attendu !!}</td>
+                                <td>{!! $enseignant->td_volume_attendu !!}</td>
                                 <td>{!! $enseignement->tp_volume_attendu !!}</td>
                             </tr>
                             <tr>
@@ -150,7 +151,7 @@
 
                 </div>
             </li>
-        @endforeach
+        @endforeach--}}
 
 
 
@@ -165,7 +166,7 @@
     @foreach($enseignantDansUEs as $enseignantDansUE)
         <div class="modal" id="gerer-mes-horaires-{{$enseignantDansUE->id}}">
             <div class="modal-content">
-                <h4>Modification de vos horaires pour l'UE {{$enseignantDansUE->enseignement->nom}}</h4>
+                <h4>Modification de vos horaires pour l'UE {{$enseignantDansUE->enseignant->nom}}</h4>
                 {!! Form::open(['url' => '#!']) !!}
                 <div class="row">
                     {!! Form::hidden('id_utilisateur', $enseignantDansUE->user->id) !!}

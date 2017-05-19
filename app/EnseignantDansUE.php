@@ -26,8 +26,7 @@ class EnseignantDansUE extends Model
         return $this->belongsTo('App\User', 'id_utilisateur');
     }
 
-    public function enseignement()
-    {
+    public function enseignement() {
         return $this->belongsTo('App\UniteeEnseignement', 'id_ue');
     }
 

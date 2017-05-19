@@ -29,7 +29,7 @@ class EnseignantController extends Controller
 
         //recuperation des enseignements de l'utilisateur
 
-        $enseignements = $userA->getEnseignements();
+        //$enseignements = $userA->getEnseignements();
         $enseignantDansUEs = $userA->enseignantDansUEs;
 
 
@@ -42,7 +42,7 @@ class EnseignantController extends Controller
             $tmp = explode("images", $url);
         }
 
-        $enseignantsArray[] = null;
+        /*$enseignantsArray[] = null;
         $volumeAffecteArray[] = null;
 
         foreach ($enseignements as $enseignement){
@@ -56,13 +56,14 @@ class EnseignantController extends Controller
 
             //array_push($volumeAffecteArray, $volumeAffecte);
 
-        }
+        }*/
+
+        //->with('volumeAffecteArray', $volumeAffecteArray)
+        //->with('enseignantsArray', $enseignantsArray)
+        //->with('enseignements', $enseignements)
 
         return view('mesEnseignements')->with('userA', $userA)
-                                            ->with('enseignements', $enseignements)
-                                            ->with('enseignantsArray', $enseignantsArray)
                                             ->with('enseignantDansUEs', $enseignantDansUEs)
-                                            ->with('volumeAffecteArray', $volumeAffecteArray)
                                             ->with('photoUrl', $tmp[1])
                                             ->with('respoDI', $respoDI)
                                             ->with('respoUE', $respoUE);
