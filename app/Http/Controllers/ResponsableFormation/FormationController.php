@@ -120,7 +120,7 @@ class FormationController extends Controller
         $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
 
         //TODO CM_VOLUME_AFFECTE
-        $str = "nom;description;responsable;cm_volume_attendu;td_volume_attendu;td_volume_affecte;tp_volume_attendu;tp_volume_affecte;ei_volume_attendu;ei_volume_affecte;td_nb_groupes_attendus;tp_nb_groupes_attendus;ei_nb_groupes_attendus;attente_validation";
+        $str = "nom;description;responsable;cm_volume_attendu;td_volume_attendu;tp_volume_attendu;ei_volume_attendu;td_nb_groupes_attendus;tp_nb_groupes_attendus;ei_nb_groupes_attendus;attente_validation";
 
 
         foreach ($ues as $ue) {
@@ -131,9 +131,9 @@ class FormationController extends Controller
             $str = $str . ';';
 
             $str = $str . $ue->cm_volume_attendu . ';';
-            $str = $str . $ue->td_volume_attendu . ';' . $ue->td_volume_affecte . ';';
-            $str = $str . $ue->tp_volume_attendu . ';' . $ue->tp_volume_affecte . ';';
-            $str = $str . $ue->ei_volume_attendu . ';' . $ue->ei_volume_affecte . ';';
+            $str = $str . $ue->td_volume_attendu . ';' ;
+            $str = $str . $ue->tp_volume_attendu . ';' ;
+            $str = $str . $ue->ei_volume_attendu . ';' ;
 
             $str = $str . $ue->td_nb_groupes_attendus . ';';
             $str = $str . $ue->tp_nb_groupes_attendus . ';';
@@ -199,15 +199,12 @@ class FormationController extends Controller
                 'responsable' => trim($row[2]),
                 'cm_volume_attendu' => $row[3],
                 'td_volume_attendu' => $row[4],
-                'td_volume_affecte' => $row[5],
-                'tp_volume_attendu' => $row[6],
-                'tp_volume_affecte' => $row[7],
-                'ei_volume_attendu' => $row[8],
-                'ei_volume_affecte' => $row[9],
-                'td_nb_groupes_attendus' => $row[10],
-                'tp_nb_groupes_attendus' => $row[11],
-                'ei_nb_groupes_attendus' => $row[12],
-                'attente_validation' => $row[13],
+                'tp_volume_attendu' => $row[5],
+                'ei_volume_attendu' => $row[6],
+                'td_nb_groupes_attendus' => $row[7],
+                'tp_nb_groupes_attendus' => $row[8],
+                'ei_nb_groupes_attendus' => $row[9],
+                'attente_validation' => $row[10],
 
             ], [
                 'nom' => 'max:255|required|string',
@@ -215,11 +212,8 @@ class FormationController extends Controller
                 'responsable' => 'string|exists:users,email',
                 'cm_volume_attendu' => 'required|integer|min:0',
                 'td_volume_attendu' => 'required|integer|min:0',
-                'td_volume_affecte' => 'required|integer|min:0',
                 'tp_volume_attendu' => 'required|integer|min:0',
-                'tp_volume_affecte' => 'required|integer|min:0',
                 'ei_volume_attendu' => 'required|integer|min:0',
-                'ei_volume_affecte' => 'required|integer|min:0',
                 'td_nb_groupes_attendus' => 'required|integer|min:0',
                 'tp_nb_groupes_attendus' => 'required|integer|min:0',
                 'ei_nb_groupes_attendus' => 'required|integer|min:0',
@@ -272,14 +266,11 @@ class FormationController extends Controller
 
             $ue->cm_volume_attendu = $row[3];
             $ue->td_volume_attendu = $row[4];
-            $ue->td_volume_affecte = $row[5];
-            $ue->tp_volume_attendu = $row[6];
-            $ue->tp_volume_affecte = $row[7];
-            $ue->ei_volume_attendu = $row[8];
-            $ue->ei_volume_affecte = $row[9];
-            $ue->td_nb_groupes_attendus = $row[10];
-            $ue->tp_nb_groupes_attendus = $row[11];
-            $ue->ei_nb_groupes_attendus = $row[12];
+            $ue->tp_volume_attendu = $row[5];
+            $ue->ei_volume_attendu = $row[6];
+            $ue->td_nb_groupes_attendus = $row[7];
+            $ue->tp_nb_groupes_attendus = $row[8];
+            $ue->ei_nb_groupes_attendus = $row[9];
             $ue->attente_validation = 1;
 
             $formation = Formation::where('nom', $nom_formation)->first();
