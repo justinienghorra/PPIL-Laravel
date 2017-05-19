@@ -28,7 +28,9 @@ class UsersTableSeeder extends Seeder
         $respDI->id_utilisateur = User::where('email', "jean.dupont@gmail.com")->first()->id;
         $respDI->save();
 
-        // Ajout d'utilisateurs lambda
+
+        // Ajout d'un utilisateur lambda Respo L1 Info
+
         $user = new User;
         $user->nom = "Utilisateur";
         $user->prenom = "Lambda";
@@ -40,13 +42,26 @@ class UsersTableSeeder extends Seeder
         $user->id_statut = \App\Statut::where('statut', 'Doctorant')->first()->id;
         $user->save();
 
+
+        // Ajout d'un respo UE Compil
+        $user = new User;
+        $user->nom = "UserRespo";
+        $user->prenom = "Compil";
+        $user->email = "respo.compil@gmail.com";
+        $user->password = bcrypt("password");
+        $user->adresse = "49 Rue de la Liberté, 54000 Nancy";
+        $user->civilite = "M";
+        $user->attente_validation = false;
+        $user->id_statut = \App\Statut::where('statut', 'Doctorant')->first()->id;
+        $user->save();
+
         $praglambda = new User;
         $praglambda->nom = "Prag";
-        $praglambda->prenom = "Lambda";
-        $praglambda->email = "utilisatrice.lambda@gmail.com";
+        $praglambda->prenom = "RespoUE";
+        $praglambda->email = "respoue@gmail.com";
         $praglambda->password = bcrypt("password");
         $praglambda->adresse = "51 Rue de la Liberté, 54000 Nancy";
-        $praglambda->civilite = "F";
+        $praglambda->civilite = "Mme";
         $praglambda->attente_validation = false;
         $praglambda->id_statut = \App\Statut::where('statut', 'PRAG')->first()->id;
         $praglambda->save();
@@ -68,7 +83,7 @@ class UsersTableSeeder extends Seeder
         $aterlambda->email = "ater.lambda@gmail.com";
         $aterlambda->password = bcrypt("password");
         $aterlambda->adresse = "55 Rue de la Liberté, 54000 Nancy";
-        $aterlambda->civilite = "F";
+        $aterlambda->civilite = "Mme";
         $aterlambda->attente_validation = false;
         $aterlambda->id_statut = \App\Statut::where('statut', 'ATER')->first()->id;
         $aterlambda->save();

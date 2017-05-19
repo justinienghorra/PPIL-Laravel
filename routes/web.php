@@ -72,19 +72,21 @@ Route::get('/home', 'HomeController@index')->name('home');
  *************************/
 
 Route::get('/profil', 'Profil\ProfilController@show');
-Route::post('/profil/email', 'Profil\ProfilController@postEmail');
+Route::post('/profil/updateInformations', 'Profil\ProfilController@postUpdateInformations');
 Route::post('/profil/password', 'Profil\ProfilController@postPassword');
 Route::post('/profil/image', 'Profil\ProfilController@postImage');
 
-Route::get('/respoUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
 
+Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
+
+Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 
 /*******************************
  * Route pour les Enseignants  *
  *******************************/
 
-Route::get('/enseignant/mesEnseignements', 'Enseignant\EnseignantController@show');
+Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
 
 
 
@@ -93,6 +95,8 @@ Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(
 Route::get('/di/annuaire.json', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/annuaire.csv', 'ResponsableDI\AnnuaireController@getAnnuaireCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::post('/di/annuaire/importCSV', 'ResponsableDI\AnnuaireController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/annuaire/delete', 'ResponsableDI\AnnuaireController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::get('/di/annuaire/delete', 'ResponsableDI\AnnuaireController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::get('/di/journal', 'ResponsableDI\JournalController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::post('/di/journal/accept', 'ResponsableDI\JournalController@accept')->middleware(\App\Http\Middleware\AdminMiddleware::class);
@@ -103,7 +107,7 @@ Route::post('/di/formations/add', 'ResponsableDI\FormationsController@add')->mid
 Route::post('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations.csv', 'ResponsableDI\FormationsController@getFormationsCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
-Route::post('/di/formations/import', 'ResponsableDI\FormationsController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/formations/importCSV', 'ResponsableDI\FormationsController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::post('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
@@ -112,8 +116,20 @@ Route::get('/en_attente', function () {
     return view('auth.en_attente');
 });
 
-/*Route::get('/formation/{nom_formation}', function ($nom_formation) {
-    return view('ResponsableFormation\FormationController@show')->with('nom_formation', $nom_formation);
-});*/
+/******************************************
+ * ROUTES pour les RESPONSABLES FORMATION *
+ ******************************************/
 
 Route::get('/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
+
+Route::post('/respoFormation/formation/{nom_formation}/add', 'ResponsableFormation\FormationController@add')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}/add', 'ResponsableFormation\FormationController@add')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/delete', 'ResponsableFormation\FormationController@delete')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}/delete', 'ResponsableFormation\FormationController@delete')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}/export', 'ResponsableFormation\FormationController@getFormationsCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/export', 'ResponsableFormation\FormationController@getFormationsCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/import', 'ResponsableFormation\FormationController@importCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
+
+Route::post('/respoFormation/formation/{nom_formation}/updateResponsable', 'ResponsableFormation\FormationController@updateResponsable')->middleware(\App\Http\Middleware\RespoFormation::class);

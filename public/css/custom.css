@@ -35,6 +35,17 @@ main {
     margin-top: -5px;
 }
 
+.h2{
+    font-family: Trebuchet;    
+    text-align: center;
+    text-decoration: underline;
+    color: black;
+}
+
 option.blue-text {
-    color: 2196F3;
+    color: #2196F3;
+}
+
+.btn-modif-responsable {
+    margin-bottom: 10px;
 }

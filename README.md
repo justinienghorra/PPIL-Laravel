@@ -6,12 +6,14 @@ Projet PPIL - L3 Informatique - FST
 * Après ça, deux utilisateur sont créés :
     * Le resp DI : jean.dupont@gmail.com | password
     * Un utilisateur lambda : utilisateur.lambda@gmail.com | password
+    * Un respo UE : respoue@gmail.com | password
 * La vue du login est dispo sur /login - elle a été générée par Laravel (A modifier)
 * La vue register est dispo sur /register - elle a été générée par Laravel (A modifier)
 * + la vue sur /en_attente
 * La vue journal est dispo sur /di/journal (Quand on est loggé en resp DI)
 * La vue annuaire est dispo sur /di/annuaire (Quand on est loggé en resp DI)
 * La vue profil est dispo sur /profil
+* La vue mesUE est dispo sur /respoUE/mesUE (Quand on est loggé en resp UE)
 * Les vues de la partie modélisation sont dispo sur /conception/xxxxxx
 
 ## Setup avec Docker/laradock

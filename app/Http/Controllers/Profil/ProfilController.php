@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Profil;
 use App\Http\Controllers\Controller;
 use App\Photos;
 use App\Statut;
+use App\EnseignantDansUE;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use App\User;
+use Illuminate\Validation\Rule;
+use Validator;
 
 class ProfilController extends Controller
 {
+
     /**
      * Create a new controller instance.
      *
@@ -22,18 +27,29 @@ class ProfilController extends Controller
         $this->middleware('auth');
     }
 
+
     /**
      * Affiche la vue du profil
      * @return $this
      */
     public function show(){
 
-        // Retourne l'utilisateur courant authentifie...
-        $user = Auth::user();
+
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
 
         $statuts = Statut::all();
 
-        $photoUrl =  Photos::where('id_utilisateur', $user->id)->first();
+        $civilite = User::select('civilite')->where('id', '=', $userA->id)->first();
+        if ($civilite->civilite == "M") $civilites = array("M" => "M","Mme" => "Mme");
+        else $civilites = array("Mme" => "Mme", "M" => "M");
+
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+
         $tmp = null;
 
         if ($photoUrl != null){
@@ -41,7 +57,29 @@ class ProfilController extends Controller
             $tmp = explode("images", $url);
         }
 
-        return view('profil')->with('user', $user)->with('statuts', $statuts)->with('photoUrl', $tmp[1]);
+        $statuts = Statut::all();
+
+
+        $uesUserA = EnseignantDansUE::where('id_utilisateur', $userA->id)->get();
+        $heurestotals = 0;
+        foreach ($uesUserA as $ue) {
+
+            $heurestotals = $heurestotals + $ue->cm_nb_heures*1.5 + ($ue->td_nb_groupes*$ue->td_heures_par_groupe)
+                + ($ue->tp_nb_groupes*$ue->tp_heures_par_groupe)*1.5
+                + ($ue->ei_nb_groupes*$ue->ei_heures_par_groupe)*1.25;
+
+        }
+
+        return view('profil')
+            ->with('userA', $userA)
+            ->with('statuts', $statuts)
+            ->with('civilites', $civilites)
+            ->with('photoUrl', $tmp[1])
+            ->with('respoDI', $respoDI)
+            ->with('respoUE', $respoUE)
+            ->with('heuresTotals', $heurestotals);
+
+
     }
 
 
@@ -54,6 +92,14 @@ class ProfilController extends Controller
         return $statut->statut;
     }
 
+    public static function getStatutVolumeMin(){
+        $user = Auth::user();
+
+        $statut = Statut::select('volumeMin')->where('id', '=', $user->id_statut)->first();
+
+        return $statut->volumeMin;
+    }
+
 
 
     public function postEmail(Request $request){
@@ -61,6 +107,53 @@ class ProfilController extends Controller
 
         $user->updateEmail($request->input('email'));
     }
+
+
+
+
+
+
+    public function postUpdateInformations(Request $request) {
+
+        // Authentification de l'utilisateur
+        $user = Auth::user();
+
+        // Validation des champs
+        $validator = Validator::make($request->all(), [
+            'nom' => 'string|max:255|alpha',
+            'prenom' => 'string|max:255|alpha',
+            'statut' => 'string', Rule::in(["ATER", "PRAG", "Enseignant chercheur", "Doctorant", "Vacataire", "Aucun"]),
+            'civilite' => 'string', Rule::in(["M", "Mme"]),
+            'adresse' => 'string|max:255',
+            'email' => 'string|email|max:255'
+        ]);
+
+        // Si la verification a echoue
+        if ($validator->fails()) {
+            $messages = "Impossible de modifier vos informations, un des champs spécifiés n'est pas valide";
+            return redirect('profil')
+                ->with('messages', $messages);
+        }
+        else {
+
+            // Mise a jour des champs
+            $user->updateNom($request->input('nom'));
+            $user->updatePrenom($request->input('prenom'));
+            $user->updateStatut($request->input('statut') + 1);
+            $user->updateCivilite($request->input('civilite'));
+            $user->updateAdresse($request->input('adresse'));
+            $user->updateEmail($request->input('email'));
+
+            $messages = "Informations modifiées avec succès";
+
+            return redirect('profil')
+                ->with('messages', $messages);
+
+        }
+    }
+
+
+
 
 
     /**
@@ -78,8 +171,11 @@ class ProfilController extends Controller
 
             $user = Auth::user();
             $user->updatePassword(bcrypt($request->input('password')));
+            $messages = "Mot de passe modifié avec succès";
 
-            return redirect('profil')->with('password_message', 'Mot de passe modifié avec succé');
+            return redirect('profil')
+                ->with('password_message', 'Mot de passe modifié avec succé')
+                ->with('messages', $messages);;
         }
     }
 
@@ -126,8 +222,11 @@ class ProfilController extends Controller
 
             $photoUrl =  Photos::where('id_utilisateur', $user->id)->first()->adresse;
             $tmp = explode("images", $photoUrl);
+            $messages = "Photographie de profil modifiée avec succès";
 
-            return redirect('profil')->with('image_message', 'Image modifiée')->with('photoUrl', $tmp[1]);
+            return redirect('profil')
+                ->with('photoUrl', $tmp[1])
+                ->with('messages', $messages);
 
         } else{
 

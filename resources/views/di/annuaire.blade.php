@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.main')
 @section('title')
     Annuaire
 @stop
@@ -14,27 +14,31 @@
 
             @if($users->count() > 0)
 
-                <table border="1" class="bordered">
-                    <thead>
-                    <th>Enseignant</th>
-                    <th>Statut</th>
-                    <th>Adresse mail</th>
-                    </thead>
 
-                    @foreach($users as $user)
-                        <tr>
-                            <td>{{ $user->prenom . " " . $user->nom }}</td>
-                            <td>{{ $user->statut() }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                <button id="{{$user->id}}"
-                                        class="btn btn-flat red-text waves-light btn-delete-utilisateur">Supprimer
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
 
-                </table>
+                @foreach($users as $user)
+
+                    <ul class="collection with-header" id="{{$user->id}}">
+
+                        <li class="collection-header">
+                            <h4>
+                                {{ $user->prenom . " " . $user->nom }}
+                                <a href="#!" id="{{$user->id}}" class="btn-delete-utilisateur secondary-content red-text">
+                                    <i class="material-icons">
+                                        clear
+                                    </i>
+                                </a>
+                            </h4>
+
+                        </li>
+
+                        <li class="collection-item"><strong>Statut</strong><span class="black-text secondary-content">{{ $user->statut() }}</span></li>
+                        <li class="collection-item"><strong>Email</strong><span class="black-text secondary-content">{{ $user->email }}</span></li>
+                    </ul>
+
+                @endforeach
+
+
 
             @endif
 
@@ -47,12 +51,13 @@
     <div id="modal_export" class="modal">
         <div class="modal-content">
             <h4>Exportation des données</h4>
-            <p class="flow-text">Les données concernant les utilisateur seront exportées au format CSV</p>
+            <p>Les données concernant les utilisateur seront exportées au format CSV</p>
         </div>
 
 
         <div class="modal-footer">
-            <a href="/di/annuaire.csv" class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
+            <a href="/di/annuaire.csv" onclick="makeToast('Exportation réussie')"
+               class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
         </div>
     </div>
@@ -61,10 +66,10 @@
         <div class="modal-content">
             <div class="row">
                 <h4>Importation des données</h4>
-                <p class="flow-text">Les données importées doivent être au format CSV. Un header doit être présent et le
+                <p>Les données importées doivent être au format CSV. Un header doit être présent et le
                     séparateur doit
                     être ;</p>
-                <p class="flow-text">Le format à respecter est le suivant : <br><strong>civilite ; prenom ; nom ; email
+                <p>Le format à respecter est le suivant : <br><strong>civilite ; prenom ; nom ; email
                         ; adresse ; statut</strong></p>
             </div>
             <div class="row">
@@ -86,12 +91,13 @@
 
 
         <div class="modal-footer">
-            <a onclick="submitImport() " href="#!" class="btn-large modal-action modal-close waves-effect waves-green btn-flat
+            <a onclick="submitImport(event) " href="#!" class="btn-large modal-action modal-close waves-effect waves-light btn-flat
                purple-text">Importer</a>
             <a href="#!"
-               class="modal-action modal-close waves-effect waves-green btn-flat btn-large red-text">Annuler</a>
+               class="modal-action modal-close waves-effect waves-light btn-flat btn-large red-text">Annuler</a>
         </div>
     </div>
+
 
 
     <script src="/js/jquery-2.1.1.min.js"></script>
@@ -106,22 +112,71 @@
 
     <script>
 
-        // Génération des toast d'erreur
-        $(document).ready(function () {
-            @if (Session::get('messages') !== null && Session::get('messages')['succes'] !== null)
-                var toastContent = '<span>{{Session::get('messages')["succes"]}}</span>';
-                Materialize.toast(toastContent, 5000);
-            @endif
-            @foreach($errors->all() as $error)
-                var toastContent = '';
-                @if (Session::get('messages') !== null)
-                    toastContent = '<span>{{$error}} (ligne {{Session::get('messages')["ligne"]}})</span>';
-                @else
-                    toastContent = '<span>{{$error}}</span>';
-                @endif
+        function makeToast(str) {
+            var toastContent = '<span>' + str + '</span>';
+            Materialize.toast(toastContent, 5000);
+        }
 
-                Materialize.toast(toastContent, 5000);
+
+        $(document).ready(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            // Toast pour action réussie
+
+            @if (Session::get('messages') !== null && isset(Session::get('messages')['succes']))
+                makeToast('{{Session::get('messages')["succes"]}}');
+            @endif
+
+
+            // Toast pour les erreurs
+
+            @foreach($errors->all() as $error)
+                @if (Session::get('messages') !== null)
+                    makeToast('{{$error}} (ligne {{Session::get('messages')["ligne"]}})');
+                @else
+                    makeToast('{{$error}}');
+                @endif
             @endforeach
+
+
+            // Suppression des utilisateurs
+
+            $('.btn-delete-utilisateur').click(function (event) {
+                event.preventDefault();
+                var btn = $(this);
+                btn.blur();
+
+                var id_utilisateur = btn.attr('id');
+                console.log('id_utilisateur : ' + id_utilisateur);
+                $.ajax({
+                    url: "/di/annuaire/delete",
+                    method: "POST",
+                    data: "id_utilisateur=" + id_utilisateur
+                })
+                    .done(function (msg) {
+                        console.log(msg);
+                        if (msg['message'] === 'success') {
+                            makeToast('Utilisateur supprimé');
+                            btn.parent().parent().parent().remove();
+                        } else {
+                            $.each(msg['errors'], function (key, value) {
+                                makeToast('Echec : ' + value);
+                            })
+
+                        }
+                    })
+                    .fail(function (xhr, msg) {
+                        console.log(msg);
+                        console.log(xhr);
+                        alert('ERREUR voir console <3');
+                    });
+            })
         });
     </script>
 @stop
