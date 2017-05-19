@@ -21,25 +21,25 @@ class CreateUniteeEnseignementsTable extends Migration
             $table->string('description');
 
 
-            $table->integer('cm_volume_attendu')->unsigned();
+            $table->integer('cm_volume_attendu')->unsigned()->default(0);
 
-            $table->integer('td_volume_attendu')->unsigned();
+            $table->integer('td_volume_attendu')->unsigned()->default(0);
 
-            $table->integer('tp_volume_attendu')->unsigned();
+            $table->integer('tp_volume_attendu')->unsigned()->default(0);
 
-            $table->integer('ei_volume_attendu')->unsigned();
-
-
-            $table->integer('td_nb_groupes_attendus')->unsigned();
-
-            $table->integer('tp_nb_groupes_attendus')->unsigned();
-
-            $table->integer('ei_nb_groupes_attendus')->unsigned();
+            $table->integer('ei_volume_attendu')->unsigned()->default(0);
 
 
-            $table->boolean('attente_validation');
+            $table->integer('td_nb_groupes_attendus')->unsigned()->default(0);
 
-            $table->integer('id_formation')->unsigned();
+            $table->integer('tp_nb_groupes_attendus')->unsigned()->default(0);
+
+            $table->integer('ei_nb_groupes_attendus')->unsigned()->default(0);
+
+
+            $table->boolean('attente_validation')->default(false);
+
+            $table->integer('id_formation')->unsigned()->nullable();
             $table->foreign('id_formation')->references('id')->on('formations')->onDelete('cascade');
 
         });
