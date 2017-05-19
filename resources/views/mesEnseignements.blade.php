@@ -3,9 +3,14 @@
 Liste des enseignements auxquels vous participez
 @stop
 @section('content')
+    <style>
+        table { border: none; border-collapse: collapse; }
+        table td { border-left: 1px solid #ccc; }
+        table th { border-left: 1px solid #ccc; }
 
+    </style>
 
- <ul class="collapsible white" data-collapsible="expandable">
+    <ul class="collapsible white" data-collapsible="expandable">
         <li class="collection-header orange-text"><h4 class="center">Liste des enseignements auxquels vous participez</h4></li>
  @foreach($enseignements as $enseignement)
     <li>
@@ -48,7 +53,7 @@ Liste des enseignements auxquels vous participez
                         </tr>
                         <tr>
                           <th>Volume affecté</th>
-                          <td>{!! $enseignement->ei_volume_affecte !!}</td>
+                          <td>{{--{!! $volumeAffecteArray[$enseignement->id_unit_ens]->ei_volume_affecte !!}--}}</td>
                           <td><span class=" green-text">{!! $enseignement->cm_volume_affecte !!}</span></td>
                           <td><span class=" green-text">{!! $enseignement->td_volume_affecte !!}</span></td>
                           <td><span class=" green-text">{!! $enseignement->tp_volume_affecte !!}</span></td>
@@ -111,13 +116,13 @@ Liste des enseignements auxquels vous participez
                                 <tr>
 
                                     <td>{!! $enseignant->nom . ' ' . $enseignant->prenom !!} </td>
-                                    <td class="center">{!! $enseignant->cm_volume_affecte !!}</td>
-                                    <td class="center">{!! $enseignant->ei_nb_groupes_affectes !!}</td>
-                                    <td class="center">{!! $enseignant->ei_volume_affecte !!}</td>
-                                    <td class="center">{!! $enseignant->td_nb_groupes_affectes !!}</td>
-                                    <td class="center">{!! $enseignant->td_volume_affecte !!}</td>
-                                    <td class="center">{!! $enseignant->tp_nb_groupes_affectes !!}</td>
-                                    <td class="center">{!! $enseignant->tp_volume_affecte !!}</td>
+                                    <td class="center">{!! $enseignant->cm_nb_heures !!}</td>
+                                    <td class="center">{!! $enseignant->ei_nb_groupes !!}</td>
+                                    <td class="center">{!! $enseignant->ei_heures_par_groupe !!}</td>
+                                    <td class="center">{!! $enseignant->td_nb_groupes !!}</td>
+                                    <td class="center">{!! $enseignant->td_heures_par_groupe !!}</td>
+                                    <td class="center">{!! $enseignant->tp_nb_groupes !!}</td>
+                                    <td class="center">{!! $enseignant->tp_heures_par_groupe !!}</td>
                                 </tr>
 
                             @endif

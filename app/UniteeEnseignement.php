@@ -13,8 +13,9 @@ class UniteeEnseignement extends Model
      */
     protected $table = 'unitee_enseignements';
 
-	/**
-     * Retourne le responsable de l'UE
+
+    /**
+     * Retourne le responsable de l'ue
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -23,6 +24,7 @@ class UniteeEnseignement extends Model
     }
 
     /**
+
      * Retourne faux si l'UE n'a pas de responsable
      *
      * @return bool
@@ -30,4 +32,43 @@ class UniteeEnseignement extends Model
     public function hasResponsable() {
         return $this->responsable != null;
     }
+
+    public function enseignants() {
+        return $this->hasMany('App\EnseignantDansUE', 'id_ue');
+    }
+
+    public function getCMNbHeuresAffectees() {
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += $enseignant->cm_nb_heures;
+        }
+        return $nbHeures;
+    }
+
+    public function getEINbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->ei_nb_groupes * $enseignant->ei_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
+
+    public function getTDNbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->td_nb_groupes * $enseignant->td_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
+
+    public function getTPNbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->tp_nb_groupes * $enseignant->tp_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
 }

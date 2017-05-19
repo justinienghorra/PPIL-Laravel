@@ -82,9 +82,9 @@ Route::post('/profil/image', 'Profil\ProfilController@postImage');
  ***************************/
 Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
 
-Route::get('/respoUE/addEnseignant/{id_enseignant}/{id_ue}', 'ResponsableUE\MesUEController@addEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::post('/respoUE/addEnseignant', 'ResponsableUE\MesUEController@addEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
 
-Route::get('respoUE/deleteEnseignant/{id_enseignant}/{id_ue}', 'ResponsableUE\MesUEController@deleteEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::post('/respoUE/deleteEnseignant', 'ResponsableUE\MesUEController@deleteEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
 
 
 
@@ -123,8 +123,20 @@ Route::get('/en_attente', function () {
     return view('auth.en_attente');
 });
 
-/*Route::get('/formation/{nom_formation}', function ($nom_formation) {
-    return view('ResponsableFormation\FormationController@show')->with('nom_formation', $nom_formation);
-});*/
+/******************************************
+ * ROUTES pour les RESPONSABLES FORMATION *
+ ******************************************/
 
 Route::get('/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
+
+Route::post('/respoFormation/formation/{nom_formation}/add', 'ResponsableFormation\FormationController@add')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}/add', 'ResponsableFormation\FormationController@add')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/delete', 'ResponsableFormation\FormationController@delete')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}/delete', 'ResponsableFormation\FormationController@delete')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::get('/respoFormation/formation/{nom_formation}/export', 'ResponsableFormation\FormationController@getFormationsCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/export', 'ResponsableFormation\FormationController@getFormationsCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/import', 'ResponsableFormation\FormationController@importCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
+
+Route::post('/respoFormation/formation/{nom_formation}/updateResponsable', 'ResponsableFormation\FormationController@updateResponsable')->middleware(\App\Http\Middleware\RespoFormation::class);

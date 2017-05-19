@@ -28,11 +28,26 @@ class UsersTableSeeder extends Seeder
         $respDI->id_utilisateur = User::where('email', "jean.dupont@gmail.com")->first()->id;
         $respDI->save();
 
-        // Ajout d'utilisateurs lambda
+
+        // Ajout d'un utilisateur lambda Respo L1 Info
+
         $user = new User;
         $user->nom = "Utilisateur";
         $user->prenom = "Lambda";
         $user->email = "utilisateur.lambda@gmail.com";
+        $user->password = bcrypt("password");
+        $user->adresse = "49 Rue de la Liberté, 54000 Nancy";
+        $user->civilite = "M";
+        $user->attente_validation = false;
+        $user->id_statut = \App\Statut::where('statut', 'Doctorant')->first()->id;
+        $user->save();
+
+
+        // Ajout d'un respo UE Compil
+        $user = new User;
+        $user->nom = "UserRespo";
+        $user->prenom = "Compil";
+        $user->email = "respo.compil@gmail.com";
         $user->password = bcrypt("password");
         $user->adresse = "49 Rue de la Liberté, 54000 Nancy";
         $user->civilite = "M";

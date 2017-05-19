@@ -37,9 +37,9 @@ class ProfilController extends Controller
 
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
-	$respoDI = $userA->estResponsableDI();
+        $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
-        
+
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
 
         $statuts = Statut::all();
@@ -56,18 +56,18 @@ class ProfilController extends Controller
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
-        
+
         $statuts = Statut::all();
-        
-	
+
+
         $uesUserA = EnseignantDansUE::where('id_utilisateur', $userA->id)->get();
         $heurestotals = 0;
         foreach ($uesUserA as $ue) {
-        
-        $heurestotals = $heurestotals + $ue->cm_nb_heures*1.5 + ($ue->td_nb_groupes*$ue->td_heures_par_groupe)
-			+ ($ue->tp_nb_groupes*$ue->tp_heures_par_groupe)*1.5
-			+ ($ue->ei_nb_groupes*$ue->ei_heures_par_groupe)*1.25;
-        
+
+            $heurestotals = $heurestotals + $ue->cm_nb_heures*1.5 + ($ue->td_nb_groupes*$ue->td_heures_par_groupe)
+                + ($ue->tp_nb_groupes*$ue->tp_heures_par_groupe)*1.5
+                + ($ue->ei_nb_groupes*$ue->ei_heures_par_groupe)*1.25;
+
         }
 
         return view('profil')

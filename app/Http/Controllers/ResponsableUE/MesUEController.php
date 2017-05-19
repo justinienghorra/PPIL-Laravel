@@ -52,29 +52,40 @@ class MesUEController extends Controller
             $id_ue = $ueTemp['id_ue'];
 
             //On récupère toutes les infos de l'UE
-            $ues[$id_ue] = UniteeEnseignement::where('id', '=', $id_ue)->first();
+            $ues[$id_ue] = UniteeEnseignement::where('id', $id_ue)->first();
 
             //On récupère aussi tous les enseignants en lien avec l'UE (avec leur nom et leur prénom)
-            $enseignantsParUE[$id_ue] = EnseignantDansUE::where('id_ue', '=', $id_ue)->join('users', 'users.id', '=', 'enseignant_dans_u_es.id_utilisateur')->get(); //tableau 3D (id UE -> id enseignant -> données de l'enseignant en lien avec l'UE)
+            $enseignantsParUE[$id_ue] = EnseignantDansUE::where('id_ue', $id_ue)->join('users', 'users.id', '=', 'enseignant_dans_u_es.id_utilisateur')->get(); //tableau 3D (id UE -> id enseignant -> données de l'enseignant en lien avec l'UE)
 
         }
 
         return view('respoUE/affichageUEs')->with('userA', $userA)->with('photoUrl', $tmp[1])->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('users', $users)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
-    public function addEnseignant($id_enseignant, $id_ue)
+    public function addEnseignant(Request $request)
     {
-        $enseignantDsUE = new EnseignantDansUE();
-        $enseignantDsUE->id_utilisateur = $id_enseignant;
-        $enseignantDsUE->id_ue = $id_ue;
-        $enseignantDsUE->save();
+        $id_ue = $request->input('id_ue');
+        $id_enseignant = $request->input('id_enseignant');
+        $verifExistenceEnseignant = EnseignantDansUE::where(['id_ue' => $id_ue, 'id_utilisateur' => $id_enseignant])->first();
+        if(empty($verifExistenceEnseignant)) {
+            $enseignantDsUE = new EnseignantDansUE();
+            $enseignantDsUE->id_utilisateur = $id_enseignant;
+            $enseignantDsUE->id_ue = $request->input('id_ue');
+            $enseignantDsUE->save();
+        }
         return redirect('/respoUE/mesUE');
     }
 
-    public function deleteEnseignant($id_enseignant, $id_ue)
-    {
-        $enseignantDsUE = EnseignantDansUE::where(['id_utilisateur' => $id_enseignant, 'id_ue' => $id_ue ])->first();
-        $enseignantDsUE->delete();
+    public function deleteEnseignant(Request $request)
+    {   
+        //Tests sur le contenu du tableau ? Affichage erreur (aucune case cochée) ?
+        $validator = Validator::make($request->all(), ['enseignants_a_supprimer' => 'required']);
+        if (!$validator->fails()) {
+            foreach($request->input('enseignants_a_supprimer') as $idEnseignantASupprimer) {
+                $enseignantDsUE = EnseignantDansUE::where(['id_utilisateur' => $idEnseignantASupprimer, 'id_ue' => $request->input('id_ue') ])->first();
+                $enseignantDsUE->delete();
+            }
+        }
         return redirect('/respoUE/mesUE');
     }
     
