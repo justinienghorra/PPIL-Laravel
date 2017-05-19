@@ -1,218 +1,291 @@
 <?php
-	function redOrGreen($attendu, $affecte){
-		if($attendu == $affecte){
-			return '<span class=" green-text">';
-		}
-		return '<span class=" red-text">';
-	}
+function redOrGreen($attendu, $affecte)
+{
+    if ($attendu == $affecte) {
+        return '<span class=" green-text">';
+    }
+    return '<span class=" red-text">';
+}
 ?>
 
 @extends('layouts.main')
 @section('title')
-Liste de vos UE
+    Liste de vos UE
 @stop
 @section('content')
-<style>
-	table { border: none; border-collapse: collapse; }
-	table td { border-left: 1px solid #ccc; }
-	table th { border-left: 1px solid #ccc; }
+    <style>
+        table {
+            border: none;
+            border-collapse: collapse;
+        }
 
-</style>  
-<!----------------------------------- 
+        table td {
+            border-left: 1px solid #ccc;
+        }
 
-				TODO
-Back-end : Calcul des volumes affectés
-Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp attendus/affectés, etc. 
+        table th {
+            border-left: 1px solid #ccc;
+        }
 
------------------------------------->
+    </style>
+    <!-----------------------------------
+
+                    TODO
+    Back-end : Calcul des volumes affectés
+    Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp attendus/affectés, etc.
+
+    ------------------------------------>
 
 
- <ul class="collapsible white" data-collapsible="expandable">
-    <li class="collection-header orange-text">
-    	<h4 class="center">Liste de vos UE</h4>
-    </li>
-@foreach($ues as $ue)
+    <ul class="collapsible white" data-collapsible="expandable">
+        <li class="collection-header orange-text">
+            <h4 class="center">Liste de vos UE</h4>
+        </li>
+        @foreach($ues as $ue)
 
-	<?php
-		$nbEnseignants = 0; 
-		$volumeCMAffecte = 0; 
-		$volumeTDAffecte = 0;
-		$volumeTPAffecte = 0;
-		$volumeEIAffecte = 0;
-		$nbGroupesTDAffectes = 0;
-		$nbGroupesTPAffectes = 0;
-		$nbGroupesEIAffectes = 0;
-		foreach($enseignants[$ue->id] as $enseignant) {
-			$nbEnseignants++;
-			$volumeCMAffecte += $enseignant->cm_nb_heures;
-			$volumeTDAffecte += $enseignant->td_heures_par_groupe;
-			$volumeTPAffecte += $enseignant->tp_heures_par_groupe;
-			$volumeEIAffecte += $enseignant->ei_heures_par_groupe;
-			$nbGroupesTDAffectes += $enseignant->td_nb_groupes;
-			$nbGroupesTPAffectes += $enseignant->tp_nb_groupes;
-			$nbGroupesEIAffectes += $enseignant->ei_nb_groupes;
-		}
-		$volumeTDAffecte = $volumeTDAffecte/$nbEnseignants;
-		$volumeTPAffecte = $volumeTPAffecte/$nbEnseignants;
-		$volumeEIAffecte = $volumeEIAffecte/$nbEnseignants;
-	?>
+            <?php
+            $nbEnseignants = 0;
+            $volumeCMAffecte = 0;
+            $volumeTDAffecte = 0;
+            $volumeTPAffecte = 0;
+            $volumeEIAffecte = 0;
+            $nbGroupesTDAffectes = 0;
+            $nbGroupesTPAffectes = 0;
+            $nbGroupesEIAffectes = 0;
+            foreach ($enseignants[$ue->id] as $enseignant) {
+                $nbEnseignants++;
+                $volumeCMAffecte += $enseignant->cm_nb_heures;
+                $volumeTDAffecte += $enseignant->td_heures_par_groupe;
+                $volumeTPAffecte += $enseignant->tp_heures_par_groupe;
+                $volumeEIAffecte += $enseignant->ei_heures_par_groupe;
+                $nbGroupesTDAffectes += $enseignant->td_nb_groupes;
+                $nbGroupesTPAffectes += $enseignant->tp_nb_groupes;
+                $nbGroupesEIAffectes += $enseignant->ei_nb_groupes;
+            }
+            $volumeTDAffecte = $volumeTDAffecte / $nbEnseignants;
+            $volumeTPAffecte = $volumeTPAffecte / $nbEnseignants;
+            $volumeEIAffecte = $volumeEIAffecte / $nbEnseignants;
+            ?>
 
-    <li>
-	  	<div class="collapsible-header"><strong class="orange-text">{{$ue['nom']}}</strong></div>
-	  	<div class="collapsible-body white">
-			<div class="row">
-				<h4 class="header light">{{$ue['description']}}</h4>
-				<blockquote>
-					<h4 class="light">Synthèse</h4>
-	            </blockquote>	
-	        </div>
-            <div class="row">
-            	<table class="bordered">
-	            	<thead>
-                        <tr>
-                          <th class="center"></th>
-                          <th class="center">CM</th>
-                          <th class="center">TD</th>
-                          <th class="center">TP</th>
-                          <th class="center">EI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-	                    <tr>
-                          <th class="center">Volume attendu</th>
-                          <td class="center">{{$ue->cm_volume_attendu}}</td>
-                          <td class="center">{{$ue->td_volume_attendu}}</td>
-                          <td class="center">{{$ue->tp_volume_attendu}}</td>
-                          <td class="center">{{$ue->ei_volume_attendu}}</td>
-                        </tr>
-                    	<tr>
-                          <th class="center">Volume affecté</th>
-                          <td class="center">
-                          	{!! redOrGreen($ue->cm_volume_attendu, $volumeCMAffecte) !!}
-                          	{{$volumeCMAffecte}}
-                          </td>
-                          <td class="center">
-                          	{!! redOrGreen($ue->td_volume_attendu, $volumeTDAffecte) !!}
-                          	{{$volumeTDAffecte}}
-                          </td>
-                          <td class="center">
-							{!! redOrGreen($ue->tp_volume_attendu, $volumeTPAffecte) !!}
-                          	{{$volumeTPAffecte}}
-                          </td>
-                          <td class="center">
-                          	{!! redOrGreen($ue->ei_volume_attendu, $volumeEIAffecte) !!}
-                          	{{$volumeEIAffecte}}
-                          </td>
-                        </tr>
-                        <tr>
-                          <th class="center">Nombre de groupes attendus</th>
-                          <td></td>
-                          <td class="center">{{$ue->td_nb_groupes_attendus}}</td>
-                          <td class="center">{{$ue->tp_nb_groupes_attendus}}</td>
-                          <td class="center">{{$ue->ei_nb_groupes_attendus}}</td>
-                        </tr>
-                        <tr>
-                          <th class="center">Nombre de groupes affectés</th>
-                          <td></td>
-                          <td class="center">
-                          	{!! redOrGreen($ue->td_nb_groupes_attendus, $nbGroupesTDAffectes) !!}
-                          	{{$nbGroupesTDAffectes}}
-                          </td>
-                          <td class="center">
-                          	{!! redOrGreen($ue->tp_nb_groupes_attendus, $nbGroupesTPAffectes) !!}
-                          	{{$nbGroupesTPAffectes}}
-                          </td>
-                          <td class="center">
-                          	{!! redOrGreen($ue->ei_nb_groupes_attendus, $nbGroupesEIAffectes) !!}
-                          	{{$nbGroupesEIAffectes}}
-                          </td>
-                        </tr>
-                    </tbody>
-            	</table>
-            </div>
-            <br>
-            <div class="row">
-                <blockquote class="hide-on-med-and-down"><h4 class="light">Détails par enseignant</h4></blockquote>
+            <li>
+                <div class="collapsible-header"><strong class="orange-text">{{$ue['nom']}}</strong></div>
+                <div class="collapsible-body white">
+                    <div class="row">
+                        <h4 class="header light">{{$ue['description']}}</h4>
+                        <blockquote>
+                            <h4 class="light">Synthèse</h4>
+                        </blockquote>
+                    </div>
+                    <div class="row">
+                        <table class="bordered">
+                            <thead>
+                            <tr>
+                                <th class="center"></th>
+                                <th class="center">CM</th>
+                                <th class="center">TD</th>
+                                <th class="center">TP</th>
+                                <th class="center">EI</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th class="center">Volume attendu</th>
+                                <td class="center">{{$ue->cm_volume_attendu}}</td>
+                                <td class="center">{{$ue->td_volume_attendu}}</td>
+                                <td class="center">{{$ue->tp_volume_attendu}}</td>
+                                <td class="center">{{$ue->ei_volume_attendu}}</td>
+                            </tr>
+                            <tr>
+                                <th class="center">Volume affecté</th>
+                                <td class="center">
+                                    {!! redOrGreen($ue->cm_volume_attendu, $volumeCMAffecte) !!}
+                                    {{$volumeCMAffecte}}
+                                </td>
+                                <td class="center">
+                                    {!! redOrGreen($ue->td_volume_attendu, $volumeTDAffecte) !!}
+                                    {{$volumeTDAffecte}}
+                                </td>
+                                <td class="center">
+                                    {!! redOrGreen($ue->tp_volume_attendu, $volumeTPAffecte) !!}
+                                    {{$volumeTPAffecte}}
+                                </td>
+                                <td class="center">
+                                    {!! redOrGreen($ue->ei_volume_attendu, $volumeEIAffecte) !!}
+                                    {{$volumeEIAffecte}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="center">Nombre de groupes attendus</th>
+                                <td></td>
+                                <td class="center">{{$ue->td_nb_groupes_attendus}}</td>
+                                <td class="center">{{$ue->tp_nb_groupes_attendus}}</td>
+                                <td class="center">{{$ue->ei_nb_groupes_attendus}}</td>
+                            </tr>
+                            <tr>
+                                <th class="center">Nombre de groupes affectés</th>
+                                <td></td>
+                                <td class="center">
+                                    {!! redOrGreen($ue->td_nb_groupes_attendus, $nbGroupesTDAffectes) !!}
+                                    {{$nbGroupesTDAffectes}}
+                                </td>
+                                <td class="center">
+                                    {!! redOrGreen($ue->tp_nb_groupes_attendus, $nbGroupesTPAffectes) !!}
+                                    {{$nbGroupesTPAffectes}}
+                                </td>
+                                <td class="center">
+                                    {!! redOrGreen($ue->ei_nb_groupes_attendus, $nbGroupesEIAffectes) !!}
+                                    {{$nbGroupesEIAffectes}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <blockquote class="hide-on-med-and-down"><h4 class="light">Détails par enseignant</h4>
+                        </blockquote>
 
-	                <table class="hide-on-med-and-down bordered">
-		                <thead>
-		                  <tr>
-		                      
-		                      <th class="center">Nom</th>
-		                      <th class="center">CM</th>
-		                      <th class="center" colspan="2">TD</th>
-		                      <th class="center" colspan="2">TP</th>
-		                      <th class="center" colspan="2">EI</th>
-		                  </tr>
-		                </thead>
+                        <table class="hide-on-med-and-down bordered">
+                            <thead>
+                            <tr>
 
-		                <thead>
-		                  <tr>
-		                      <th></th>
-		                      
-		                      <th class="center">Heures</th>
-		                      <th class="center">Nombre de groupes</th>
-		                      <th class="center">Heures par groupe</th>
-		                      <th class="center">Nombre de groupes</th>
-		                      <th class="center">Heures par groupe</th>
-		                      <th class="center">Nombre de groupes</th>
-		                      <th class="center">Heures par groupe</th>
-		                      
-		                  </tr>
-		                </thead>
-		                <tbody>
-		                	@foreach($enseignants[$ue->id] as $enseignant)
-		                	<tr>
-		                		<td class="center">{{$enseignant->nom . " " . $enseignant->prenom}}</td>
-		                		<td class="center">{{$enseignant->cm_nb_heures}}</td>
-		                		<td class="center">{{$enseignant->td_nb_groupes}}</td>
-		                		<td class="center">{{$enseignant->td_heures_par_groupe}}</td>
-		                		<td class="center">{{$enseignant->tp_nb_groupes}}</td>
-		                		<td class="center">{{$enseignant->tp_heures_par_groupe}}</td>
-		                		<td class="center">{{$enseignant->ei_nb_groupes}}</td>
-		                		<td class="center">{{$enseignant->ei_heures_par_groupe}}</td>
-		                	</tr>
-		          		</tbody>
-		                	@endforeach
-		            </table>
-		        </div>
-                <!-- end collapsible body -->
-                <a href="#modal-gerer-enseignants-{{$ue->id}}" class="btn btn-flat green-text waves-effect waves-light">Gérer les enseignants</a>
-                <a href="#modal-gerer-horaires-{{$ue->id}}" class="right btn btn-flat blue-text waves-effect waves-light">Gérer les horaires</a>
-                <!-------------------------->
-		    </div>
+                                <th class="center">Nom</th>
+                                <th class="center">CM</th>
+                                <th class="center" colspan="2">TD</th>
+                                <th class="center" colspan="2">TP</th>
+                                <th class="center" colspan="2">EI</th>
+                            </tr>
+                            </thead>
 
-  	</li>
+                            <thead>
+                            <tr>
+                                <th></th>
 
-        <!-- Génération modals -->
+                                <th class="center">Heures</th>
+                                <th class="center">Nombre de groupes</th>
+                                <th class="center">Heures par groupe</th>
+                                <th class="center">Nombre de groupes</th>
+                                <th class="center">Heures par groupe</th>
+                                <th class="center">Nombre de groupes</th>
+                                <th class="center">Heures par groupe</th>
 
-        <div class="modal" id="modal-gerer-enseignants-{{$ue->id}}">
-            <div class="modal-content">
-                <h4>Gestion des enseignants de l'UE {{$ue->nom}}</h4>
-                <div class="row">
-                    <form action="" class="col s12">
-                        @foreach($ue->enseignants as $enseignant)
-                            <input type="checkbox" id="test5" />
-                            <label for="test5">Red</label>
-                        @endforeach
-                    </form>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($enseignants[$ue->id] as $enseignant)
+                                <tr>
+                                    <td class="center">{{$enseignant->nom . " " . $enseignant->prenom}}</td>
+                                    <td class="center">{{$enseignant->cm_nb_heures}}</td>
+                                    <td class="center">{{$enseignant->td_nb_groupes}}</td>
+                                    <td class="center">{{$enseignant->td_heures_par_groupe}}</td>
+                                    <td class="center">{{$enseignant->tp_nb_groupes}}</td>
+                                    <td class="center">{{$enseignant->tp_heures_par_groupe}}</td>
+                                    <td class="center">{{$enseignant->ei_nb_groupes}}</td>
+                                    <td class="center">{{$enseignant->ei_heures_par_groupe}}</td>
+                                </tr>
+                            </tbody>
+                            @endforeach
+                        </table>
+                    </div>
+                    <!-- end collapsible body -->
+                    <a href="#modal-gerer-enseignants-{{$ue->id}}"
+                       class="btn btn-flat green-text waves-effect waves-light">Gérer les enseignants</a>
+                    <a href="#modal-gerer-horaires-{{$ue->id}}"
+                       class="right btn btn-flat blue-text waves-effect waves-light">Gérer les horaires</a>
+                    <!-------------------------->
                 </div>
 
+            </li>
 
+            <!-- Génération modals -->
 
+            <div class="modal" id="modal-gerer-enseignants-{{$ue->id}}">
+                <div class="modal-content">
+                    <h4>Gestion des enseignants de l'UE {{$ue->nom}}</h4>
 
+                    <blockquote><h4>Suppression d'enseignants</h4></blockquote>
+
+                    <div class="row">
+                        <form class="col s12" action="#!">
+                            @foreach($ue->enseignants as $enseignant)
+                                <p>
+                                    <input name="enseignants_a_supprimer[]" type="checkbox"
+                                           value="{{$enseignant->user->id}}" id="{{$enseignant->user->id}}"/>
+                                    <label for="{{$enseignant->user->id}}">{{ $enseignant->user->prenom . " " . $enseignant->user->nom }}</label>
+                                </p>
+                            @endforeach
+                            <button onclick="event.preventDefault();makeToast('TODO : suppression enseignant')"
+                                    class="right btn btn-flat red-text" type="submit">Supprimer
+                            </button>
+                        </form>
+                    </div>
+
+                    <blockquote><h4>Ajout d'un enseignant</h4></blockquote>
+
+                    <div class="row">
+                        <form class="col s12" action="#!">
+                            <select name="ajout_enseignant" id="">
+                                @foreach(App\User::all() as $user)
+                                    <option value="{{$user->id}}">{{$user->prenom . " " . $user->nom}}</option>
+                                @endforeach
+                            </select>
+                            <button onclick="event.preventDefault();makeToast('TODO : ajout enseignant')"
+                                    class="right btn btn-flat green-text" type="submit">Ajouter
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="modal" id="modal-gerer-horaires-{{$ue->id}}">
-            <div class="modal-content">
-                <h4>Gestion des horaires de l'UE {{$ue->nom}}</h4>
+            <div class="modal" id="modal-gerer-horaires-{{$ue->id}}">
+                <div class="modal-content">
+                    <h4>Gestion des horaires de l'UE {{$ue->nom}}</h4>
+                    <blockquote><h4>Modification des horaires globaux</h4></blockquote>
+                    {!! Form::open(['url' => '#!'], $attributes = ['class' => 'col s12']) !!}
+                    <div class="row">
+                        <div class="col s6">
+                            {!! Form::label('cm_nb_heures_attendues', 'CM : Nombre d\'heures attendues') !!}
+                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            {!! Form::label('cm_nb_heures_attendues', 'TD : Nombre d\'heures attendues') !!}
+                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                        </div>
+                        <div class="col s6">
+                            {!! Form::label('cm_nb_heures_attendues', 'TD : Nombre de groupes attendus') !!}
+                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            {!! Form::label('cm_nb_heures_attendues', 'TP : Nombre d\'heures attendues') !!}
+                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                        </div>
+                        <div class="col s6">
+                            {!! Form::label('cm_nb_heures_attendues', 'TP : Nombre de groupes attendus') !!}
+                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            {!! Form::label('cm_nb_heures_attendues', 'EI : Nombre d\'heures attendues') !!}
+                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                        </div>
+                        <div class="col s6">
+                            {!! Form::label('cm_nb_heures_attendues', 'EI : Nombre de groupes attendus') !!}
+                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                        </div>
+                    </div>
+
+                    {!! Form::close() !!}
+                </div>
             </div>
-        </div>
 
-     @endforeach
-      
-  </ul>
+        @endforeach
+
+    </ul>
 
 
 
