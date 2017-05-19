@@ -54,7 +54,7 @@ class ProfilController extends Controller
         }
         
         $statuts = Statut::all();
-        
+
 
         return view('profil')
             ->with('userA', $userA)
