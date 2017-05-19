@@ -12,4 +12,12 @@ class ResponsableUniteeEnseignement extends Model
      * @var string
      */
     protected $table = 'responsable_unitee_enseignements';
+
+    /**
+     * Retourne l'utilisateur associé
+     *
+     */
+    public function user() {
+        return $this->belongsTo('App\User', 'id_utilisateur');
+    }
 }

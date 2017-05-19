@@ -20,6 +20,7 @@ class CreateUniteeEnseignementsTable extends Migration
             $table->string('nom');
             $table->string('description');
 
+
             $table->integer('cm_volume_attendu')->unsigned();
 
             $table->integer('td_volume_attendu')->unsigned();

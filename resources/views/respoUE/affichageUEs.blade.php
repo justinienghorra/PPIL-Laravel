@@ -176,12 +176,40 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
 		                	@endforeach
 		            </table>
 		        </div>
+                <!-- end collapsible body -->
+                <a href="#modal-gerer-enseignants-{{$ue->id}}" class="btn btn-flat green-text waves-effect waves-light">Gérer les enseignants</a>
+                <a href="#modal-gerer-horaires-{{$ue->id}}" class="right btn btn-flat blue-text waves-effect waves-light">Gérer les horaires</a>
+                <!-------------------------->
 		    </div>
 
   	</li>
-@endforeach
+
+        <!-- Génération modals -->
+
+        <div class="modal" id="modal-gerer-enseignants-{{$ue->id}}">
+            <div class="modal-content">
+                <h4>Gestion des enseignants de l'UE {{$ue->nom}}</h4>
+                <div class="row">
+                    <form action="" class="col s12">
+                    </form>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+        <div class="modal" id="modal-gerer-horaires-{{$ue->id}}">
+            <div class="modal-content">
+                <h4>Gestion des horaires de l'UE {{$ue->nom}}</h4>
+            </div>
+        </div>
+
+     @endforeach
       
   </ul>
+
 
 
 @stop

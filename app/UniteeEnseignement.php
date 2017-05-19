@@ -13,8 +13,9 @@ class UniteeEnseignement extends Model
      */
     protected $table = 'unitee_enseignements';
 
-	/**
-     * Retourne le responsable de l'UE
+
+    /**
+     * Retourne le responsable de l'ue
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -23,11 +24,24 @@ class UniteeEnseignement extends Model
     }
 
     /**
+
      * Retourne faux si l'UE n'a pas de responsable
      *
      * @return bool
      */
     public function hasResponsable() {
         return $this->responsable != null;
+    }
+
+    public function enseignants() {
+        return $this->hasMany('App\EnseignantDansUE', 'id_ue');
+    }
+
+    public function getCMNbHeuresAffectees() {
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += $enseignant->cm_nb_heures;
+        }
+        return $nbHeures;
     }
 }
