@@ -102,7 +102,7 @@
 
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/materialize.js"></script>
-    <script src="https://unpkg.com/vue"></script>
+    <script src="/js/vue.min.js"></script>
     <script src="/js/di/FormationsDIComponents.js"></script>
     <script src="/js/utils.js"></script>
 

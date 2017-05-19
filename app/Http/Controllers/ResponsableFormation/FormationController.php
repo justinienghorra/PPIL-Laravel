@@ -45,7 +45,7 @@ class FormationController extends Controller
             $tmp = explode("images", $url);
         }
 
-        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI, 'photoURL' => $photoUrl]);
+        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI, 'photoUrl' => $photoUrl]);
     }
 
     /**
