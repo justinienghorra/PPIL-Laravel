@@ -87,6 +87,7 @@ Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@sho
  *******************************/
 
 Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
+Route::post('/mesEnseignements/modificationUE', 'Enseignant\EnseignantController@updateUE');
 
 
 

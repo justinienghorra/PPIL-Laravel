@@ -166,7 +166,7 @@
         <div class="modal" id="gerer-mes-horaires-{{$enseignantDansUE->id}}">
             <div class="modal-content">
                 <h4>Modification de vos horaires pour l'UE {{$enseignantDansUE->enseignement->nom}}</h4>
-                {!! Form::open(['url' => '#!']) !!}
+                {!! Form::open(['url' => '/mesEnseignements/modificationUE']) !!}
                 <div class="row">
                     {!! Form::hidden('id_utilisateur', $enseignantDansUE->user->id) !!}
                     <div class="col s6">
@@ -203,9 +203,10 @@
                         {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
                         {!! Form::number('ei_heures_par_groupe', $value = $enseignantDansUE->td_heures_par_groupe) !!}
                     </div>
-                    <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires')"
+                    {{--<button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires')"
                             class="btn btn-flat green-text right" type="submit">Valider - TODO : Backend
-                    </button>
+                    </button>--}}
+                        {!! Form::submit('Valider', $attributes = [ 'class' => 'btn btn-flat green-text right']) !!}
                 </div>
                 {!! Form::close() !!}
             </div>

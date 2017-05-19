@@ -28,8 +28,6 @@ class EnseignantController extends Controller
         $tmp = null;
 
         //recuperation des enseignements de l'utilisateur
-
-        //$enseignements = $userA->getEnseignements();
         $enseignantDansUEs = $userA->enseignantDansUEs;
 
 
@@ -42,25 +40,7 @@ class EnseignantController extends Controller
             $tmp = explode("images", $url);
         }
 
-        /*$enseignantsArray[] = null;
-        $volumeAffecteArray[] = null;
 
-        foreach ($enseignements as $enseignement){
-            //on recupere les enseignants
-            $enseignants = EnseignantDansUE::getEnseignantsDansUE($enseignement->id_unit_ens);
-
-            //recupere les volumes affectes des TP, TD... de chaque UE
-            //$volumeAffecte = EnseignantDansUE::getVolumeAffectee($enseignement->id_unit_ens);
-
-            array_push($enseignantsArray, $enseignants);
-
-            //array_push($volumeAffecteArray, $volumeAffecte);
-
-        }*/
-
-        //->with('volumeAffecteArray', $volumeAffecteArray)
-        //->with('enseignantsArray', $enseignantsArray)
-        //->with('enseignements', $enseignements)
 
         return view('mesEnseignements')->with('userA', $userA)
                                             ->with('enseignantDansUEs', $enseignantDansUEs)
@@ -68,5 +48,21 @@ class EnseignantController extends Controller
                                             ->with('respoDI', $respoDI)
                                             ->with('respoUE', $respoUE);
 
+    }
+
+
+    public function updateUE(Request $request){
+        $cm_volume_affecte = $request->input('cm_volume_affecte');
+        $td_nb_groupes = $request->input('td_nb_groupes');
+        $td_heures_par_groupe = $request->input('td_heures_par_groupe');
+        $tp_nb_groupes = $request->input('tp_nb_groupes');
+        $tp_heures_par_groupe = $request->input('tp_heures_par_groupe');
+        $ei_nb_groupes = $request->input('ei_nb_groupes');
+        $ei_heures_par_groupe = $request->input('ei_heures_par_groupe');
+
+
+
+
+        return redirect('mesEnseignements');
     }
 }
