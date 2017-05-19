@@ -71,4 +71,27 @@ class UniteeEnseignement extends Model
         return $nbHeures;
     }
 
+    public function getTDNbGroupesAffectes(){
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->td_nb_groupes;
+        }
+        return $nbGroupes;
+    }
+    public function getTPNbGroupesAffectes(){
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->tp_nb_groupes;
+        }
+        return $nbGroupes;
+    }
+
+    public function getEINbGroupesAffectes(){
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->ei_nb_groupes;
+        }
+        return $nbGroupes;
+    }
+
 }
