@@ -87,7 +87,7 @@
                             </tbody>
                         </table>
                     </div>
-            @endforeach
+
 
                     <div class="row">
                         <br>
@@ -151,7 +151,7 @@
                 </div>
             </li>
 
-
+    @endforeach
 
 
 
