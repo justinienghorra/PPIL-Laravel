@@ -169,6 +169,7 @@
                 {!! Form::open(['url' => '/mesEnseignements/modificationUE']) !!}
                 <div class="row">
                     {!! Form::hidden('id_utilisateur', $enseignantDansUE->user->id) !!}
+                    {!! Form::hidden('id_ue', $enseignantDansUE->enseignement->id) !!}
                     <div class="col s6">
                         {!! Form::label('cm_volume_affecte', 'CM : Nombre d\'heures affectées') !!}
                         {!! Form::number('cm_volume_affecte', $value = $enseignantDansUE->cm_nb_heures) !!}
