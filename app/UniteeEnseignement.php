@@ -44,4 +44,31 @@ class UniteeEnseignement extends Model
         }
         return $nbHeures;
     }
+
+    public function getEINbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->ei_nb_groupes * $enseignant->ei_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
+
+    public function getTDNbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->td_nb_groupes * $enseignant->td_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
+
+    public function getTPNbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->tp_nb_groupes * $enseignant->tp_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
 }
