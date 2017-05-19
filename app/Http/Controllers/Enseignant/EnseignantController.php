@@ -28,7 +28,9 @@ class EnseignantController extends Controller
         $tmp = null;
 
         //recuperation des enseignements de l'utilisateur
-        $enseignements = $userA->getEnseignements();
+        $enseignantDansUEs = $userA->enseignantDansUEs;
+
+
 
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
 
@@ -38,28 +40,36 @@ class EnseignantController extends Controller
             $tmp = explode("images", $url);
         }
 
-        $enseignantsArray[] = null;
-        $volumeAffecteArray[] = null;
 
-        foreach ($enseignements as $enseignement){
-            //on recupere les enseignants
-            $enseignants = EnseignantDansUE::getEnseignantsDansUE($enseignement->id_unit_ens);
-            $enseignement->getTDNbHeuresAffectees();
-            //recupere les volumes affectes des TP, TD... de chaque UE
-            //$volumeAffecte = EnseignantDansUE::getVolumeAffectee($enseignement->id_unit_ens);
-
-            array_push($enseignantsArray, $enseignants);
-
-            //array_push($volumeAffecteArray, $volumeAffecte);
-
-        }
 
         return view('mesEnseignements')->with('userA', $userA)
-                                            ->with('enseignements', $enseignements)
-                                            ->with('enseignantsArray', $enseignantsArray)
-                                            ->with('volumeAffecteArray', $volumeAffecteArray)
+                                            ->with('enseignantDansUEs', $enseignantDansUEs)
                                             ->with('photoUrl', $tmp[1])
                                             ->with('respoDI', $respoDI)
                                             ->with('respoUE', $respoUE);
+
+    }
+
+
+    public function updateUE(Request $request){
+        $id_utilisateur = $request->input('id_utilisateur');
+        $id_ue = $request->input('id_ue');
+        $cm_volume_affecte = $request->input('cm_volume_affecte');
+        $td_nb_groupes = $request->input('td_nb_groupes');
+        $td_heures_par_groupe = $request->input('td_heures_par_groupe');
+        $tp_nb_groupes = $request->input('tp_nb_groupes');
+        $tp_heures_par_groupe = $request->input('tp_heures_par_groupe');
+        $ei_nb_groupes = $request->input('ei_nb_groupes');
+        $ei_heures_par_groupe = $request->input('ei_heures_par_groupe');
+
+        EnseignantDansUE::where('id_utilisateur', $id_utilisateur)
+                        ->where('id_ue', $id_ue)
+                        ->update(['cm_nb_heures' => $cm_volume_affecte, 'td_nb_groupes' => $td_nb_groupes,
+                            'td_heures_par_groupe' => $td_heures_par_groupe, 'tp_nb_groupes' => $tp_nb_groupes,
+                            'tp_heures_par_groupe' => $tp_heures_par_groupe, 'ei_nb_groupes' => $ei_nb_groupes,
+                            'ei_heures_par_groupe' => $ei_heures_par_groupe]);
+
+
+        return redirect('mesEnseignements')->with('message', 'L\'UE a bien été modifié' );
     }
 }

@@ -37,6 +37,10 @@ class UniteeEnseignement extends Model
         return $this->hasMany('App\EnseignantDansUE', 'id_ue');
     }
 
+    public function formation() {
+        return $this->belongsTo('App\Formation', 'id_formation');
+    }
+
     public function getCMNbHeuresAffectees() {
         $nbHeures = 0;
         foreach ($this->enseignants as $enseignant) {
@@ -71,4 +75,28 @@ class UniteeEnseignement extends Model
         return $nbHeures;
     }
 
+    public function getTDNbGroupesAffectees() {
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->td_nb_groupes;
+        }
+        return $nbGroupes;
+    }
+
+    public function getTPNbGroupesAffectees() {
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->tp_nb_groupes;
+        }
+        return $nbGroupes;
+    }
+
+
+    public function getEINbGroupesAffectees() {
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->ei_nb_groupes;
+        }
+        return $nbGroupes;
+    }
 }

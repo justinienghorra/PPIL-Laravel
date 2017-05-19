@@ -93,6 +93,7 @@ Route::post('/respoUE/deleteEnseignant', 'ResponsableUE\MesUEController@deleteEn
  *******************************/
 
 Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
+Route::post('/mesEnseignements/modificationUE', 'Enseignant\EnseignantController@updateUE');
 
 
 
