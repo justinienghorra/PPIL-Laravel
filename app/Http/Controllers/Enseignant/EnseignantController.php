@@ -39,18 +39,25 @@ class EnseignantController extends Controller
         }
 
         $enseignantsArray[] = null;
+        $volumeAffecteArray[] = null;
 
         foreach ($enseignements as $enseignement){
             //on recupere les enseignants
             $enseignants = EnseignantDansUE::getEnseignantsDansUE($enseignement->id_unit_ens);
 
+            //recupere les volumes affectes des TP, TD... de chaque UE
+            //$volumeAffecte = EnseignantDansUE::getVolumeAffectee($enseignement->id_unit_ens);
+
             array_push($enseignantsArray, $enseignants);
+
+            //array_push($volumeAffecteArray, $volumeAffecte);
 
         }
 
         return view('mesEnseignements')->with('userA', $userA)
                                             ->with('enseignements', $enseignements)
                                             ->with('enseignantsArray', $enseignantsArray)
+                                            ->with('volumeAffecteArray', $volumeAffecteArray)
                                             ->with('photoUrl', $tmp[1])
                                             ->with('respoDI', $respoDI)
                                             ->with('respoUE', $respoUE);

@@ -21,4 +21,12 @@ class EnseignantDansUE extends Model
                                     'users.*')
                                 ->get();
     }
+
+    public static function getVolumeAffectee($id_ue)
+    {
+        return EnseignantDansUE::where('id_ue', $id_ue)
+            ->select('SUM(ei_heures_par_groupe) as ei_volume_affecte', 'SUM(cm_nb_heures) as cm_volume_affecte',
+                'SUM(td_heures_par_groupe) as td_volume_affecte', 'SUM(tp_heures_par_groupe) as tp_volume_affecte')
+            ->get();
+    }
 }
