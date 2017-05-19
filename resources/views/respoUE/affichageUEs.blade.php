@@ -245,17 +245,17 @@ function redOrGreen($attendu, $affecte)
                     <div class="row">
                         <div class="col s6">
                             {!! Form::label('cm_nb_heures_attendues', 'CM : Nombre d\'heures attendues') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::number('cm_nb_heures_attendues', $value = 57) !!}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s6">
                             {!! Form::label('cm_nb_heures_attendues', 'TD : Nombre d\'heures attendues') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::number('cm_nb_heures_attendues', $value = $ue->cm_nb_heures_attendues) !!}
                         </div>
                         <div class="col s6">
                             {!! Form::label('cm_nb_heures_attendues', 'TD : Nombre de groupes attendus') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::number('cm_nb_heures_attendues', $value = $ue->cm_nb_heures_attendues) !!}
                         </div>
                     </div>
                     <div class="row">
