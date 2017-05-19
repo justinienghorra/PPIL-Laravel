@@ -25,10 +25,11 @@
     <li><a href="/di/annuaire">Annuaire</a></li>
     <li><a href="/di/formations">Formations</a></li>
     <li><a href="/di/journal">Journal</a></li>
+     <li><a href="/di/recapEnseignants">Recapitulatif des enseignants</a></li>
 </ul>
 <ul id="dropdown_user" class="dropdown-content">
     <li><a href="/profil">Profil</a></li>
-    <li><a href="{{ route('logout') }}"
+    <li><a href="#!"
                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                     Déconnexion
                 </a></li>
@@ -80,11 +81,12 @@
 	<li><a href="/di/annuaire">Annuaire</a></li>
 	<li><a href="/di/formations">Formations</a></li>
 	<li><a href="/di/journal">Journal</a></li>
+  <li><a href="/di/recapEnseignants">Recapitulatif des enseignants</a></li>
 	<li><div class="divider"></div></li>
 	@endif
         <li><a href="profil.html">Profil</a></li>
         <li><div class="divider"></div></li>
-        <li><a href="">Déconnexion</a></li>
+        <li><a href="#!" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Déconnexion</a></li>
         <li>M. Groot</li>  
       </ul>
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>

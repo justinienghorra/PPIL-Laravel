@@ -82,6 +82,15 @@ Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\
 Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 
+/*******************************
+ * Route pour les Enseignants  *
+ *******************************/
+
+Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
+
+
+
+
 Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/annuaire.json', 'ResponsableDI\AnnuaireController@getAnnuaireJSON')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/annuaire.csv', 'ResponsableDI\AnnuaireController@getAnnuaireCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
@@ -98,7 +107,7 @@ Route::post('/di/formations/add', 'ResponsableDI\FormationsController@add')->mid
 Route::post('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations/delete', 'ResponsableDI\FormationsController@delete')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations.csv', 'ResponsableDI\FormationsController@getFormationsCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
-Route::post('/di/formations/import', 'ResponsableDI\FormationsController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/di/formations/importCSV', 'ResponsableDI\FormationsController@importCSV')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
 Route::post('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);

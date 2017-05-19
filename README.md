@@ -13,7 +13,7 @@ Projet PPIL - L3 Informatique - FST
 * La vue journal est dispo sur /di/journal (Quand on est loggé en resp DI)
 * La vue annuaire est dispo sur /di/annuaire (Quand on est loggé en resp DI)
 * La vue profil est dispo sur /profil
-* La vue mesUE est dispo sur /respoUE (Quand on est loggé en resp UE)
+* La vue mesUE est dispo sur /respoUE/mesUE (Quand on est loggé en resp UE)
 * Les vues de la partie modélisation sont dispo sur /conception/xxxxxx
 
 ## Setup avec Docker/laradock

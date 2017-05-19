@@ -1,3 +1,12 @@
+<?php
+	function redOrGreen($attendu, $affecte){
+		if($attendu == $affecte){
+			return '<span class=" green-text">';
+		}
+		return '<span class=" red-text">';
+	}
+?>
+
 @extends('layouts.main')
 @section('title')
 Liste de vos UE
@@ -12,7 +21,7 @@ Liste de vos UE
 <!----------------------------------- 
 
 				TODO
-
+Back-end : Calcul des volumes affectés
 Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp attendus/affectés, etc. 
 
 ------------------------------------>
@@ -22,7 +31,32 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
     <li class="collection-header orange-text">
     	<h4 class="center">Liste de vos UE</h4>
     </li>
-@foreach($ues as $ue) 
+@foreach($ues as $ue)
+
+	<?php
+		$nbEnseignants = 0; 
+		$volumeCMAffecte = 0; 
+		$volumeTDAffecte = 0;
+		$volumeTPAffecte = 0;
+		$volumeEIAffecte = 0;
+		$nbGroupesTDAffectes = 0;
+		$nbGroupesTPAffectes = 0;
+		$nbGroupesEIAffectes = 0;
+		foreach($enseignants[$ue->id] as $enseignant) {
+			$nbEnseignants++;
+			$volumeCMAffecte += $enseignant->cm_nb_heures;
+			$volumeTDAffecte += $enseignant->td_heures_par_groupe;
+			$volumeTPAffecte += $enseignant->tp_heures_par_groupe;
+			$volumeEIAffecte += $enseignant->ei_heures_par_groupe;
+			$nbGroupesTDAffectes += $enseignant->td_nb_groupes;
+			$nbGroupesTPAffectes += $enseignant->tp_nb_groupes;
+			$nbGroupesEIAffectes += $enseignant->ei_nb_groupes;
+		}
+		$volumeTDAffecte = $volumeTDAffecte/$nbEnseignants;
+		$volumeTPAffecte = $volumeTPAffecte/$nbEnseignants;
+		$volumeEIAffecte = $volumeEIAffecte/$nbEnseignants;
+	?>
+
     <li>
 	  	<div class="collapsible-header"><strong class="orange-text">{{$ue['nom']}}</strong></div>
 	  	<div class="collapsible-body white">
@@ -53,10 +87,22 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
                         </tr>
                     	<tr>
                           <th class="center">Volume affecté</th>
-                          <td class="center">{{$ue->cm_volume_affecte}}</td>
-                          <td class="center">{{$ue->td_volume_affecte}}</td>
-                          <td class="center">{{$ue->tp_volume_affecte}}</td>
-                          <td class="center">{{$ue->ei_volume_affecte}}</td>
+                          <td class="center">
+                          	{!! redOrGreen($ue->cm_volume_attendu, $volumeCMAffecte) !!}
+                          	{{$volumeCMAffecte}}
+                          </td>
+                          <td class="center">
+                          	{!! redOrGreen($ue->td_volume_attendu, $volumeTDAffecte) !!}
+                          	{{$volumeTDAffecte}}
+                          </td>
+                          <td class="center">
+							{!! redOrGreen($ue->tp_volume_attendu, $volumeTPAffecte) !!}
+                          	{{$volumeTPAffecte}}
+                          </td>
+                          <td class="center">
+                          	{!! redOrGreen($ue->ei_volume_attendu, $volumeEIAffecte) !!}
+                          	{{$volumeEIAffecte}}
+                          </td>
                         </tr>
                         <tr>
                           <th class="center">Nombre de groupes attendus</th>
@@ -68,9 +114,18 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
                         <tr>
                           <th class="center">Nombre de groupes affectés</th>
                           <td></td>
-                          <td class="center">{{$ue->td_nb_groupes_affectes}}</td>
-                          <td class="center">{{$ue->tp_nb_groupes_affectes}}</td>
-                          <td class="center">{{$ue->ei_nb_groupes_affectes}}</td>
+                          <td class="center">
+                          	{!! redOrGreen($ue->td_nb_groupes_attendus, $nbGroupesTDAffectes) !!}
+                          	{{$nbGroupesTDAffectes}}
+                          </td>
+                          <td class="center">
+                          	{!! redOrGreen($ue->tp_nb_groupes_attendus, $nbGroupesTPAffectes) !!}
+                          	{{$nbGroupesTPAffectes}}
+                          </td>
+                          <td class="center">
+                          	{!! redOrGreen($ue->ei_nb_groupes_attendus, $nbGroupesEIAffectes) !!}
+                          	{{$nbGroupesEIAffectes}}
+                          </td>
                         </tr>
                     </tbody>
             	</table>
@@ -108,7 +163,7 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
 		                <tbody>
 		                	@foreach($enseignants[$ue->id] as $enseignant)
 		                	<tr>
-		                		<td class="center">{{$enseignant->prenom . " " . $enseignant->nom}}</td>
+		                		<td class="center">{{$enseignant->nom . " " . $enseignant->prenom}}</td>
 		                		<td class="center">{{$enseignant->cm_nb_heures}}</td>
 		                		<td class="center">{{$enseignant->td_nb_groupes}}</td>
 		                		<td class="center">{{$enseignant->td_heures_par_groupe}}</td>

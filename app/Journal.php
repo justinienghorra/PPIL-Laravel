@@ -13,7 +13,7 @@ class Journal extends Model
         switch ($this->type) {
             case 'INSC':
                 $user = User::where('id', $this->id_utilisateur)->first();
-                return $user;
+                return 'Inscription de ' . $user->civilite . ' ' . $user->prenom . ' ' . $user->nom;
                 break;
         }
     }

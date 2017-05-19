@@ -51,15 +51,8 @@ class MesUEController extends Controller
             //On récupère toutes les infos de l'UE
             $ues[$id_ue] = UniteeEnseignement::where('id', '=', $id_ue)->first();
 
-            //On récupère aussi tous les enseignants en lien avec l'UE
+            //On récupère aussi tous les enseignants en lien avec l'UE (avec leur nom et leur prénom)
             $enseignantsParUE[$id_ue] = EnseignantDansUE::where('id_ue', '=', $id_ue)->join('users', 'users.id', '=', 'enseignant_dans_u_es.id_utilisateur')->get(); //tableau 3D (id UE -> id enseignant -> données de l'enseignant en lien avec l'UE)
-            
-            /*foreach($enseignantsParUE[$id_ue] as $enseignant) {
-                $id_enseignant = $enseignant->id_utilisateur;
-
-                //On récupère le nom et le prénom de l'enseignant
-                $nomPrenomEnseignant['id_enseignant'] = User::where('id', '=', $id_ue)->join('users ', 'users.id', '=', $id_enseignant)->select('nom', 'prenom')->first();
-            }*/
 
         }
 
