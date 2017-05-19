@@ -16,22 +16,36 @@ class UnitesEnseignementsTableSeeder extends Seeder
     public function run()
     {
 
+        //Ajout de l'UE Compil
+        $devmob = new UniteeEnseignement;
+        $devmob->nom = "Compilation";
+        $devmob->description = "UE de compil";
+        $devmob->cm_volume_attendu = 30;
+        $devmob->td_volume_attendu = 15;
+        $devmob->tp_volume_attendu = 15;
+        $devmob->ei_volume_attendu = 0;
+        $devmob->td_nb_groupes_attendus = 2;
+        $devmob->tp_nb_groupes_attendus = 3;
+        $devmob->ei_nb_groupes_attendus = 0;
+        $devmob->attente_validation = false;
+        $devmob->id_formation = 2;
+        $devmob->save();
 
     	/******************************Dev Mob******************************/
-    	//Ajout de l'UE
+        //Ajout de l'UE
         $devmob = new UniteeEnseignement;
-		$devmob->nom = "Développement Mobile";
-		$devmob->description = "UE de développement mobile en L3";
-		$devmob->cm_volume_attendu = 30;
-		$devmob->td_volume_attendu = 15;
-		$devmob->tp_volume_attendu = 15;
-		$devmob->ei_volume_attendu = 0;
-		$devmob->td_nb_groupes_attendus = 2;
-		$devmob->tp_nb_groupes_attendus = 3;
-		$devmob->ei_nb_groupes_attendus = 0;
-		$devmob->attente_validation = false;
-		$devmob->id_formation = 2;
-		$devmob->save();
+        $devmob->nom = "Développement Mobile";
+        $devmob->description = "UE de développement mobile en L3";
+        $devmob->cm_volume_attendu = 30;
+        $devmob->td_volume_attendu = 15;
+        $devmob->tp_volume_attendu = 15;
+        $devmob->ei_volume_attendu = 0;
+        $devmob->td_nb_groupes_attendus = 2;
+        $devmob->tp_nb_groupes_attendus = 3;
+        $devmob->ei_nb_groupes_attendus = 0;
+        $devmob->attente_validation = false;
+        $devmob->id_formation = 2;
+        $devmob->save();
 
 		//Ajout du respo UE
 		$respoUE_DM = new ResponsableUniteeEnseignement;
