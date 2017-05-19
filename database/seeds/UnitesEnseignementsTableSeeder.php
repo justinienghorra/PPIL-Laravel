@@ -3,8 +3,6 @@
 use Illuminate\Database\Seeder;
 use App\Formation;
 use App\UniteeEnseignement;
-use App\EnseignantDansUE;
-use App\ResponsableUniteeEnseignement;
 
 class UnitesEnseignementsTableSeeder extends Seeder
 {
@@ -47,38 +45,6 @@ class UnitesEnseignementsTableSeeder extends Seeder
         $devmob->id_formation = 2;
         $devmob->save();
 
-		//Ajout du respo UE
-		$respoUE_DM = new ResponsableUniteeEnseignement;
-		$respoUE_DM->id_utilisateur = 3; //utilisatrice PRAG
-		$respoUE_DM->id_ue = 1; //devmob
-		$respoUE_DM->save();
-
-		//Ajout d'enseignants
-		$enseignantDM1 = new EnseignantDansUE;
-		$enseignantDM1->id_ue = 1; //devmob
-		$enseignantDM1->id_utilisateur = 3; //utilisatrice PRAG
-		$enseignantDM1->cm_nb_heures = 30;
-		$enseignantDM1->td_nb_groupes = 1;
-		$enseignantDM1->tp_nb_groupes = 2;
-		$enseignantDM1->ei_nb_groupes = 0;
-		$enseignantDM1->td_heures_par_groupe = 15;
-		$enseignantDM1->tp_heures_par_groupe = 15;
-		$enseignantDM1->ei_heures_par_groupe = 0;
-		$enseignantDM1->save();
-
-		$enseignantDM2 = new EnseignantDansUE;
-		$enseignantDM2->id_ue = 1; //devmob
-		$enseignantDM2->id_utilisateur = 2; //utilisateur doctorant
-		$enseignantDM2->cm_nb_heures = 0;
-		$enseignantDM2->td_nb_groupes = 1;
-		$enseignantDM2->tp_nb_groupes = 2;
-		$enseignantDM2->ei_nb_groupes = 0;
-		$enseignantDM2->td_heures_par_groupe = 15;
-		$enseignantDM2->tp_heures_par_groupe = 15;
-		$enseignantDM2->ei_heures_par_groupe = 0;
-		$enseignantDM2->save();
-
-
 		/******************************Algo******************************/
 
 		//Ajout de l'UE
@@ -96,23 +62,5 @@ class UnitesEnseignementsTableSeeder extends Seeder
 		$algo->id_formation = 1;
 		$algo->save();
 
-		//Ajout du respo UE
-		$respoUE_A = new ResponsableUniteeEnseignement;
-		$respoUE_A->id_utilisateur = 3; //utilisatrice PRAG
-		$respoUE_A->id_ue = 2; //algo
-		$respoUE_A->save();
-
-		//Ajout d'enseignants
-		$enseignantA1 = new EnseignantDansUE;
-		$enseignantA1->id_ue = 2; //algo
-		$enseignantA1->id_utilisateur = 3; //utilisatrice PRAG
-		$enseignantA1->cm_nb_heures = 0;
-		$enseignantA1->td_nb_groupes = 1;
-		$enseignantA1->tp_nb_groupes = 1;
-		$enseignantA1->ei_nb_groupes = 1;
-		$enseignantA1->td_heures_par_groupe = 30;
-		$enseignantA1->tp_heures_par_groupe = 15;
-		$enseignantA1->ei_heures_par_groupe = 15;
-		$enseignantA1->save();
     }
 }
