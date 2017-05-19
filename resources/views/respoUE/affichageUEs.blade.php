@@ -191,6 +191,10 @@ Front-end : Changement de couleurs en fonction du volume attendu/affecté, nb gp
                 <h4>Gestion des enseignants de l'UE {{$ue->nom}}</h4>
                 <div class="row">
                     <form action="" class="col s12">
+                        @foreach($ue->enseignants as $enseignant)
+                            <input type="checkbox" id="test5" />
+                            <label for="test5">Red</label>
+                        @endforeach
                     </form>
                 </div>
 
