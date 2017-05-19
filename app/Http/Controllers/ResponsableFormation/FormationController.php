@@ -5,11 +5,12 @@ namespace App\Http\Controllers\ResponsableFormation;
 
 use App\Formation;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\NotificationController;
+use App\Notification;
 use App\ResponsableUniteeEnseignement;
 use App\UniteeEnseignement;
 use App\User;
 use League\Csv\Reader;
-use Validator;
 use Illuminate\Http\Request;
 use App\Photos;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,7 @@ class FormationController extends Controller
      */
     public function add(Request $req, $nom_formation)
     {
+        $user = Auth::user();
 
         $validator = Validator::make($req->all(), [
             'nom' => 'required|string|max:255|unique:unitee_enseignements',
@@ -73,6 +75,19 @@ class FormationController extends Controller
             $ue->description = $req->description;
             $ue->id_formation = $formation->id;
             $ue->save();
+
+            $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
+
+
+            $notif = new Notification();
+
+            $notif->resume = $messageNotif;
+            $notif->id_utilisateur_a_notifie = $formation->responsable->id;
+            $notif->venant_de_id_utilisateur = $user->id;
+
+            $notif->save();
+
+
             return response()->json(["message" => "success", "ue" => $ue]);
         } else {
             return response()->json(["message" => "errors", "errors" => $validator->messages()]);
