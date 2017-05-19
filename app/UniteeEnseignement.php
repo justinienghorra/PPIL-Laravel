@@ -13,6 +13,7 @@ class UniteeEnseignement extends Model
      */
     protected $table = 'unitee_enseignements';
 
+
     /**
      * Retourne le responsable de l'ue
      *
@@ -23,12 +24,12 @@ class UniteeEnseignement extends Model
     }
 
     /**
-     * Retourne faux si l'ue n'a pas de responsable
+
+     * Retourne faux si l'UE n'a pas de responsable
      *
      * @return bool
      */
     public function hasResponsable() {
         return $this->responsable != null;
     }
-	
 }

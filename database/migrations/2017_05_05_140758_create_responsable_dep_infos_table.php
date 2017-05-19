@@ -18,7 +18,7 @@ class CreateResponsableDepInfosTable extends Migration
             $table->timestamps();
 
             $table->integer('id_utilisateur')->unsigned();
-            $table->foreign('id_utilisateur')->references('id')->on('users');
+            $table->foreign('id_utilisateur')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

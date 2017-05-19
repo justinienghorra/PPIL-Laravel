@@ -11,6 +11,7 @@ use App\User;
 use League\Csv\Reader;
 use Validator;
 use Illuminate\Http\Request;
+use App\Photos;
 use Illuminate\Support\Facades\Auth;
 
 class FormationController extends Controller
@@ -32,7 +33,19 @@ class FormationController extends Controller
         $respoUE = ResponsableUniteeEnseignement::all();
         $users = User::all();
 
-        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users]);
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
+
+        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI, 'photoURL' => $photoUrl]);
     }
 
     /**
@@ -51,6 +64,7 @@ class FormationController extends Controller
         ]);
 
 
+
         $formation = Formation::where('nom', $nom_formation)->first();
 
         if (!$validator->fails()) {
@@ -65,6 +79,7 @@ class FormationController extends Controller
         }
     }
 
+
     /**
      * Supprime une ue avec un ID
      *
@@ -77,6 +92,7 @@ class FormationController extends Controller
         $validator = Validator::make($req->all(), [
             'id_ue' => 'required|integer|exists:unitee_enseignements,id'
         ]);
+
 
 
         if (!$validator->fails()) {

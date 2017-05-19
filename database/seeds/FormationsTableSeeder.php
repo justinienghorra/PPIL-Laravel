@@ -13,7 +13,7 @@ class FormationsTableSeeder extends Seeder
     {
         $formation = new \App\Formation;
         $formation->nom = "L1 Informatique";
-        $formation->description = "Trop cool";
+        $formation->description = "Première année de licence informatique";
         $formation->save();
 
         $resp = new \App\ResponsableFormation();
@@ -23,7 +23,7 @@ class FormationsTableSeeder extends Seeder
 		
 		$l3 = new \App\Formation;
 		$l3->nom = "L3 Informatique";
-		$l3->description = "Trop pas ouf";
+		$l3->description = "Troisième année de licence informatique";
 		$l3->save();
 		
 		$respl3 = new \App\ResponsableFormation();

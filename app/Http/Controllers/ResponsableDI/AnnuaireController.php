@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\ResponsableDI;
 
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
 use App\Statut;
+use Illuminate\Support\Facades\Log;
 use App\User;
+use App\Photos;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -30,23 +32,38 @@ class AnnuaireController extends Controller
      *
      * @return View
      */
-    protected function show() {
+    protected function show()
+    {
         $users = User::all();
-        return \view('di.annuaire')->with('users', $users);
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
+        
+        return \view('di.annuaire')->with('users', $users)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
     }
 
     /**
      * Retourne la liste des utilisateurs au format json
      */
-    protected function getAnnuaireJSON() {
+    protected function getAnnuaireJSON()
+    {
         $users = User::all();
-        return json_encode($users);
+        return $users;
     }
 
     /**
      * Retourne la liste des utilisateurs au format json
      */
-    protected function getAnnuaireCSV() {
+    protected function getAnnuaireCSV()
+    {
         $users = User::all();
         $str = "enseignant;statut;email";
         foreach ($users as $user) {
@@ -59,16 +76,29 @@ class AnnuaireController extends Controller
     /**
      * Importation d'un fichier csv
      */
-    protected function importCSV(Request $request) {
+    protected function importCSV(Request $request)
+    {
 
         $validator = Validator::make(
             [
                 'file' => $request->file('file_csv'),
-                'extension' => strtolower($request->file('file_csv')->getClientOriginalExtension()),
             ]
             ,
             [
                 'file' => 'required',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect('/di/annuaire')->withErrors($validator);
+        }
+
+        $validator = Validator::make(
+            [
+                'extension' => strtolower($request->file('file_csv')->getClientOriginalExtension()),
+            ]
+            ,
+            [
                 'extension' => 'required|in:csv',
             ]
         );
@@ -80,7 +110,7 @@ class AnnuaireController extends Controller
 
         $file = $request->file('file_csv');
         $new_users = array();
-        $errors_custom = array();
+        $messages = array();
         $num_row = 0;
         $csv = Reader::createFromPath($file->path());
         $csv->setDelimiter(';');
@@ -115,9 +145,11 @@ class AnnuaireController extends Controller
             ]);
 
             if ($validator->fails()) {
-                $errors_custom['ligne'] = $num_row;
+                $messages['ligne'] = $num_row;
                 $this->importRollback($new_users);
-                return redirect('/di/annuaire')->with('errors_custom', $errors_custom)->withErrors($validator);
+                return redirect('/di/annuaire')
+                    ->with('messages', $messages)
+                    ->with('errors', $validator->errors());
             }
 
             $user = new User;
@@ -128,7 +160,7 @@ class AnnuaireController extends Controller
             $user->adresse = $row[4];
             $user->id_statut = Statut::where('statut', $row[5])->first()->id;
 
-            // TODO gérer mot de passe et mail ?
+            // TODO : gérer mot de passe et mail ?
 
             $user->password = bcrypt("password");
             $user->attente_validation = false;
@@ -137,12 +169,51 @@ class AnnuaireController extends Controller
 
         }
 
-        return redirect('/di/annuaire');
+        $messages['succes'] = "Importation réussie";
+        return redirect('/di/annuaire')->with('messages', $messages);
     }
 
-    private function importRollback($new_users) {
+    /**
+     * Annule les changements fait par importCSV en cas d'erreur
+     *
+     * @param $new_users
+     */
+    private function importRollback($new_users)
+    {
         foreach ($new_users as $user) {
             $user->delete();
         }
     }
+
+    /**
+     * Suppression d'une utilisateur
+     *
+     * @param Request $req
+     *
+     * @return Response
+     */
+    public function delete(Request $req)
+    {
+
+        $validator = Validator::make($req->all(), [
+            'id_utilisateur' => 'required|exists:users,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["message" => "errors", "errors" => $validator->messages()]);
+        }
+
+        $current_user = Auth::user();
+        Log::info("ID utilisateur : " . $req->id_utilisateur);
+        Log::info("ID current : " . $current_user->id);
+        if ($req->id_utilisateur == $current_user->id) {
+            return response()->json(["message" => "errors", "errors" => array("fail" => "Impossible de supprimer l'utilisateur connecté")]);
+        }
+
+        $u = User::where('id', $req->id_utilisateur)->first();
+        $u->delete();
+        return response()->json(["message" => "success"]);
+    }
+
+
 }
