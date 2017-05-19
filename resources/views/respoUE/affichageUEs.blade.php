@@ -244,42 +244,97 @@ function redOrGreen($attendu, $affecte)
                     {!! Form::open(['url' => '#!'], $attributes = ['class' => 'col s12']) !!}
                     <div class="row">
                         <div class="col s6">
-                            {!! Form::label('cm_nb_heures_attendues', 'CM : Nombre d\'heures attendues') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $value = 57) !!}
+                            {!! Form::label('cm_volume_attendu', 'CM : Nombre d\'heures attendues') !!}
+                            {!! Form::number('cm_volume_attendu', $value = $ue->cm_volume_attendu) !!}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s6">
-                            {!! Form::label('cm_nb_heures_attendues', 'TD : Nombre d\'heures attendues') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $value = $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::label('td_volume_attendu', 'TD : Nombre d\'heures attendues') !!}
+                            {!! Form::number('td_volume_attendu', $value = $ue->td_volume_attendu) !!}
                         </div>
                         <div class="col s6">
-                            {!! Form::label('cm_nb_heures_attendues', 'TD : Nombre de groupes attendus') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $value = $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::label('td_nb_groupes', 'TD : Nombre de groupes attendus') !!}
+                            {!! Form::number('td_nb_groupes', $value = $ue->td_nb_groupes_attendus) !!}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s6">
-                            {!! Form::label('cm_nb_heures_attendues', 'TP : Nombre d\'heures attendues') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::label('tp_volume_attendu', 'TP : Nombre d\'heures attendues') !!}
+                            {!! Form::number('tp_volume_attendu', $ue->tp_volume_attendu) !!}
                         </div>
                         <div class="col s6">
-                            {!! Form::label('cm_nb_heures_attendues', 'TP : Nombre de groupes attendus') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::label('tp_nb_groupes', 'TP : Nombre de groupes attendus') !!}
+                            {!! Form::number('tp_nb_groupes', $ue->tp_nb_groupes_attendus) !!}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s6">
-                            {!! Form::label('cm_nb_heures_attendues', 'EI : Nombre d\'heures attendues') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::label('ei_volume_attendu', 'EI : Nombre d\'heures attendues') !!}
+                            {!! Form::number('ei_volume_attendu', $ue->ei_volume_attendu) !!}
                         </div>
                         <div class="col s6">
-                            {!! Form::label('cm_nb_heures_attendues', 'EI : Nombre de groupes attendus') !!}
-                            {!! Form::number('cm_nb_heures_attendues', $ue->cm_nb_heures_attendues) !!}
+                            {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes attendus') !!}
+                            {!! Form::number('ei_nb_groupes', $ue->ei_nb_groupes_attendus) !!}
                         </div>
+                    </div>
+                    <div class="row">
+                        <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires globaux')"
+                                class="btn btn-flat green-text right" type="submit">Valider
+                        </button>
                     </div>
 
                     {!! Form::close() !!}
+
+                    @foreach($ue->enseignants as $enseignant)
+
+                        <blockquote><h4>Modification des horaires
+                                de {{$enseignant->user->civilite . " " . $enseignant->user->prenom . " " . $enseignant->user->nom}}</h4>
+                        </blockquote>
+                        {!! Form::open(['url' => '#!']) !!}
+                        <div class="row">
+                            {!! Form::hidden('id_utilisateur', $enseignant->user->id) !!}
+                            <div class="col s6">
+                                {!! Form::label('cm_volume_affecte', 'CM : Nombre d\'heures affectées') !!}
+                                {!! Form::number('cm_volume_affecte', $value = $enseignant->cm_nb_heures) !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6">
+                                {!! Form::label('td_nb_groupes', 'TD : Nombre de groupes') !!}
+                                {!! Form::number('td_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
+                            </div>
+                            <div class="col s6">
+                                {!! Form::label('td_heures_par_groupe', 'TD : Heures par groupe') !!}
+                                {!! Form::number('td_heures_par_groupe', $value = $enseignant->td_heures_par_groupe) !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6">
+                                {!! Form::label('tp_nb_groupes', 'TP : Nombre de groupes') !!}
+                                {!! Form::number('tp_nb_groupes', $value = $enseignant->tp_nb_groupes) !!}
+                            </div>
+                            <div class="col s6">
+                                {!! Form::label('tp_heures_par_groupe', 'TP : Heures par groupe') !!}
+                                {!! Form::number('tp_heures_par_groupe', $value = $enseignant->tp_heures_par_groupe) !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6">
+                                {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
+                                {!! Form::number('ei_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
+                            </div>
+                            <div class="col s6">
+                                {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
+                                {!! Form::number('ei_heures_par_groupe', $value = $enseignant->td_heures_par_groupe) !!}
+                            </div>
+                            <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires enseignants')"
+                                    class="btn btn-flat green-text right" type="submit">Valider
+                            </button>
+                        </div>
+                        {!! Form::close() !!}
+
+                    @endforeach
                 </div>
             </div>
 
