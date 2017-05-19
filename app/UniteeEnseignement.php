@@ -32,4 +32,16 @@ class UniteeEnseignement extends Model
     public function hasResponsable() {
         return $this->responsable != null;
     }
+
+    public function enseignants() {
+        return $this->hasMany('App\EnseignantDansUE', 'id_ue');
+    }
+
+    public function getCMNbHeuresAffectees() {
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += $enseignant->cm_nb_heures;
+        }
+        return $nbHeures;
+    }
 }

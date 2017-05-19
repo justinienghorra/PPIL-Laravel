@@ -21,4 +21,8 @@ class EnseignantDansUE extends Model
                                     'users.*')
                                 ->get();
     }
+
+    public function user() {
+        return $this->belongsTo('App\User', 'id_utilisateur');
+    }
 }
