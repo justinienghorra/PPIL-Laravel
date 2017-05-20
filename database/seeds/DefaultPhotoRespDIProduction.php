@@ -1,5 +1,6 @@
 <?php
 
+use App\Photos;
 use Illuminate\Database\Seeder;
 
 class DefaultPhotoRespDIProduction extends Seeder
@@ -11,7 +12,7 @@ class DefaultPhotoRespDIProduction extends Seeder
      */
     public function run()
     {
-        $photo = new Photo;
+        $photo = new Photos;
         $photo->adresse = "/var/www/public/images/default.jpg";
         $photo->id_utilisateur = 1;
         $photo->save();

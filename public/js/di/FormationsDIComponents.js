@@ -69,7 +69,7 @@ Vue.component('formations-main-back', {
 Vue.component('formations-main-new', {
     delimiters: ['${', '}'],
     props: ['formationarg', 'responsable', 'openmodal', 'getmodalsuppid', 'getmodalmodifid'],
-    template: '<div class="card col s6">\
+    template: '<div class="card">\
                     <div class="card-content">\
                         <span class="card-title">${formationarg.nom}</span>\
                         <p>\
@@ -80,7 +80,7 @@ Vue.component('formations-main-new', {
                     </div>\
                     <div class="card-action">\
                         <a @click.prevent="openmodal(getmodalmodifid(formationarg.id))" href="">Modifier le responsable</a>\
-                        <a @click.prevent="openmodal(getmodalsuppid(formationarg.id))" class="red-text" href="">Supprimer</a>\
+                        <a @click.prevent="openmodal(getmodalsuppid(formationarg.id))" class="right red-text" href="">Supprimer</a>\
                     </div>\
                 </div>'
 });
