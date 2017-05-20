@@ -42,7 +42,7 @@ Vue.component('formations-modal-modification-responsable', {
 
 });
 
-Vue.component('formations-main', {
+Vue.component('formations-main-back', {
     delimiters: ['${', '}'],
     props: ['formationarg', 'responsable', 'openmodal', 'getmodalsuppid', 'getmodalmodifid'],
     template: '<ul class="collection with-header ">\
@@ -64,6 +64,25 @@ Vue.component('formations-main', {
                                     le responsable</a>\
                     </li>\
             </ul>'
+});
+
+Vue.component('formations-main-new', {
+    delimiters: ['${', '}'],
+    props: ['formationarg', 'responsable', 'openmodal', 'getmodalsuppid', 'getmodalmodifid'],
+    template: '<div class="card col s6">\
+                    <div class="card-content">\
+                        <span class="card-title">${formationarg.nom}</span>\
+                        <p>\
+                        <strong>Description : </strong>${formationarg.description}\
+                        <br>\
+                        <strong>Responsable : </strong>${responsable(formationarg.id)}\
+                        </p>\
+                    </div>\
+                    <div class="card-action">\
+                        <a @click.prevent="openmodal(getmodalmodifid(formationarg.id))" href="">Modifier le responsable</a>\
+                        <a @click.prevent="openmodal(getmodalsuppid(formationarg.id))" class="red-text" href="">Supprimer</a>\
+                    </div>\
+                </div>'
 });
 
 Vue.component('formations-modal-ajout', {

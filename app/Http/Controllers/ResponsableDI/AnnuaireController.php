@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use League\Csv\Reader;
 
+// TODO : confirmation suppression
+
 class AnnuaireController extends Controller
 {
     protected $statut_array;
