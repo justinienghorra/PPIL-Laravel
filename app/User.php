@@ -133,4 +133,12 @@ class User extends Authenticatable
                              formations.nom as nomFormation, formations.description as descriptionFormation, unitee_enseignements.*, formations.* ,enseignant_dans_u_es.*')
                             ->get();
     }
+
+    public function enseignantDansUEs() {
+        return $this->hasMany('App\EnseignantDansUE', 'id_utilisateur');
+    }
+
+    public function enseignantDansUEsExterne() {
+        return $this->hasMany('App\EnseignantDansUEExterne', 'id_utilisateur');
+    }
 }

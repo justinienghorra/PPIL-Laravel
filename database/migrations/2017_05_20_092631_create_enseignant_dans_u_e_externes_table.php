@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEnseignantDansUEsTable extends Migration
+class CreateEnseignantDansUEExternesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreateEnseignantDansUEsTable extends Migration
      */
     public function up()
     {
-        Schema::create('enseignant_dans_u_es', function (Blueprint $table) {
+        Schema::create('enseignant_dans_u_e_externes', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+
+            $table->string('nom');
+            $table->string('description');
+
+            $table->string('nom_formation');
 
             $table->integer('cm_nb_heures')->unsigned()->default(0);
 
@@ -29,10 +34,6 @@ class CreateEnseignantDansUEsTable extends Migration
 
             $table->integer('id_utilisateur')->unsigned();
             $table->foreign('id_utilisateur')->references('id')->on('users')->onDelete('cascade');
-
-            $table->integer('id_ue')->unsigned();
-            $table->foreign('id_ue')->references('id')->on('unitee_enseignements')->onDelete('cascade');
-
         });
     }
 
@@ -43,8 +44,6 @@ class CreateEnseignantDansUEsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enseignant_dans_u_es', function(Blueprint $table) {
-            $table->dropForeign(['id_ue']);
-        });
+        Schema::dropIfExists('enseignant_dans_u_e_externes');
     }
 }
