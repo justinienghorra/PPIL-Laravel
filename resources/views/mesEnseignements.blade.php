@@ -22,7 +22,7 @@
     <ul class="collapsible white" data-collapsible="expandable">
         <li class="collection-header orange-text"><h4 class="center">Liste des enseignements auxquels vous
                 participez</h4>
-        </li>
+        </li><br>
 
         @foreach($enseignantDansUEs as $enseignant)
             <li>
@@ -163,7 +163,7 @@
     <ul class="collapsible white" data-collapsible="expandable">
         <li class="collection-header blue-text"><h4 class="center">Liste des enseignements externe auxquels vous
                 participez</h4>
-        </li>
+        </li><br>
         @foreach($enseignantDansUEsExterne as $enseignantExterne)
             <li>
                 <div class="active collapsible-header "><strong
