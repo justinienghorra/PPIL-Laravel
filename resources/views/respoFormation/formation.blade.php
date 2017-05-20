@@ -34,6 +34,16 @@ function redOrGreen($attendu, $affecte)
                     <div class="row">
                         <blockquote class="flow-text">
                             <p><strong>Description :</strong> {{$ue->description}}</p>
+                            <p>
+                                <strong>Responsable :</strong>
+                                <span id="resp-{{$ue->id}}">
+                                    @if(isset($ue->responsable))
+                                        {{$ue->responsable->user->civilite . " " . $ue->responsable->user->prenom . " " . $ue->responsable->user->nom}}
+                                    @else
+                                        Aucun responsable
+                                    @endif
+                                </span>
+                            </p>
                             <h4 class="light">Synthèse</h4>
                         </blockquote>
                     </div>
@@ -104,54 +114,54 @@ function redOrGreen($attendu, $affecte)
                     <br>
                     <div class="row">
                         @if($ue->enseignants->count() > 0)
-                        <blockquote class="hide-on-med-and-down">
-                            <h4 class="light">Détails par enseignant</h4>
-                        </blockquote>
+                            <blockquote class="hide-on-med-and-down">
+                                <h4 class="light">Détails par enseignant</h4>
+                            </blockquote>
 
 
 
-                        <table class="hide-on-med-and-down bordered">
-                            <thead>
-                            <tr>
-
-                                <th class="center">Nom</th>
-                                <th class="center">CM</th>
-                                <th class="center" colspan="2">TD</th>
-                                <th class="center" colspan="2">TP</th>
-                                <th class="center" colspan="2">EI</th>
-                            </tr>
-                            </thead>
-
-                            <thead>
-                            <tr>
-                                <th></th>
-
-                                <th class="center">Heures</th>
-                                <th class="center">Nombre de groupes</th>
-                                <th class="center">Heures par groupe</th>
-                                <th class="center">Nombre de groupes</th>
-                                <th class="center">Heures par groupe</th>
-                                <th class="center">Nombre de groupes</th>
-                                <th class="center">Heures par groupe</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($ue->enseignants as $enseignant)
+                            <table class="hide-on-med-and-down bordered">
+                                <thead>
                                 <tr>
-                                    <td class="center">{{$enseignant->user->nom . " " . $enseignant->user->prenom}}</td>
-                                    <td class="center">{{$enseignant->cm_nb_heures}}</td>
-                                    <td class="center">{{$enseignant->td_nb_groupes}}</td>
-                                    <td class="center">{{$enseignant->td_heures_par_groupe}}</td>
-                                    <td class="center">{{$enseignant->tp_nb_groupes}}</td>
-                                    <td class="center">{{$enseignant->tp_heures_par_groupe}}</td>
-                                    <td class="center">{{$enseignant->ei_nb_groupes}}</td>
-                                    <td class="center">{{$enseignant->ei_heures_par_groupe}}</td>
+
+                                    <th class="center">Nom</th>
+                                    <th class="center">CM</th>
+                                    <th class="center" colspan="2">TD</th>
+                                    <th class="center" colspan="2">TP</th>
+                                    <th class="center" colspan="2">EI</th>
                                 </tr>
-                            </tbody>
-                            @endforeach
-                        </table>
-                            @endif
+                                </thead>
+
+                                <thead>
+                                <tr>
+                                    <th></th>
+
+                                    <th class="center">Heures</th>
+                                    <th class="center">Nombre de groupes</th>
+                                    <th class="center">Heures par groupe</th>
+                                    <th class="center">Nombre de groupes</th>
+                                    <th class="center">Heures par groupe</th>
+                                    <th class="center">Nombre de groupes</th>
+                                    <th class="center">Heures par groupe</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($ue->enseignants as $enseignant)
+                                    <tr>
+                                        <td class="center">{{$enseignant->user->nom . " " . $enseignant->user->prenom}}</td>
+                                        <td class="center">{{$enseignant->cm_nb_heures}}</td>
+                                        <td class="center">{{$enseignant->td_nb_groupes}}</td>
+                                        <td class="center">{{$enseignant->td_heures_par_groupe}}</td>
+                                        <td class="center">{{$enseignant->tp_nb_groupes}}</td>
+                                        <td class="center">{{$enseignant->tp_heures_par_groupe}}</td>
+                                        <td class="center">{{$enseignant->ei_nb_groupes}}</td>
+                                        <td class="center">{{$enseignant->ei_heures_par_groupe}}</td>
+                                    </tr>
+                                </tbody>
+                                @endforeach
+                            </table>
+                        @endif
                     </div>
                     <div class="row">
                         <a href="#modal-gerer-enseignants-{{$ue->id}}"
@@ -328,11 +338,13 @@ function redOrGreen($attendu, $affecte)
                     </p>
                     <ul class="collection collection-with-header">
                         <li class="collection-header"><h4>Liste des utilisateurs</h4></li>
-                        <li v-for="(user, index) in users" class="collection-item">
-                            {{ $user->prenom . " " . $user->nom }}
-                            <a href="#!" @click.prevent="modifierresponsable(formationarg.id, user.id)"
+                        @foreach(App\User::all() as $user)
+                            <li class="collection-item">
+                                {{ $user->prenom . " " . $user->nom }}
+                            <a href="#!" onclick="modifierResponsable(event, {{$ue->id}}, {{$user->id}})"
                                class="secondary-content"><i class="material-icons">send</i></a>
-                        </li>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -359,8 +371,8 @@ function redOrGreen($attendu, $affecte)
             <div class="row">
                 <h4>Ajout d'une UE</h4>
             </div>
-            <form method="post" action="/di/formations/add" id="form-add" class="row">
-                <input type="hidden" name="_token" :value="token" >
+            <form method="post" action="/respoFormation/formation/{{$formation->nom}}/add" id="form-add" class="row">
+                {{csrf_field()}}
                 <div class="input-field col s12">
                     <input name="nom" id="add-nom" type="text">
                     <label for="">Nom</label>
@@ -372,7 +384,7 @@ function redOrGreen($attendu, $affecte)
             </form>
         </div>
         <div class="modal-footer">
-            <a href="#!" @click="submitformadd" class="modal-action  waves-effect waves-light btn-flat green-text" >Confirmer</a>
+            <a href="#!" onclick="event.preventDefault();document.getElementById('form-add').submit();" class="modal-action  waves-effect waves-light btn-flat green-text" >Confirmer</a>
         </div>
     </div>
 
@@ -517,6 +529,7 @@ function redOrGreen($attendu, $affecte)
     <script>
 
         function deleteUE(event, id_ue) {
+            event.preventDefault();
             $.ajax({
                 url: "/respoFormation/formation/{{$formation->nom}}/delete",
                 method: "POST",
@@ -538,6 +551,36 @@ function redOrGreen($attendu, $affecte)
                     makeToast('Erreur serveur : ' + xhr.status);
                 });
         }
+
+
+
+
+        function modifierResponsable(event, id_ue, id_utilisateur) {
+            event.preventDefault();
+            $.ajax({
+                url: "/respoFormation/formation/{{$formation->nom}}/updateResponsable",
+                method: "POST",
+                data: "id_utilisateur=" + id_utilisateur + "&id_ue=" + id_ue
+            })
+                .done(function (msg) {
+                    console.log(msg);
+                    if (msg['message'] === 'success') {
+                        makeToast('Modification du responsable réussie')
+                        $('#modal-modifier-responsable-' + id_ue).modal('close');
+                        var user = msg['user'];
+                        var new_resp = user['civilite'] + " " + user['prenom'] + " " + user['nom'];
+                        $('#resp-' + id_ue).text(new_resp);
+                    } else {
+                        makeToast('Erreur lors de la modification du responsable')
+                    }
+                })
+                .fail(function (xhr, msg) {
+                    console.log(msg);
+                    console.log(xhr);
+                    makeToast('Erreur serveur : ' + xhr.status)
+                });
+        }
+
 
         $(document).ready(function () {
 
