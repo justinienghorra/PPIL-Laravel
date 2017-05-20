@@ -175,6 +175,8 @@ function redOrGreen($attendu, $affecte)
             <div class="modal-content">
                 <h4>Gestion des enseignants de l'UE {{$ue->nom}}</h4>
 
+                @if($ue->enseignants->count() > 0)
+
                 <blockquote><h4>Suppression d'enseignants</h4></blockquote>
 
                 <div class="row">
@@ -191,6 +193,8 @@ function redOrGreen($attendu, $affecte)
                         </button>
                     </form>
                 </div>
+
+                @endif
 
                 <blockquote><h4>Ajout d'un enseignant</h4></blockquote>
 
