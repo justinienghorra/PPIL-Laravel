@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
+use App\ResponsableDepInfo;
 
 class CreateRespDIProduction extends Seeder
 {
