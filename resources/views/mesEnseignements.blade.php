@@ -170,7 +170,7 @@
                             class="orange-text"> {!! $enseignantExterne->nom !!}</strong><span
                             class="right">{!! $enseignantExterne->nom_formation !!}</span>
                 </div>
-                {{--<div class="collapsible-body white">
+                <div class="collapsible-body white">
                     <div class="row">
 
 
@@ -179,7 +179,7 @@
 
                             <!-- Contenu du premier EC -->
 
-                            <p class="flow-text">{!! $enseignant->enseignement->description !!} </p>
+                            <p class="flow-text">{!! $enseignantExterne->description !!} </p>
 
 
                             <h4 class="light">Synthèse</h4>
@@ -196,27 +196,13 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <th>Volume attendu</th>
-                                <td>{!! $enseignant->enseignement->cm_volume_attendu !!}</td>
-                                <td>{!! $enseignant->enseignement->ei_volume_attendu !!}</td>
-                                <td>{!! $enseignant->enseignement->td_volume_attendu !!}</td>
-                                <td>{!! $enseignant->enseignement->tp_volume_attendu !!}</td>
-                            </tr>
-                            <tr>
                                 <th>Volume affecté</th>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}</span></td>
-                                <td>{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}</td>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}</span></td>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}</span></td>
+                                <td><span class=" green-text">{!! $enseignantExterne->cm_nb_heures !!}</span></td>
+                                <td>{!! $enseignantExterne->getEINbHeuresAffectees() !!}</td>
+                                <td><span class=" green-text">{!! $enseignantExterne->getTDNbHeuresAffectees() !!}</span></td>
+                                <td><span class=" green-text">{!! $enseignantExterne->getTPNbHeuresAffectees() !!}</span></td>
                             </tr>
-                            <tr>
-                                <th>Nombre de groupes attendus</th>
-                                <td>{!! $enseignant->enseignement->cm_nb_groupes_attendus !!}</td>
-                                <td>{!! $enseignant->enseignement->ei_nb_groupes_attendus !!}</td>
-                                <td>{!! $enseignant->enseignement->td_nb_groupes_attendus !!}</td>
-                                <td>{!! $enseignant->enseignement->tp_nb_groupes_attendus !!}</td>
-                            </tr>
-                            <tr>
+                            {{--<tr>
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
                                 <td>{!! $enseignant->enseignement->getEINbGroupesAffectees() !!}</td>
@@ -224,12 +210,12 @@
                                 <td><span class=" red-text">{!! $enseignant->enseignement->getTPNbGroupesAffectees() !!}</span>
                                 </td>
                             </tr>
-                            </tbody>
+                            </tbody>--}}
                         </table>
                     </div>
 
 
-                    <div class="row">
+                    {{--<div class="row">
                         <br>
                         <blockquote>
                             <h4 class="light">Détails par enseignant</h4>
@@ -286,9 +272,9 @@
                         <a href="#gerer-mes-horaires-{{$enseignant->id}}" class="right btn btn-flat green-text">Gérer
                             mes horaires</a>
                         <!-- Fin du Contenu du premier EC -->
-                    </div>
+                    </div>--}}
 
-                </div>--}}
+                </div>
             </li>
 
         @endforeach
