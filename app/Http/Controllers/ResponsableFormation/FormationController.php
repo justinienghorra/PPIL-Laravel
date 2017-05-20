@@ -45,7 +45,7 @@ class FormationController extends Controller
             $tmp = explode("images", $url);
         }
 
-        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI, 'photoURL' => $photoUrl]);
+        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI, 'photoUrl' => $photoUrl]);
     }
 
     /**
@@ -63,8 +63,6 @@ class FormationController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-
-
         $formation = Formation::where('nom', $nom_formation)->first();
 
         if (!$validator->fails()) {
@@ -73,9 +71,11 @@ class FormationController extends Controller
             $ue->description = $req->description;
             $ue->id_formation = $formation->id;
             $ue->save();
-            return response()->json(["message" => "success", "ue" => $ue]);
+            //return response()->json(["message" => "success", "ue" => $ue]);
+            return redirect('/formation/' . $nom_formation);
         } else {
-            return response()->json(["message" => "errors", "errors" => $validator->messages()]);
+            //return response()->json(["message" => "errors", "errors" => $validator->messages()]);
+            return redirect('/formation/' . $nom_formation)->withErrors($validator);
         }
     }
 
@@ -329,7 +329,7 @@ class FormationController extends Controller
                 $resp->save();
             }
 
-            return response()->json(["message" => "success"]);
+            return response()->json(["message" => "success", "user" => $resp->user]);
         } else {
             return response()->json(["message" => "errors", "errors" => $validator]);
         }

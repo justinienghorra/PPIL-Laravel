@@ -75,7 +75,7 @@ class UniteeEnseignement extends Model
         return $nbHeures;
     }
 
-    public function getTDNbGroupesAffectees() {
+    public function getTDNbGroupesAffectes(){
         $nbGroupes = 0;
         foreach ($this->enseignants as $enseignant) {
             $nbGroupes += $enseignant->td_nb_groupes;
@@ -83,7 +83,7 @@ class UniteeEnseignement extends Model
         return $nbGroupes;
     }
 
-    public function getTPNbGroupesAffectees() {
+    public function getTPNbGroupesAffectes(){
         $nbGroupes = 0;
         foreach ($this->enseignants as $enseignant) {
             $nbGroupes += $enseignant->tp_nb_groupes;
@@ -91,8 +91,7 @@ class UniteeEnseignement extends Model
         return $nbGroupes;
     }
 
-
-    public function getEINbGroupesAffectees() {
+    public function getEINbGroupesAffectes(){
         $nbGroupes = 0;
         foreach ($this->enseignants as $enseignant) {
             $nbGroupes += $enseignant->ei_nb_groupes;

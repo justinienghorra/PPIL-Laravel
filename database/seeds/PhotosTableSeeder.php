@@ -13,7 +13,7 @@ class PhotosTableSeeder extends Seeder
     public function run()
     {
         $photo_user_1 = new Photos;
-        $photo_user_1->adresse = "/var/www/public/images/user_1/profil.jpg";
+        $photo_user_1->adresse = "/var/www/public/images/default.jpg";
         $photo_user_1->id_utilisateur = 1;
         $photo_user_1->save();
         
