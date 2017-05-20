@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         $admin->email = "jean.dupont@gmail.com";
         $admin->password = bcrypt("password");
         $admin->adresse = "45 Rue de la Liberté, 54000 Nancy";
-        $admin->civilite = "M";
+        $admin->civilite = "M.";
         $admin->attente_validation = false;
         $admin->id_statut = \App\Statut::where('statut', 'Aucun')->first()->id;
         $admin->save();
@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
         $user->email = "utilisateur.lambda@gmail.com";
         $user->password = bcrypt("password");
         $user->adresse = "49 Rue de la Liberté, 54000 Nancy";
-        $user->civilite = "M";
+        $user->civilite = "M.";
         $user->attente_validation = false;
         $user->id_statut = \App\Statut::where('statut', 'Doctorant')->first()->id;
         $user->save();
@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
         $user->email = "respo.compil@gmail.com";
         $user->password = bcrypt("password");
         $user->adresse = "49 Rue de la Liberté, 54000 Nancy";
-        $user->civilite = "M";
+        $user->civilite = "M.";
         $user->attente_validation = false;
         $user->id_statut = \App\Statut::where('statut', 'Doctorant')->first()->id;
         $user->save();
@@ -72,7 +72,7 @@ class UsersTableSeeder extends Seeder
         $vacalambda->email = "vacataire.lambda2@gmail.com";
         $vacalambda->password = bcrypt("password");
         $vacalambda->adresse = "53 Rue de la Liberté, 54000 Nancy";
-        $vacalambda->civilite = "M";
+        $vacalambda->civilite = "M.";
         $vacalambda->attente_validation = false;
         $vacalambda->id_statut = \App\Statut::where('statut', 'Vacataire')->first()->id;
         $vacalambda->save();

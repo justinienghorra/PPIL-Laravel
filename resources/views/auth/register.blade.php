@@ -17,7 +17,7 @@
                             <div class="col-md-6">
 
                                 <select id="civilite" class="form-control" name="civilite" value="{{ old('civilite') }}" required autofocus>
-                                    <option>M</option>
+                                    <option>M.</option>
                                     <option>Mme</option>
                                 </select>
                                 @if ($errors->has('civilite'))

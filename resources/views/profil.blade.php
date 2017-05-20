@@ -14,7 +14,7 @@ Profil
                 <div class="row center">
 
                 <h5 class="header col s12 light">Récapitulatif</h5>
-                <h5 class="header col s12 light">{{$userA->civilite}}. {{$userA->nom}} {{$userA->prenom}}, vous êtes <span class="green-text light">{{ProfilController::getStatut()}}</span>.</h5>
+                <h5 class="header col s12 light">{{$userA->civilite}} {{$userA->nom}} {{$userA->prenom}}, vous êtes <span class="green-text light">{{ProfilController::getStatut()}}</span>.</h5>
                 <h5 class="header col s12 light">Vous avez été affecté à <span class="blue-text">{{$heuresTotals}} / {{ProfilController::getStatutVolumeMin()}}</span> heures équivalent TD</h5>        
                 <div class="progress col s6 offset-s3">
                     <div class="determinate" style="width: 70%"></div>

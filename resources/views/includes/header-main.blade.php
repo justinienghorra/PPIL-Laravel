@@ -55,7 +55,7 @@
                                 class="material-icons right">arrow_drop_down</i></a></li>
             @endif
             <li><a class="dropdown-button" href="#!" data-activates="dropdown_user">{{$userA->civilite}}
-                    . {{$userA->nom}}<i class="material-icons right">arrow_drop_down</i></a></li>
+                    {{$userA->nom}}<i class="material-icons right">arrow_drop_down</i></a></li>
             <li><img src="/images{{$photoUrl}}" class="navbar-pic circle" alt=""></li>
         </ul>
 
@@ -67,7 +67,7 @@
                         <img src="/images/office.jpg">
                     </div>
                     <a href="#!user"><img class="circle" height="128px" src="/images{{$photoUrl}}"></a>
-                    <a href="#!name"><span class="white-text name">{{$userA->civilite}}. {{$userA->nom}}</span></a>
+                    <a href="#!name"><span class="white-text name">{{$userA->civilite}} {{$userA->nom}}</span></a>
                     <a href="#!email"><span class="white-text email">{{$userA->email}}</span></a>
                 </div>
             </li>
