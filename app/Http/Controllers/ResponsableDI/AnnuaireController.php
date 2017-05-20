@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use League\Csv\Reader;
 
+// TODO : confirmation suppression
+
 class AnnuaireController extends Controller
 {
     protected $statut_array;
@@ -136,13 +138,15 @@ class AnnuaireController extends Controller
                 'adresse' => $row[4],
                 'statut' => $row[5],
             ], [
-                'civilite' => ['required', 'string', Rule::in(['M., Mme'])],
+                'civilite' => ['required', 'string', Rule::in(['M.', 'Mme', 'M'])],
                 'prenom' => 'alpha|required|string|max:255',
                 'nom' => 'alpha|required|string|max:255',
                 'email' => 'required|string|email|unique:users,email',
                 'adresse' => 'required|string',
                 'statut' => ['required', 'string', Rule::in($this->statut_array)],
             ]);
+
+            if ($row[0] === 'M') $row[0] = 'M.';
 
             if ($validator->fails()) {
                 $messages['ligne'] = $num_row;
@@ -165,6 +169,10 @@ class AnnuaireController extends Controller
             $user->password = bcrypt("password");
             $user->attente_validation = false;
             $user->save();
+            $photo = new Photos;
+            $photo->adresse = "/var/www/public/images/default.jpg";
+            $photo->id_utilisateur =  $user->id;
+            $photo->save();
             array_push($new_users, $user);
 
         }

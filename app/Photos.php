@@ -19,4 +19,9 @@ class Photos extends Model
 
         return $photo;
     }
+
+    public function pathForClient() {
+        $tmp = explode("images", $this->adresse);
+        return '/images/' . $tmp[1];
+    }
 }

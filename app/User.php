@@ -141,4 +141,8 @@ class User extends Authenticatable
     public function enseignantDansUEsExterne() {
         return $this->hasMany('App\EnseignantDansUEExterne', 'id_utilisateur');
     }
+
+    public function photo() {
+        return $this->hasOne('App\Photos', 'id_utilisateur');
+    }
 }
