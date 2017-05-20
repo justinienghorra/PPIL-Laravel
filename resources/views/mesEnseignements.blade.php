@@ -79,9 +79,9 @@
                             <tr>
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
-                                <td>{!! $enseignant->enseignement->getEINbGroupesAffectees() !!}</td>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getTDNbGroupesAffectees() !!}</span></td>
-                                <td><span class=" red-text">{!! $enseignant->enseignement->getTPNbGroupesAffectees() !!}</span>
+                                <td>{!! $enseignant->enseignement->getEINbGroupesAffectes() !!}</td>
+                                <td><span class=" green-text">{!! $enseignant->enseignement->getTDNbGroupesAffectes() !!}</span></td>
+                                <td><span class=" red-text">{!! $enseignant->enseignement->getTPNbGroupesAffectes() !!}</span>
                                 </td>
                             </tr>
                             </tbody>
@@ -161,13 +161,13 @@
     </ul>
 
     <ul class="collapsible white" data-collapsible="expandable">
-        <li class="collection-header orange-text"><h4 class="center">Liste des enseignements externe auxquels vous
+        <li class="collection-header blue-text"><h4 class="center">Liste des enseignements externe auxquels vous
                 participez</h4>
         </li>
         @foreach($enseignantDansUEsExterne as $enseignantExterne)
             <li>
                 <div class="active collapsible-header "><strong
-                            class="orange-text"> {!! $enseignantExterne->nom !!}</strong><span
+                            class="blue-text"> {!! $enseignantExterne->nom !!}</strong><span
                             class="right">{!! $enseignantExterne->nom_formation !!}</span>
                 </div>
                 <div class="collapsible-body white">
@@ -202,15 +202,15 @@
                                 <td><span class=" green-text">{!! $enseignantExterne->getTDNbHeuresAffectees() !!}</span></td>
                                 <td><span class=" green-text">{!! $enseignantExterne->getTPNbHeuresAffectees() !!}</span></td>
                             </tr>
-                            {{--<tr>
+                            <tr>
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
-                                <td>{!! $enseignant->enseignement->getEINbGroupesAffectees() !!}</td>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getTDNbGroupesAffectees() !!}</span></td>
-                                <td><span class=" red-text">{!! $enseignant->enseignement->getTPNbGroupesAffectees() !!}</span>
+                                <td>{!! $enseignantExterne->ei_nb_groupes !!}</td>
+                                <td><span class=" green-text">{!! $enseignantExterne->td_nb_groupes !!}</span></td>
+                                <td><span class=" red-text">{!! $enseignantExterne->tp_nb_groupes !!}</span>
                                 </td>
                             </tr>
-                            </tbody>--}}
+                            </tbody>
                         </table>
                     </div>
 
@@ -271,9 +271,9 @@
                         <br>
                         <a href="#gerer-mes-horaires-{{$enseignant->id}}" class="right btn btn-flat green-text">Gérer
                             mes horaires</a>
-                        <!-- Fin du Contenu du premier EC -->
                     </div>--}}
-
+                    <a href="#gerer-mes-horaires-externe-{{$enseignantExterne->id}}" class="right btn btn-flat green-text">Gérer
+                        mon UE externe</a>
                 </div>
             </li>
 
@@ -321,16 +321,84 @@
                 <div class="row">
                     <div class="col s6">
                         {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
-                        {!! Form::number('ei_nb_groupes', $value = $enseignantDansUE->td_nb_groupes) !!}
+                        {!! Form::number('ei_nb_groupes', $value = $enseignantDansUE->ei_nb_groupes) !!}
                     </div>
                     <div class="col s6">
                         {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
-                        {!! Form::number('ei_heures_par_groupe', $value = $enseignantDansUE->td_heures_par_groupe) !!}
+                        {!! Form::number('ei_heures_par_groupe', $value = $enseignantDansUE->ei_heures_par_groupe) !!}
                     </div>
                     {{--<button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires')"
                             class="btn btn-flat green-text right" type="submit">Valider - TODO : Backend
                     </button>--}}
                         {!! Form::submit('Valider', $attributes = [ 'class' => 'btn btn-flat green-text right']) !!}
+                </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    @endforeach
+
+
+
+
+    <!-- Génération des modals horaire externe -->
+
+    @foreach($enseignantDansUEsExterne as $enseignantExterne)
+        <div class="modal" id="gerer-mes-horaires-externe-{{$enseignantExterne->id}}">
+            <div class="modal-content">
+                <h4>Modification de vos informations pour l'UE externe {{$enseignantExterne->nom}}</h4>
+                {!! Form::open(['url' => '/mesEnseignements/modificationUEExterne']) !!}
+                <div class="row">
+                    {!! Form::hidden('id_utilisateur', $enseignantExterne->user->id) !!}
+                    {!! Form::hidden('id_ue_externe', $enseignantExterne->id) !!}
+                    <div class="col s6">
+                        {!! Form::label('nom', 'Nom de l\'UE') !!}
+                        {!! Form::text('nom', $value = $enseignantExterne->nom) !!}
+                    </div>
+                    <div class="col s6">
+                        {!! Form::label('description', 'Description de l\'UE') !!}
+                        {!! Form::text('description', $value = $enseignantExterne->description) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        {!! Form::label('nom_formation', 'Formation : Nom') !!}
+                        {!! Form::text('nom_formation', $value = $enseignantExterne->nom_formation) !!}
+                    </div>
+                    <div class="col s6">
+                        {!! Form::label('cm_volume_affecte', 'CM : Nombre d\'heures affectées') !!}
+                        {!! Form::number('cm_volume_affecte', $value = $enseignantExterne->cm_nb_heures) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        {!! Form::label('td_nb_groupes', 'TD : Nombre de groupes') !!}
+                        {!! Form::number('td_nb_groupes', $value = $enseignantExterne->td_nb_groupes) !!}
+                    </div>
+                    <div class="col s6">
+                        {!! Form::label('td_heures_par_groupe', 'TD : Heures par groupe') !!}
+                        {!! Form::number('td_heures_par_groupe', $value = $enseignantExterne->td_heures_par_groupe) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        {!! Form::label('tp_nb_groupes', 'TP : Nombre de groupes') !!}
+                        {!! Form::number('tp_nb_groupes', $value = $enseignantExterne->tp_nb_groupes) !!}
+                    </div>
+                    <div class="col s6">
+                        {!! Form::label('tp_heures_par_groupe', 'TP : Heures par groupe') !!}
+                        {!! Form::number('tp_heures_par_groupe', $value = $enseignantExterne->tp_heures_par_groupe) !!}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
+                        {!! Form::number('ei_nb_groupes', $value = $enseignantExterne->ei_nb_groupes) !!}
+                    </div>
+                    <div class="col s6">
+                        {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
+                        {!! Form::number('ei_heures_par_groupe', $value = $enseignantExterne->ei_heures_par_groupe) !!}
+                    </div>
+                    {!! Form::submit('Valider', $attributes = [ 'class' => 'btn btn-flat green-text right']) !!}
                 </div>
                 {!! Form::close() !!}
             </div>
