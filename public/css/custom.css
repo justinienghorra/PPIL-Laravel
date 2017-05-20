@@ -21,8 +21,6 @@ body {
 main {
     flex: 1 0 auto;
     background-image: url("../../images/grid.jpg");
-    background-size: 100%;
-    
 }
 
 .navbar-logo {
