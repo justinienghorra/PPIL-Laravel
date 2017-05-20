@@ -86,6 +86,9 @@ Route::post('/respoUE/addEnseignant', 'ResponsableUE\MesUEController@addEnseigna
 
 Route::post('/respoUE/deleteEnseignant', 'ResponsableUE\MesUEController@deleteEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
 
+Route::post('/respoUE/modifEnseignant', 'ResponsableUE\MesUEController@modifEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
+
+Route::post('/respoUE/modifUE', 'ResponsableUE\MesUEController@modifUE')->middleware(\App\Http\Middleware\RespoUE::class);
 
 
 /*******************************
