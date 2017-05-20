@@ -244,7 +244,8 @@ Back-end : modifier heures + sécuriser l'ajout/suppression
                     <div class="modal-content">
                         <h4>Gestion des horaires de l'UE {{$ue->nom}}</h4>
                         <blockquote><h4>Modification des horaires globaux</h4></blockquote>
-                        {!! Form::open(['url' => '#!'], $attributes = ['class' => 'col s12']) !!}
+                        {!! Form::open(['url' => '/respoUE/modifUE'], $attributes = ['class' => 'col s12']) !!}
+                        <input type="hidden" name="id_ue" value="{{ $ue->id }}" />
                         <div class="row">
                             <div class="col s6">
                                 {!! Form::label('cm_volume_attendu', 'CM : Nombre d\'heures attendues') !!}
@@ -282,8 +283,7 @@ Back-end : modifier heures + sécuriser l'ajout/suppression
                             </div>
                         </div>
                         <div class="row">
-                            <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires globaux')"
-                                    class="btn btn-flat green-text right" type="submit">Valider
+                            <button class="btn btn-flat green-text right" type="submit">Valider
                             </button>
                         </div>
 
@@ -294,53 +294,69 @@ Back-end : modifier heures + sécuriser l'ajout/suppression
                             <blockquote><h4>Modification des horaires
                                     de {{$enseignant->user->civilite . " " . $enseignant->user->prenom . " " . $enseignant->user->nom}}</h4>
                             </blockquote>
-                            {!! Form::open(['url' => '#!']) !!}
+                            {!! Form::open(['url' => '/respoUE/modifEnseignant']) !!}
                             <div class="row">
+                                {!! Form::hidden('id_ue', $ue->id) !!}
                                 {!! Form::hidden('id_utilisateur', $enseignant->user->id) !!}
                                 <div class="col s6">
-                                    {!! Form::label('cm_volume_affecte', 'CM : Nombre d\'heures affectées') !!}
-                                    {!! Form::number('cm_volume_affecte', $value = $enseignant->cm_nb_heures) !!}
+                                    {!! Form::label('cm_nb_heures', 'CM : Nombre d\'heures affectées') !!}
+                                    {!! Form::number('cm_nb_heures', $value = $enseignant->cm_nb_heures) !!}
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s6">
-                                    {!! Form::label('td_nb_groupes', 'TD : Nombre de groupes') !!}
-                                    {!! Form::number('td_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
-                                </div>
                                 <div class="col s6">
                                     {!! Form::label('td_heures_par_groupe', 'TD : Heures par groupe') !!}
                                     {!! Form::number('td_heures_par_groupe', $value = $enseignant->td_heures_par_groupe) !!}
                                 </div>
+                                <div class="col s6">
+                                    {!! Form::label('td_nb_groupes', 'TD : Nombre de groupes') !!}
+                                    {!! Form::number('td_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col s6">
-                                    {!! Form::label('tp_nb_groupes', 'TP : Nombre de groupes') !!}
-                                    {!! Form::number('tp_nb_groupes', $value = $enseignant->tp_nb_groupes) !!}
-                                </div>
                                 <div class="col s6">
                                     {!! Form::label('tp_heures_par_groupe', 'TP : Heures par groupe') !!}
                                     {!! Form::number('tp_heures_par_groupe', $value = $enseignant->tp_heures_par_groupe) !!}
                                 </div>
+                                <div class="col s6">
+                                    {!! Form::label('tp_nb_groupes', 'TP : Nombre de groupes') !!}
+                                    {!! Form::number('tp_nb_groupes', $value = $enseignant->tp_nb_groupes) !!}
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col s6">
-                                    {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
-                                    {!! Form::number('ei_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
-                                </div>
                                 <div class="col s6">
                                     {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
                                     {!! Form::number('ei_heures_par_groupe', $value = $enseignant->td_heures_par_groupe) !!}
                                 </div>
-                                <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires enseignants')"
-                                        class="btn btn-flat green-text right" type="submit">Valider
+                                <div class="col s6">
+                                    {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
+                                    {!! Form::number('ei_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
+                                </div>
+                                <button class="btn btn-flat green-text right" type="submit">Valider
                                 </button>
                             </div>
                             {!! Form::close() !!}
 
                         @endforeach
                     </div>
-    		    </div>
+    		      </div>
       	     </li>
         @endforeach
-  </ul>
+    </ul>
+    @include('includes.buttonExport')
+
+    <div id="modal_export" class="modal">
+      <div class="modal-content">
+          <h4>Exportation des données</h4>
+          <p>Les données concernant les utilisateur seront exportées au format CSV</p>
+      </div>
+
+
+      <div class="modal-footer">
+          <a href="/respoUE/mesUE.csv" onclick="makeToast('Exportation réussie')"
+             class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
+      </div>
+  </div>
+
 @stop

@@ -1,5 +1,3 @@
 <div class="fixed-action-btn horizontal">
-    <a class="btn-floating btn-large blue">
-      <i class="material-icons">file_download</i>
-    </a>
+    <a href="#modal_export" class="btn-floating blue tooltipped" data-position="top" data-tooltip="Exporter"><i class="material-icons">file_download</i></a>
 </div>
