@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitesEnseignementsTableSeeder::class);
         $this->call(Responsable_unitee_enseignementsTableSeeder::class);
         $this->call(Enseignant_dans_u_esTableSeeder::class);
+        $this->call(EnseignantsDansUEExterneTableSeeder::class);
     }
 }

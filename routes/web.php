@@ -81,11 +81,12 @@ Route::post('/profil/image', 'Profil\ProfilController@postImage');
  * Route pour les Respo UE *
  ***************************/
 Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::get('/respoUE/mesUE.csv', 'ResponsableUE\MesUEController@export')->middleware(\App\Http\Middleware\RespoUE::class);
 
 Route::post('/respoUE/addEnseignant', 'ResponsableUE\MesUEController@addEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
-
 Route::post('/respoUE/deleteEnseignant', 'ResponsableUE\MesUEController@deleteEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
-
+Route::post('/respoUE/modifEnseignant', 'ResponsableUE\MesUEController@modifEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::post('/respoUE/modifUE', 'ResponsableUE\MesUEController@modifUE')->middleware(\App\Http\Middleware\RespoUE::class);
 
 
 /*******************************
@@ -94,6 +95,8 @@ Route::post('/respoUE/deleteEnseignant', 'ResponsableUE\MesUEController@deleteEn
 
 Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
 Route::post('/mesEnseignements/modificationUE', 'Enseignant\EnseignantController@updateUE');
+Route::post('/mesEnseignements/modificationUEExterne', 'Enseignant\EnseignantController@updateUEExterne');
+Route::post('/mesEnseignements/ajoutUEExterne', 'Enseignant\EnseignantController@ajouterUEExterne');
 
 
 
