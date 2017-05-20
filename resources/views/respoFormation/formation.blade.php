@@ -518,86 +518,8 @@ function redOrGreen($attendu, $affecte)
                 }
             });
 
-            $('#btn-add-ue').click(function (event) {
-                var nom = $('#nom-ue-add').val();
-                var desc = $('#description-ue-add').val();
+            // TODO affichier les erreurs suite à une une redirection
 
-                console.log('nom : ' + nom);
-                console.log('desc : ' + desc);
-                $.ajax({
-                    url: "/respoFormation/formation/{{$formation->nom}}/add",
-                    method: "POST",
-                    data: "nom=" + nom + "&description=" + desc
-                })
-                    .done(function (msg) {
-                        console.log(msg);
-                        if (msg['message'] === 'success') {
-                            var tab = $('#tableau_ues');
-                            var str = '<tr id="' + msg['ue']['id'] + '">';
-                            str = str + '<td><a href="/formation/{{$formation->nom}}/' + msg['ue']['nom'] + '">' + msg['ue']['nom'] + '</a></td>';
-                            str = str + '<td>' + msg['ue']['description'] + '</td>';
-                            str = str + '<td></td>';
-                            str = str + '<td><button type="submit" class="btn-delete-ue" id=">' + msg['ue']['id'] + '">Supprimer</button></td>';
-                            tab.append(str);
-                        } else {
-                            alert('ECHEC :/')
-                        }
-                    })
-
-                    .fail(function (xhr, msg) {
-                        console.log(xhr);
-                        console.log(msg);
-                        alert('ERREUR voir console <3');
-                    });
-            });
-
-            $('.btn-delete-ue').click(function () {
-                var id_ue = $(this).attr('id');
-                $.ajax({
-                    url: "/respoFormation/formation/{{$formation->nom}}/delete",
-                    method: "POST",
-                    data: "id_ue=" + id_ue
-                })
-                    .done(function (msg) {
-                        console.log(msg);
-                        if (msg['message'] === 'success') {
-                            $('tr#' + id_ue).remove();
-                        } else {
-                            alert('ECHEC :/')
-                        }
-                    })
-
-                    .fail(function (xhr, msg) {
-                        console.log(msg);
-                        console.log(xhr);
-                        alert('ERREUR voir console <3');
-                    });
-            });
-
-            $('.btn-modifier-ue').click(function () {
-                var id_utilisateur = $(this).parent().find("#responsable").find(':selected').attr('value');
-                var id_ue = $(this).parent().parent().attr('id');
-                console.log('User  : ' + id_utilisateur);
-                console.log('ue  : ' + id_ue);
-                $.ajax({
-                    url: "/respoFormation/formation/{{$formation->nom}}/updateResponsable",
-                    method: "POST",
-                    data: "id_utilisateur=" + id_utilisateur + "&id_ue=" + id_ue
-                })
-                    .done(function (msg) {
-                        console.log(msg);
-                        if (msg['message'] === 'success') {
-                            //
-                        } else {
-                            alert('ECHEC :/')
-                        }
-                    })
-                    .fail(function (xhr, msg) {
-                        console.log(msg);
-                        console.log(xhr);
-                        alert('ERREUR voir console <3');
-                    });
-            });
         });
     </script>
 @stop
