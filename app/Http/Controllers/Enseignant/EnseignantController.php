@@ -30,6 +30,8 @@ class EnseignantController extends Controller
         //recuperation des enseignements de l'utilisateur
         $enseignantDansUEs = $userA->enseignantDansUEs;
 
+        //recuperation des enseignements externe de l'utilisateur
+        $enseignantDansUEsExterne = $userA->enseignantDansUEsExterne;
 
 
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
@@ -44,6 +46,7 @@ class EnseignantController extends Controller
 
         return view('mesEnseignements')->with('userA', $userA)
                                             ->with('enseignantDansUEs', $enseignantDansUEs)
+                                            ->with('enseignantDansUEsExterne', $enseignantDansUEsExterne)
                                             ->with('photoUrl', $tmp[1])
                                             ->with('respoDI', $respoDI)
                                             ->with('respoUE', $respoUE);

@@ -24,7 +24,7 @@
                 participez</h4>
         </li>
 
-            @foreach($enseignantDansUEs as $enseignant)
+        @foreach($enseignantDansUEs as $enseignant)
             <li>
                 <div class="active collapsible-header "><strong
                             class="orange-text"> {!! $enseignant->enseignement->nom !!}</strong><span
@@ -151,14 +151,151 @@
                 </div>
             </li>
 
-    @endforeach
+        @endforeach
 
 
 
 
+
+
+    </ul>
+
+    <ul class="collapsible white" data-collapsible="expandable">
+        <li class="collection-header orange-text"><h4 class="center">Liste des enseignements externe auxquels vous
+                participez</h4>
+        </li>
+        @foreach($enseignantDansUEsExterne as $enseignantExterne)
+            <li>
+                <div class="active collapsible-header "><strong
+                            class="orange-text"> {!! $enseignantExterne->nom !!}</strong><span
+                            class="right">{!! $enseignantExterne->nom_formation !!}</span>
+                </div>
+                {{--<div class="collapsible-body white">
+                    <div class="row">
+
+
+                        <blockquote>
+                            <h4 class="header light">Description</h4>
+
+                            <!-- Contenu du premier EC -->
+
+                            <p class="flow-text">{!! $enseignant->enseignement->description !!} </p>
+
+
+                            <h4 class="light">Synthèse</h4>
+                        </blockquote>
+                        <table class="bordered">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>CM</th>
+                                <th>EI</th>
+                                <th>TD</th>
+                                <th>TP</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Volume attendu</th>
+                                <td>{!! $enseignant->enseignement->cm_volume_attendu !!}</td>
+                                <td>{!! $enseignant->enseignement->ei_volume_attendu !!}</td>
+                                <td>{!! $enseignant->enseignement->td_volume_attendu !!}</td>
+                                <td>{!! $enseignant->enseignement->tp_volume_attendu !!}</td>
+                            </tr>
+                            <tr>
+                                <th>Volume affecté</th>
+                                <td><span class=" green-text">{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}</span></td>
+                                <td>{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}</td>
+                                <td><span class=" green-text">{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}</span></td>
+                                <td><span class=" green-text">{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}</span></td>
+                            </tr>
+                            <tr>
+                                <th>Nombre de groupes attendus</th>
+                                <td>{!! $enseignant->enseignement->cm_nb_groupes_attendus !!}</td>
+                                <td>{!! $enseignant->enseignement->ei_nb_groupes_attendus !!}</td>
+                                <td>{!! $enseignant->enseignement->td_nb_groupes_attendus !!}</td>
+                                <td>{!! $enseignant->enseignement->tp_nb_groupes_attendus !!}</td>
+                            </tr>
+                            <tr>
+                                <th>Nombre de groupes affecté</th>
+                                <td></td>
+                                <td>{!! $enseignant->enseignement->getEINbGroupesAffectees() !!}</td>
+                                <td><span class=" green-text">{!! $enseignant->enseignement->getTDNbGroupesAffectees() !!}</span></td>
+                                <td><span class=" red-text">{!! $enseignant->enseignement->getTPNbGroupesAffectees() !!}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="row">
+                        <br>
+                        <blockquote>
+                            <h4 class="light">Détails par enseignant</h4>
+                        </blockquote>
+
+                        <table class="responsive-table bordered">
+                            <thead>
+                            <tr>
+
+                                <th class="center">Nom</th>
+                                <th class="center">CM</th>
+                                <th class="center" colspan="2">EI</th>
+                                <th class="center" colspan="2">TD</th>
+                                <th class="center" colspan="2">TP</th>
+                            </tr>
+                            </thead>
+
+                            <thead>
+                            <tr>
+                                <th></th>
+
+                                <th class="center">Heures</th>
+                                <th class="center">Nombre de groupes</th>
+                                <th class="center">Heures par groupes</th>
+                                <th class="center">Nombre de groupes</th>
+                                <th class="center">Heures par groupes</th>
+                                <th class="center">Nombre de groupes</th>
+                                <th class="center">Heures par groupes</th>
+
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            @foreach($enseignant->enseignement->enseignants as $enseignantParticipeUE)
+
+                                <tr>
+                                    <td>{!! $enseignantParticipeUE->user->nom . ' ' . $enseignantParticipeUE->user->prenom !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->cm_nb_heures !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->ei_nb_groupes !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->ei_heures_par_groupe !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->td_nb_groupes !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->td_heures_par_groupe !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->tp_nb_groupes !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->tp_heures_par_groupe !!}</td>
+                                </tr>
+
+                            @endforeach
+
+                            </tbody>
+                        </table>
+
+                        <br>
+                        <a href="#gerer-mes-horaires-{{$enseignant->id}}" class="right btn btn-flat green-text">Gérer
+                            mes horaires</a>
+                        <!-- Fin du Contenu du premier EC -->
+                    </div>
+
+                </div>--}}
+            </li>
+
+        @endforeach
+
+    </ul>
 
     <!-- Génération des modals -->
-    </ul>
 
     <!-- Génération des modals horaire -->
 

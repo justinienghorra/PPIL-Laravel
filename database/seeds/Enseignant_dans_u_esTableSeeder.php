@@ -49,5 +49,17 @@ class Enseignant_dans_u_esTableSeeder extends Seeder
 		$enseignantA1->tp_heures_par_groupe = 15;
 		$enseignantA1->ei_heures_par_groupe = 15;
 		$enseignantA1->save();
+
+        $enseignant = new EnseignantDansUE;
+        $enseignant->id_ue = UniteeEnseignement::where('nom', 'Algorithmique 2')->first()->id;
+        $enseignant->id_utilisateur = 2;
+        $enseignant->cm_nb_heures = 0;
+        $enseignant->td_nb_groupes = 1;
+        $enseignant->tp_nb_groupes = 1;
+        $enseignant->ei_nb_groupes = 1;
+        $enseignant->td_heures_par_groupe = 30;
+        $enseignant->tp_heures_par_groupe = 15;
+        $enseignant->ei_heures_par_groupe = 15;
+        $enseignant->save();
     }
 }
