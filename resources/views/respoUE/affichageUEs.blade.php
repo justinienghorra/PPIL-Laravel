@@ -339,8 +339,24 @@ Back-end : modifier heures + sécuriser l'ajout/suppression
 
                         @endforeach
                     </div>
-    		    </div>
+    		      </div>
       	     </li>
         @endforeach
-  </ul>
+    </ul>
+    @include('includes.buttonExport')
+
+    <div id="modal_export" class="modal">
+      <div class="modal-content">
+          <h4>Exportation des données</h4>
+          <p>Les données concernant les utilisateur seront exportées au format CSV</p>
+      </div>
+
+
+      <div class="modal-footer">
+          <a href="/respoUE/mesUE.csv" onclick="makeToast('Exportation réussie')"
+             class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
+      </div>
+  </div>
+
 @stop

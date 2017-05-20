@@ -183,5 +183,95 @@ class MesUEController extends Controller
     }
 
 
+
+    public function export()
+    {   
+        $userA = Auth::user();
+        $uesTemp = ResponsableUniteeEnseignement::where('id_utilisateur', $userA->id)->get();
+
+        $ues = null;
+        $enseignantsParUE = null;
+        $nomPrenomEnseignant = null;
+
+        //pour chaque UE dont l'utilisateur est responsable
+        foreach ($uesTemp as $ueTemp) {
+            $id_ue = $ueTemp['id_ue'];
+
+            //On récupère toutes les infos de l'UE
+            $ues[$id_ue] = UniteeEnseignement::where('id', $id_ue)->first();
+
+            //On récupère aussi tous les enseignants en lien avec l'UE (avec leur nom et leur prénom)
+            $enseignantsParUE[$id_ue] = EnseignantDansUE::where('id_ue', $id_ue)->join('users', 'users.id', '=', 'enseignant_dans_u_es.id_utilisateur')->get(); //tableau 3D (id UE -> id enseignant -> données de l'enseignant en lien avec l'UE)
+
+        }
+
+        $str = array(
+                    array("Liste des UE"),
+                    array(
+                        "Nom",
+                        "heures CM",
+                        "heures TD",
+                        "groupes TD",
+                        "heures TP ",
+                        "groupes TP",
+                        "heures EI",
+                        "groupes EI"
+            ));
+
+        foreach ($ues as $ue) {
+            array_push($str, array(
+                $ue->nom,
+                $ue->cm_volume_attendu,
+                $ue->td_volume_attendu, 
+                $ue->td_nb_groupes_attendus,
+                $ue->tp_volume_attendu,
+                $ue->tp_nb_groupes_attendus,
+                $ue->ei_volume_attendu,
+                $ue->ei_nb_groupes_attendus,
+            ));
+        }
+
+        array_push($str, array(""));
+        array_push($str, array("Enseignants par UE"));
+
+        $champs = array("Nom",
+                        "heures CM",
+                        "heures TD",
+                        "groupes TD",
+                        "heures TP ",
+                        "groupes TP",
+                        "heures EI",
+                        "groupes EI"
+                );
+
+        foreach ($ues as $ue) {
+            array_push($str, array(" ", " ", " ", $ue->nom, " ", " ", " ", " "));
+            array_push($str, $champs);
+            foreach ($enseignantsParUE[$ue->id] as $enseignant) {
+                array_push($str, array(
+                    $enseignant->prenom." ".$enseignant->nom,
+                    $enseignant->cm_nb_heures,
+                    $enseignant->td_heures_par_groupe,
+                    $enseignant->td_nb_groupes,
+                    $enseignant->tp_heures_par_groupe,
+                    $enseignant->tp_nb_groupes,
+                    $enseignant->ei_heures_par_groupe,
+                    $enseignant->ei_nb_groupes
+                ));
+            }
+            array_push($str, array(""));
+        }
+
+        $fichier = fopen("/tmp/mesUE.csv", "w");
+
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
+
+        return response()->download("/tmp/mesUE.csv");
+    }
+
     
 }
