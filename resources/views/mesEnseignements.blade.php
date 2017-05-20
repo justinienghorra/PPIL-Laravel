@@ -213,65 +213,6 @@
                             </tbody>
                         </table>
                     </div>
-
-
-                    {{--<div class="row">
-                        <br>
-                        <blockquote>
-                            <h4 class="light">Détails par enseignant</h4>
-                        </blockquote>
-
-                        <table class="responsive-table bordered">
-                            <thead>
-                            <tr>
-
-                                <th class="center">Nom</th>
-                                <th class="center">CM</th>
-                                <th class="center" colspan="2">EI</th>
-                                <th class="center" colspan="2">TD</th>
-                                <th class="center" colspan="2">TP</th>
-                            </tr>
-                            </thead>
-
-                            <thead>
-                            <tr>
-                                <th></th>
-
-                                <th class="center">Heures</th>
-                                <th class="center">Nombre de groupes</th>
-                                <th class="center">Heures par groupes</th>
-                                <th class="center">Nombre de groupes</th>
-                                <th class="center">Heures par groupes</th>
-                                <th class="center">Nombre de groupes</th>
-                                <th class="center">Heures par groupes</th>
-
-                            </tr>
-                            </thead>
-
-                            <tbody>
-
-                            @foreach($enseignant->enseignement->enseignants as $enseignantParticipeUE)
-
-                                <tr>
-                                    <td>{!! $enseignantParticipeUE->user->nom . ' ' . $enseignantParticipeUE->user->prenom !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->cm_nb_heures !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->ei_nb_groupes !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->ei_heures_par_groupe !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->td_nb_groupes !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->td_heures_par_groupe !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->tp_nb_groupes !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->tp_heures_par_groupe !!}</td>
-                                </tr>
-
-                            @endforeach
-
-                            </tbody>
-                        </table>
-
-                        <br>
-                        <a href="#gerer-mes-horaires-{{$enseignant->id}}" class="right btn btn-flat green-text">Gérer
-                            mes horaires</a>
-                    </div>--}}
                     <br>
                     <a href="#gerer-mes-horaires-externe-{{$enseignantExterne->id}}" class="right btn btn-flat green-text">Gérer
                         mon UE externe</a><br><br>
@@ -482,9 +423,6 @@
                 {!! Form::submit('Ajouter', $attributes = [ 'class' => 'btn btn-flat green-text right']) !!}
             </div>
             {!! Form::close() !!}
-            <p>
-                {{--<button onclick="makeToast('Noop')" class="btn btn-flat green-text">Ajouter</button>--}}
-            </p>
         </div>
     </div>
 
