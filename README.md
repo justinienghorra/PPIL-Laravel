@@ -76,3 +76,8 @@ Dans le .env du dossier racine
 * Créer un Model avec fichier de migration : php artisan make:model User -m 
     * -> Classe User dans app/
     * -> fichier de migration create_users_table dans database/migrations/
+    
+## Trucs à fix
+* Les cards moches sur /di/formations
+* Changement photo de profil sur mobile : erreur 500
+* Photo de profil par défaut pour l'admin
