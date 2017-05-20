@@ -26,7 +26,7 @@ Profil
                 <div class="divider"></div>
                 <br>
                 <div class="row center">
-                    <h5 class="header col s12 light">Modification de l'adresse email</h5>
+                    <h5 class="header col s12 light">Modification de vos informations</h5>
                 </div>
 
                 <div class="row">
@@ -99,26 +99,41 @@ Profil
                     <div class="row center">
                         <h5 class="header col s12 light">Modifier votre photo</h5>
                     </div>
-                    <div class="row center">
-                        {!! Form::open(['url' => 'profil/image', 'files' => true], $attributes = ['class' => 'col s12']) !!}
-                            <!--<img src="images/groot.png" alt="Votre photo" class="circle responsive-img">-->
-                            @if (Session::get('photoUrl') == null && $photoUrl == null)
-                                <img src="{!! url('images/groot.png') !!}" alt="Votre photo" class="circle responsive-img" height="256" width="256">
-                            @elseif (Session::get('photoUrl') == null)
-                                <img src="{!! url('images'. $photoUrl) !!}" alt="Votre photo" class="circle responsive-img" height="256" width="256">
-                            @else
-                                <img src="{!! url('images'. Session::get('photoUrl')) !!}" alt="Votre photo" class="circle responsive-img" height="256" width="256">
-                            @endif
-                    </div>
-                    <div class="row">
-                        <!--<a href="#" class="btn btn-flat blue-text">Importer</a>    ['url' => 'profil/image'], $attributes = ['class' => 'col s12']-->
-                        {!! Form::file('image', $attributes = ['class' => 'btn btn-flat blue-text']) !!}
-                        <!--<a href="#" class=" right btn btn-flat green-text">Valider</a>-->
-                        {!! Form::submit('Valider', $attributes = ['class' => 'right btn btn-flat green-text']) !!}
-                        {!! Form::close() !!}
 
-                        {{ Session::get('image_message') }}
-                    </div>
+                    {!! Form::open(['url' => 'profil/image', 'files' => true], $attributes = ['class' => 'col s12']) !!}
+                        <div class="row center">
+                                <!--<img src="images/groot.png" alt="Votre photo" class="circle responsive-img">-->
+                                @if (Session::get('photoUrl') == null && $photoUrl == null)
+                                    <img src="{!! url('images/default.jpg') !!}" alt="Votre photo" class="circle responsive-img" height="256" width="256">
+                                @elseif (Session::get('photoUrl') == null)
+                                    <img src="{!! url('images'. $photoUrl) !!}" alt="Votre photo" class="circle responsive-img" height="256" width="256">
+                                @else
+                                    <img src="{!! url('images'. Session::get('photoUrl')) !!}" alt="Votre photo" class="circle responsive-img" height="256" width="256">
+                                @endif
+                        </div>
+                        <div class="row">
+
+
+
+                            <div class="file-field input-field col s10">
+                                <div class="btn">
+                                    <span>Fichier</span>
+                                    {!! Form::file('image') !!}
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+
+                            <div style="padding-top: 20px" class="col s2">
+                                {!! Form::submit('Valider', $attributes = ['class' => 'right btn btn-flat green-text']) !!}
+                            </div>
+
+
+
+                            {{ Session::get('image_message') }}
+                        </div>
+                    {!! Form::close() !!}
 
                     <div class="divider"></div>
                     <br>
