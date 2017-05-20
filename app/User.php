@@ -125,15 +125,6 @@ class User extends Authenticatable
     }
 
 
-    public function getEnseignements(){
-        return EnseignantDansUE::where('id_utilisateur', $this->id)
-                            ->join('unitee_enseignements', 'enseignant_dans_u_es.id_ue', 'unitee_enseignements.id')
-                            ->join('formations', 'unitee_enseignements.id_formation', 'formations.id')
-                            ->selectRaw('enseignant_dans_u_es.id_ue as id_unit_ens  , unitee_enseignements.nom as nomUE, unitee_enseignements.description as descriptionUE,
-                             formations.nom as nomFormation, formations.description as descriptionFormation, unitee_enseignements.*, formations.* ,enseignant_dans_u_es.*')
-                            ->get();
-    }
-
     public function enseignantDansUEs() {
         return $this->hasMany('App\EnseignantDansUE', 'id_utilisateur');
     }
