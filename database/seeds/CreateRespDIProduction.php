@@ -25,7 +25,7 @@ class CreateRespDIProduction extends Seeder
         $admin->save();
 
         $respDI = new \App\ResponsableDepInfo;
-        $respDI->id_utilisateur = User::where('email', "jean.dupont@gmail.com")->first()->id;
+        $respDI->id_utilisateur = $admin->id;
         $respDI->save();
     }
 }
