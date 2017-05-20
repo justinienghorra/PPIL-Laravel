@@ -95,6 +95,8 @@ Route::post('/respoUE/modifUE', 'ResponsableUE\MesUEController@modifUE')->middle
 
 Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
 Route::post('/mesEnseignements/modificationUE', 'Enseignant\EnseignantController@updateUE');
+Route::post('/mesEnseignements/modificationUEExterne', 'Enseignant\EnseignantController@updateUEExterne');
+Route::post('/mesEnseignements/ajoutUEExterne', 'Enseignant\EnseignantController@ajouterUEExterne');
 
 
 
