@@ -39,11 +39,27 @@
                 @endforeach
 
 
-
             @endif
 
 
             @include('includes.buttonImportExport')
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-content">
+            <ul class="collection">
+                @foreach($users as $user)
+                    <li class="collection-item avatar">
+                        @if(isset($user->photo))
+                            <img src="{{$user->photo->pathForClient()}}" alt="" class="circle">
+                        @else
+                            <img src="/images/default.jpg" alt="" class="circle">
+                        @endif
+                        <span class="title">{{$user->civilite . " " . $user->prenom . " " . $user->nom}}</span>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </div>
 
