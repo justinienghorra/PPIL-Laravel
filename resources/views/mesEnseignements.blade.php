@@ -482,7 +482,6 @@
                 {!! Form::submit('Ajouter', $attributes = [ 'class' => 'btn btn-flat green-text right']) !!}
             </div>
             {!! Form::close() !!}
-            </p>
             <p>
                 {{--<button onclick="makeToast('Noop')" class="btn btn-flat green-text">Ajouter</button>--}}
             </p>
