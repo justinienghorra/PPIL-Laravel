@@ -23,9 +23,10 @@ function redOrGreen($attendu, $affecte)
             <blockquote class="flow-text">
                 <p><strong>Description :</strong> {{$formation->description}}</p>
             </blockquote>
+            <br>
         </li>
         @foreach($ues as $ue)
-            <li>
+            <li id="li-{{$ue->id}}">
                 <div class="collapsible-header">
                     <strong class="orange-text">{{$ue->nom}}</strong></div>
                 <div class="collapsible-body white">
@@ -102,9 +103,12 @@ function redOrGreen($attendu, $affecte)
                     </div>
                     <br>
                     <div class="row">
+                        @if($ue->enseignants->count() > 0)
                         <blockquote class="hide-on-med-and-down">
                             <h4 class="light">Détails par enseignant</h4>
                         </blockquote>
+
+
 
                         <table class="hide-on-med-and-down bordered">
                             <thead>
@@ -147,6 +151,7 @@ function redOrGreen($attendu, $affecte)
                             </tbody>
                             @endforeach
                         </table>
+                            @endif
                     </div>
                     <div class="row">
                         <a href="#modal-gerer-enseignants-{{$ue->id}}"
@@ -338,12 +343,12 @@ function redOrGreen($attendu, $affecte)
                 <div class="row">
                     <h4>Suppression de l'UE</h4>
                     <p>
-                        Attention, vous allez supprimer la formation {{$ue->nom}}
+                        Attention, vous allez supprimer l' UE {{$ue->nom}}
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" @click.prevent="deleteformation(formationarg.id)" class="modal-action modal-close waves-effect waves-light btn-flat red-text" >Confirmer</a>
+                <a href="#!" onclick="deleteUE(event, {{$ue->id}})" class="modal-action modal-close waves-effect waves-light btn-flat red-text" >Confirmer</a>
             </div>
         </div>
 
@@ -510,11 +515,35 @@ function redOrGreen($attendu, $affecte)
     <script src="/js/materialize.js"></script>
 
     <script>
+
+        function deleteUE(event, id_ue) {
+            $.ajax({
+                url: "/respoFormation/formation/{{$formation->nom}}/delete",
+                method: "POST",
+                data: "id_ue=" + id_ue
+            })
+                .done(function (msg) {
+                    console.log(msg);
+                    if (msg['message'] === 'success') {
+                        $('#li-'+id_ue).remove();
+                        makeToast('Suppression effectuée')
+                    } else {
+                        makeToast('Erreur lors de la suppression')
+                    }
+                })
+
+                .fail(function (xhr, msg) {
+                    console.log(msg);
+                    console.log(xhr);
+                    makeToast('Erreur serveur : ' + xhr.status);
+                });
+        }
+
         $(document).ready(function () {
 
             $.ajaxSetup({
                 headers: {
-                    "X-CSRF-TOKEN": $('meta[name="token"]').attr('content')
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
