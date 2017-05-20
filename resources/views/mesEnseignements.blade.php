@@ -272,8 +272,9 @@
                         <a href="#gerer-mes-horaires-{{$enseignant->id}}" class="right btn btn-flat green-text">Gérer
                             mes horaires</a>
                     </div>--}}
+                    <br>
                     <a href="#gerer-mes-horaires-externe-{{$enseignantExterne->id}}" class="right btn btn-flat green-text">Gérer
-                        mon UE externe</a>
+                        mon UE externe</a><br><br>
                 </div>
             </li>
 
@@ -427,12 +428,63 @@
         <div class="modal-content">
             <h4>Ajout d'une UE externe</h4>
             <p>
-                TODO : Remplir cette partie, je sais pas trop quoi mettre.
-                <br>
-                On va surement devoir modif la base en plus :(
+            {!! Form::open(['url' => '/mesEnseignements/ajoutUEExterne']) !!}
+            <div class="row">
+                {!! Form::hidden('id_utilisateur', $userA->id) !!}
+                <div class="col s6">
+                    {!! Form::label('nom', 'Nom de l\'UE') !!}
+                    {!! Form::text('nom') !!}
+                </div>
+                <div class="col s6">
+                    {!! Form::label('description', 'Description de l\'UE') !!}
+                    {!! Form::text('description') !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    {!! Form::label('nom_formation', 'Formation : Nom') !!}
+                    {!! Form::text('nom_formation') !!}
+                </div>
+                <div class="col s6">
+                    {!! Form::label('cm_volume_affecte', 'CM : Nombre d\'heures affectées') !!}
+                    {!! Form::number('cm_volume_affecte') !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    {!! Form::label('td_nb_groupes', 'TD : Nombre de groupes') !!}
+                    {!! Form::number('td_nb_groupes') !!}
+                </div>
+                <div class="col s6">
+                    {!! Form::label('td_heures_par_groupe', 'TD : Heures par groupe') !!}
+                    {!! Form::number('td_heures_par_groupe') !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    {!! Form::label('tp_nb_groupes', 'TP : Nombre de groupes') !!}
+                    {!! Form::number('tp_nb_groupes') !!}
+                </div>
+                <div class="col s6">
+                    {!! Form::label('tp_heures_par_groupe', 'TP : Heures par groupe') !!}
+                    {!! Form::number('tp_heures_par_groupe') !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
+                    {!! Form::number('ei_nb_groupes') !!}
+                </div>
+                <div class="col s6">
+                    {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
+                    {!! Form::number('ei_heures_par_groupe') !!}
+                </div>
+                {!! Form::submit('Ajouter', $attributes = [ 'class' => 'btn btn-flat green-text right']) !!}
+            </div>
+            {!! Form::close() !!}
             </p>
             <p>
-                <button onclick="makeToast('Noop')" class="btn btn-flat green-text">Ajouter</button>
+                {{--<button onclick="makeToast('Noop')" class="btn btn-flat green-text">Ajouter</button>--}}
             </p>
         </div>
     </div>

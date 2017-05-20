@@ -56,6 +56,7 @@ class EnseignantController extends Controller
 
 
     public function updateUE(Request $request){
+        //TODO : message sur la vue
         $id_utilisateur = $request->input('id_utilisateur');
         $id_ue = $request->input('id_ue');
         $cm_volume_affecte = $request->input('cm_volume_affecte');
@@ -78,7 +79,7 @@ class EnseignantController extends Controller
     }
 
     public function updateUEExterne(Request $request){
-
+        //TODO : message sur la vue
         $id_utilisateur = $request->input('id_utilisateur');
         $id_ue_externe = $request->input('id_ue_externe');
         $nom = $request->input('nom');
@@ -95,11 +96,35 @@ class EnseignantController extends Controller
         EnseignantDansUEExterne::where('id_utilisateur', $id_utilisateur)
                                 ->where('id', $id_ue_externe)
                                 ->update(['nom' => $nom, 'description' => $description, 'nom_formation' => $nom_formation,
-                                    'cm_nb_heures' => $cm_volume_affecte, 'td_nb_groupes' => $td_nb_groupes,
-                                    'td_heures_par_groupe' => $td_heures_par_groupe, 'tp_nb_groupes' => $tp_nb_groupes,
-                                    'tp_heures_par_groupe' => $tp_heures_par_groupe, 'ei_nb_groupes' => $ei_nb_groupes,
-                                    'ei_heures_par_groupe' => $ei_heures_par_groupe]);
+                                        'cm_nb_heures' => $cm_volume_affecte, 'td_nb_groupes' => $td_nb_groupes,
+                                        'td_heures_par_groupe' => $td_heures_par_groupe, 'tp_nb_groupes' => $tp_nb_groupes,
+                                        'tp_heures_par_groupe' => $tp_heures_par_groupe, 'ei_nb_groupes' => $ei_nb_groupes,
+                                        'ei_heures_par_groupe' => $ei_heures_par_groupe]);
 
         return redirect('mesEnseignements')->with('message', 'L\'UE externe a bien été modifié' );
+    }
+
+    public function ajouterUEExterne(Request $request){
+        //TODO : message sur la vue
+
+        $id_utilisateur = $request->input('id_utilisateur');
+        $nom = $request->input('nom');
+        $description = $request->input('description');
+        $nom_formation = $request->input('nom_formation');
+        $cm_volume_affecte = $request->input('cm_volume_affecte');
+        $td_nb_groupes = $request->input('td_nb_groupes');
+        $td_heures_par_groupe = $request->input('td_heures_par_groupe');
+        $tp_nb_groupes = $request->input('tp_nb_groupes');
+        $tp_heures_par_groupe = $request->input('tp_heures_par_groupe');
+        $ei_nb_groupes = $request->input('ei_nb_groupes');
+        $ei_heures_par_groupe = $request->input('ei_heures_par_groupe');
+
+        EnseignantDansUEExterne::insert(['nom' => $nom, 'description' => $description, 'nom_formation' => $nom_formation,
+                                        'cm_nb_heures' => $cm_volume_affecte, 'td_nb_groupes' => $td_nb_groupes,
+                                        'td_heures_par_groupe' => $td_heures_par_groupe, 'tp_nb_groupes' => $tp_nb_groupes,
+                                        'tp_heures_par_groupe' => $tp_heures_par_groupe, 'ei_nb_groupes' => $ei_nb_groupes,
+                                        'ei_heures_par_groupe' => $ei_heures_par_groupe, 'id_utilisateur' => $id_utilisateur]);
+
+        return redirect('mesEnseignements')->with('message', 'L\'UE externe a bien été ajouté' );
     }
 }

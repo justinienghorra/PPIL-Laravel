@@ -95,6 +95,8 @@ Route::post('/respoUE/deleteEnseignant', 'ResponsableUE\MesUEController@deleteEn
 Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
 Route::post('/mesEnseignements/modificationUE', 'Enseignant\EnseignantController@updateUE');
 Route::post('/mesEnseignements/modificationUEExterne', 'Enseignant\EnseignantController@updateUEExterne');
+Route::post('/mesEnseignements/ajoutUEExterne', 'Enseignant\EnseignantController@ajouterUEExterne');
+
 
 
 Route::get('/di/annuaire', 'ResponsableDI\AnnuaireController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
