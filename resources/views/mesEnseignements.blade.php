@@ -64,10 +64,10 @@
                             </tr>
                             <tr>
                                 <th>Volume affecté</th>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}</span></td>
+                                <td>{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}</td>
                                 <td>{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}</td>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}</span></td>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}</span></td>
+                                <td>{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}</td>
+                                <td>{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}</td>
                             </tr>
                             <tr>
                                 <th>Nombre de groupes attendus</th>
@@ -80,9 +80,8 @@
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
                                 <td>{!! $enseignant->enseignement->getEINbGroupesAffectes() !!}</td>
-                                <td><span class=" green-text">{!! $enseignant->enseignement->getTDNbGroupesAffectes() !!}</span></td>
-                                <td><span class=" red-text">{!! $enseignant->enseignement->getTPNbGroupesAffectes() !!}</span>
-                                </td>
+                                <td>{!! $enseignant->enseignement->getTDNbGroupesAffectes() !!}</td>
+                                <td>{!! $enseignant->enseignement->getTPNbGroupesAffectes() !!}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -145,7 +144,6 @@
                         <br>
                         <a href="#gerer-mes-horaires-{{$enseignant->id}}" class="right btn btn-flat green-text">Gérer
                             mes horaires</a>
-                        <!-- Fin du Contenu du premier EC -->
                     </div>
 
                 </div>
@@ -197,18 +195,17 @@
                             <tbody>
                             <tr>
                                 <th>Volume affecté</th>
-                                <td><span class=" green-text">{!! $enseignantExterne->cm_nb_heures !!}</span></td>
+                                <td>{!! $enseignantExterne->cm_nb_heures !!}</td>
                                 <td>{!! $enseignantExterne->getEINbHeuresAffectees() !!}</td>
-                                <td><span class=" green-text">{!! $enseignantExterne->getTDNbHeuresAffectees() !!}</span></td>
-                                <td><span class=" green-text">{!! $enseignantExterne->getTPNbHeuresAffectees() !!}</span></td>
+                                <td>{!! $enseignantExterne->getTDNbHeuresAffectees() !!}</td>
+                                <td>{!! $enseignantExterne->getTPNbHeuresAffectees() !!}</td>
                             </tr>
                             <tr>
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
                                 <td>{!! $enseignantExterne->ei_nb_groupes !!}</td>
-                                <td><span class=" green-text">{!! $enseignantExterne->td_nb_groupes !!}</span></td>
-                                <td><span class=" red-text">{!! $enseignantExterne->tp_nb_groupes !!}</span>
-                                </td>
+                                <td>{!! $enseignantExterne->td_nb_groupes !!}</td>
+                                <td>{!! $enseignantExterne->tp_nb_groupes !!}</td>
                             </tr>
                             </tbody>
                         </table>

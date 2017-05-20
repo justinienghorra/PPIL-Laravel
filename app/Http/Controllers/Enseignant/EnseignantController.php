@@ -123,7 +123,8 @@ class EnseignantController extends Controller
                                         'cm_nb_heures' => $cm_volume_affecte, 'td_nb_groupes' => $td_nb_groupes,
                                         'td_heures_par_groupe' => $td_heures_par_groupe, 'tp_nb_groupes' => $tp_nb_groupes,
                                         'tp_heures_par_groupe' => $tp_heures_par_groupe, 'ei_nb_groupes' => $ei_nb_groupes,
-                                        'ei_heures_par_groupe' => $ei_heures_par_groupe, 'id_utilisateur' => $id_utilisateur]);
+                                        'ei_heures_par_groupe' => $ei_heures_par_groupe, 'id_utilisateur' => $id_utilisateur,
+                                        'created_at' =>  \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
 
         return redirect('mesEnseignements')->with('message', 'L\'UE externe a bien été ajouté' );
     }
