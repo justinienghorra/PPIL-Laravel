@@ -45,8 +45,8 @@ class ProfilController extends Controller
         $statuts = Statut::all();
 
         $civilite = User::select('civilite')->where('id', '=', $userA->id)->first();
-        if ($civilite->civilite == "M") $civilites = array("M" => "M","Mme" => "Mme");
-        else $civilites = array("Mme" => "Mme", "M" => "M");
+        if ($civilite->civilite == "M.") $civilites = array("M." => "M.","Mme" => "Mme");
+        else $civilites = array("Mme" => "Mme", "M." => "M.");
 
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
 
@@ -123,7 +123,7 @@ class ProfilController extends Controller
             'nom' => 'string|max:255|alpha',
             'prenom' => 'string|max:255|alpha',
             'statut' => 'string', Rule::in(["ATER", "PRAG", "Enseignant chercheur", "Doctorant", "Vacataire", "Aucun"]),
-            'civilite' => 'string', Rule::in(["M", "Mme"]),
+            'civilite' => 'string', Rule::in(["M.", "Mme"]),
             'adresse' => 'string|max:255',
             'email' => 'string|email|max:255'
         ]);

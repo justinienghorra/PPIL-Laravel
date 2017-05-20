@@ -136,7 +136,7 @@ class AnnuaireController extends Controller
                 'adresse' => $row[4],
                 'statut' => $row[5],
             ], [
-                'civilite' => ['required', 'string', Rule::in(['M, "Mme'])],
+                'civilite' => ['required', 'string', Rule::in(['M., Mme'])],
                 'prenom' => 'alpha|required|string|max:255',
                 'nom' => 'alpha|required|string|max:255',
                 'email' => 'required|string|email|unique:users,email',
