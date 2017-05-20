@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CreateRespiDIProduction extends Seeder
+class CreateRespDIProduction extends Seeder
 {
     /**
      * Run the database seeds.
