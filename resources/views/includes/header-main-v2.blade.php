@@ -97,7 +97,7 @@
                     <div class="divider"></div>
                 </li>
             @endif
-            <li><a href="profil.html">Profil</a></li>
+            <li><a href="/profil">Profil</a></li>
             <li>
                 <div class="divider"></div>
             </li>
