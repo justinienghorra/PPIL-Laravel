@@ -5,33 +5,33 @@
 
 <!-- Dropdown Structure -->
 <ul id="dropdown_notifs" class="dropdown-content">
-    <li><a class="black-text" href="#!"><strong>Inscription</strong> Chuck Norris <i
+    <li><a class="blue-text darken-1" href="#!"><strong>Inscription</strong> Chuck Norris <i
                     class="material-icons tiny red-text">clear</i></a></li>
-    <li><a class="black-text" href="#!"><strong>Inscription</strong> Mickey <i class="material-icons tiny red-text">clear</i></a>
+    <li><a class="blue-text darken-1" href="#!"><strong>Inscription</strong> Mickey <i class="material-icons tiny red-text">clear</i></a>
     </li>
 </ul>
 
 <ul id="dropdown_enseignements" class="dropdown-content">
     @if($respoUE)
-        <li><a class="black-text" href="/respoUE/mesUE">Vos UE</a></li>
+        <li><a class="blue-text darken-1" href="/respoUE/mesUE">Vos UE</a></li>
     @endif
-    <li><a class="black-text" href="/mesEnseignements">Mes enseignements</a></li>
+    <li><a class="blue-text darken-1" href="/mesEnseignements">Mes enseignements</a></li>
 </ul>
 
 <ul id="dropdown_formations" class="dropdown-content">
-    <li><a class="black-text" href="/mesFormations/L1Informatique">L1 Informatique</a></li>
-    <li><a class="black-text" href="#!">L2 Informatique</a></li>
-    <li><a class="black-text" href="#!">L3 Informatique</a></li>
+    <li><a class="blue-text darken-1" href="/mesFormations/L1Informatique">L1 Informatique</a></li>
+    <li><a class="blue-text darken-1" href="#!">L2 Informatique</a></li>
+    <li><a class="blue-text darken-1" href="#!">L3 Informatique</a></li>
 </ul>
 <ul id="dropdown_administration" class="dropdown-content">
-    <li><a href="/di/annuaire">Annuaire</a></li>
-    <li><a href="/di/formations">Formations</a></li>
-    <li><a href="/di/journal">Journal</a></li>
-    <li><a href="/di/recapEnseignants">Recapitulatif des enseignants</a></li>
+    <li><a class="blue-text darken-1" href="/di/annuaire">Annuaire</a></li>
+    <li><a class="blue-text darken-1" href="/di/formations">Formations</a></li>
+    <li><a class="blue-text darken-1" href="/di/journal">Journal</a></li>
+    <li><a class="blue-text darken-1" href="/di/recapEnseignants">Recapitulatif des enseignants</a></li>
 </ul>
 <ul id="dropdown_user" class="dropdown-content">
-    <li><a href="/profil">Profil</a></li>
-    <li><a href="#!"
+    <li><a class="blue-text darken-1" href="/profil">Profil</a></li>
+    <li><a class="blue-text darken-1" href="#!"
            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
             Déconnexion
         </a></li>
