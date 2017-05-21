@@ -13,6 +13,7 @@ use App\User;
 use League\Csv\Reader;
 use Illuminate\Http\Request;
 use App\Photos;
+use Validator;
 use Illuminate\Support\Facades\Auth;
 
 class FormationController extends Controller
@@ -79,13 +80,7 @@ class FormationController extends Controller
             $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
 
 
-            $notif = new Notification();
-
-            $notif->resume = $messageNotif;
-            $notif->id_utilisateur_a_notifie = $formation->responsable->id;
-            $notif->venant_de_id_utilisateur = $user->id;
-
-            $notif->save();
+            Notification::createNotification($messageNotif, $user->id, $formation->responsable->id);
 
 
             return response()->json(["message" => "success", "ue" => $ue]);
