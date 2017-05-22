@@ -22,7 +22,7 @@
                 <h5 class="header col s12 light">Vous avez été affecté à <span class="blue-text">{{$heuresTotals}}
                         / {{ProfilController::getStatutVolumeMin()}}</span> heures équivalent TD</h5>
                 <div class="progress col s6 offset-s3">
-                    <div class="determinate" style="width: 70%"></div>
+                    <div class="determinate" style="width: {{$pourcentage}}%"></div>
                 </div>
 
             </div>

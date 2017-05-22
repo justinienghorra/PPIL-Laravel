@@ -70,7 +70,16 @@ class ProfilController extends Controller
                 + ($ue->ei_nb_groupes*$ue->ei_heures_par_groupe)*1.25;
 
         }
+	if ($this->getStatutVolumeMin() > 0){
+	   $pourcentage = ($heurestotals / $this->getStatutVolumeMin())*100;
+           if ($pourcentage > 100){
+	    $pourcentage = 100;
+	  }
+        }else {
+	  $pourcentage = 0;
+        }
 
+        
         return view('profil')
             ->with('userA', $userA)
             ->with('statuts', $statuts)
@@ -79,7 +88,8 @@ class ProfilController extends Controller
             ->with('respoDI', $respoDI)
             ->with('respoUE', $respoUE)
             ->with('respoForm', $respoForm)
-            ->with('heuresTotals', $heurestotals);
+            ->with('heuresTotals', $heurestotals)
+            ->with('pourcentage', $pourcentage);
 
 
     }
