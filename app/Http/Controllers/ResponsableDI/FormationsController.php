@@ -109,6 +109,8 @@ class FormationsController
         }
 
         $fichier = fopen("/tmp/formations.csv", "w");
+        
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
 
         foreach($str as $fields) {
             fputcsv($fichier, $fields);

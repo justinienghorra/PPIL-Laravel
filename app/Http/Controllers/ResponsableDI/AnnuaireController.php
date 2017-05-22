@@ -81,6 +81,8 @@ class AnnuaireController extends Controller
 
         $fichier = fopen("/tmp/annuaire.csv", "r");
 
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
+        
         foreach($str as $fields) {
             fputcsv($fichier, $fields);
         }

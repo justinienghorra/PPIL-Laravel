@@ -194,6 +194,8 @@ class FormationController extends Controller
 
         $fichier = fopen("/tmp/" . $formation->nom . ".csv", "w");
 
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
+
         foreach($str as $fields) {
             fputcsv($fichier, $fields);
         }
