@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed'   => 'Ces identifiants ne correspondent pas à nos enregistrements',
+    'failed'   => 'Identifiants invalides, votre inscription est peut-être en attente',
     'throttle' => 'Trop de tentatives de connexion. Veuillez essayer de nouveau dans :seconds secondes.',
 
 ];
