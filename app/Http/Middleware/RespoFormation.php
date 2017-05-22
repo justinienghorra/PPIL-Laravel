@@ -23,7 +23,7 @@ class RespoFormation
             //dd($nom_formation);
 
             $user = Auth::user();
-            if (!$user->estResponsableFormation($nom_formation)) {
+            if (!$user->estResponsableFormation($nom_formation) && !$user->estResponsableDI()) {
                 return redirect('/home');
             }
 
