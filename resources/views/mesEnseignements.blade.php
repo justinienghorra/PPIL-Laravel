@@ -30,15 +30,6 @@ function redOrGreen($attendu, $affecte)
 
 
     <ul class="collapsible white" data-collapsible="expandable">
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
         <li class="collection-header orange-text"><h4 class="center">Liste des enseignements auxquels vous
                 participez</h4>
@@ -46,7 +37,7 @@ function redOrGreen($attendu, $affecte)
 
         @foreach($enseignantDansUEs as $enseignant)
             <li>
-                <div class="active collapsible-header "><strong
+                <div class="collapsible-header "><strong
                             class="orange-text"> {!! $enseignant->enseignement->nom !!}</strong><span
                             class="right">{!! $enseignant->enseignement->formation->nom !!}</span>
                 </div>
@@ -206,7 +197,7 @@ function redOrGreen($attendu, $affecte)
         </li><br>
         @foreach($enseignantDansUEsExterne as $enseignantExterne)
             <li>
-                <div class="active collapsible-header "><strong
+                <div class=" collapsible-header "><strong
                             class="blue-text"> {!! $enseignantExterne->nom !!}</strong><span
                             class="right">{!! $enseignantExterne->nom_formation !!}</span>
                 </div>
@@ -469,6 +460,20 @@ function redOrGreen($attendu, $affecte)
 
 
     @include('includes.buttonExportAdd')
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/materialize.js"></script>
+    <script src="/js/utils.js"></script>
+
+    <script>
+        @if(Session::get('message')  != null )
+            makeToast("{{Session::get('message')}}");
+        @endif
+
+        @foreach($errors->all() as $error)
+            makeToast("{{$error}}");
+        @endforeach
+    </script>
 
 
 
