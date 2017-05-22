@@ -7,6 +7,10 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
 
+		<?php
+		header('Location: /profil');
+		exit();
+		?>
                 <div class="panel-heading">Votre connexion au Système de gestion des enseignements a bien été effectué. Que 
                     voulez-vous faire ?</div>
 
