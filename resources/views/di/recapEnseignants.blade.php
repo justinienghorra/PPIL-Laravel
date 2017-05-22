@@ -41,10 +41,10 @@ Récapitulatif des enseignants
               <td><span class="green-text">{{$tableauHeureTotale[$userStatut->id]}}</span></td>
               @endif
              
-              @if( ($userStatut->volumeMin) > ($tableauHeureTotale[$userStatut->id]) )
-              <td><span class="red-text">{{$tableauHeureTotale[$userStatut->id]}}</span></td>
+              @if( ($userStatut->volumeMin) > ($tableauHeureTotaleFST[$userStatut->id]) )
+              <td><span class="red-text">{{$tableauHeureTotaleFST[$userStatut->id]}}</span></td>
               @else
-              <td><span class="green-text">{{$tableauHeureTotale[$userStatut->id]}}</span></td>
+              <td><span class="green-text">{{$tableauHeureTotaleFST[$userStatut->id]}}</span></td>
               @endif              
               
              
