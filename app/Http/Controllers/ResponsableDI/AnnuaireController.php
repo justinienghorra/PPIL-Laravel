@@ -36,7 +36,7 @@ class AnnuaireController extends Controller
      */
     protected function show()
     {
-        $users = User::all();
+        $users = User::allValidate();
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
@@ -58,7 +58,7 @@ class AnnuaireController extends Controller
      */
     protected function getAnnuaireJSON()
     {
-        $users = User::all();
+        $users = User::allValidate();
         return $users;
     }
 
@@ -67,7 +67,7 @@ class AnnuaireController extends Controller
      */
     protected function getAnnuaireCSV()
     {
-        $users = User::all();
+        $users = User::allValidate();
         $str = "enseignant;statut;email";
         foreach ($users as $user) {
             $str = $str . "\n" . $user->prenom . " " . $user->nom . "; " . $user->statut() . "; " . $user->email;
