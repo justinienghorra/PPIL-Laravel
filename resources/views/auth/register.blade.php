@@ -61,9 +61,13 @@
 
                             <div class="col-md-6">
 
-                                <select id="statut" class="form-control" name="statut" value="{{ old('statut') }}" required autofocus>
+                                <select id="statut" class="form-control" name="statut" required autofocus>
                                     @foreach(\App\Statut::all() as $statut)
-                                        <option>{{$statut->statut}}</option>
+                                        @if($statut->statut == old('statut'))
+                                            <option selected>{{$statut->statut}}</option>
+                                        @else
+                                            <option >{{$statut->statut}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 @if ($errors->has('statut'))
