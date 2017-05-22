@@ -28,7 +28,18 @@ function redOrGreen($attendu, $affecte)
 
     </style>
 
+
     <ul class="collapsible white" data-collapsible="expandable">
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <li class="collection-header orange-text"><h4 class="center">Liste des enseignements auxquels vous
                 participez</h4>
         </li><br>
@@ -172,6 +183,7 @@ function redOrGreen($attendu, $affecte)
                         </table>
 
                         <br>
+
                         <a href="#gerer-mes-horaires-{{$enseignant->id}}" class="right btn btn-flat green-text">Gérer
                             mes horaires</a>
                     </div>
