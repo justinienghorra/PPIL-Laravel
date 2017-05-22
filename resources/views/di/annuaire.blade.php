@@ -30,8 +30,10 @@
                                     {{$user->statut()}}
                                 @endif
                                 <br>
-                                {{$user->email}}
-                                <a onclick="deleteUser(event, {{$user->id}})" class="secondary-content" href="#!"><i
+                            {{$user->email}}
+                            <!--<a onclick="deleteUser(event, {{$user->id}})" class="secondary-content" href="#!"><i
+                                            class="red-text material-icons">clear</i></a>-->
+                                <a class="secondary-content" href="#modal-suppression-{{$user->id}}"><i
                                             class="red-text material-icons">clear</i></a>
                             </p>
                         </li>
@@ -40,6 +42,18 @@
 
             @endif
 
+            @foreach($users as $user)
+                <div id="modal-suppression-{{$user->id}}" class="modal">
+                    <div class="modal-content">
+                        <h3>Suppresion d'un utilisateur</h3>
+                        <p>Vous allez supprimer {{$user->civilite . " " .  $user->prenom . " " . $user->nom}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a onclick="deleteUser(event, {{$user->id}})"
+                           class="modal-action modal-close waves-effect waves-light btn-flat red-text" href="#!">Confirmer</a>
+                    </div>
+                </div>
+            @endforeach
 
             @include('includes.buttonImportExport')
         </div>
