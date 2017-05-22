@@ -462,17 +462,20 @@ function redOrGreen($attendu, $affecte)
     @include('includes.buttonExportAdd')
 
     <script src="/js/jquery-2.1.1.min.js"></script>
-    <script src="/js/materialize.js"></script>
-    <script src="/js/utils.js"></script>
+
 
     <script>
-        @if(Session::get('message')  != null )
-            makeToast("{{Session::get('message')}}");
-        @endif
 
-        @foreach($errors->all() as $error)
-            makeToast("{{$error}}");
-        @endforeach
+        $(document).ready(function () {
+            @if(Session::get('message')  != null )
+                makeToast("{{Session::get('message')}}");
+            @endif
+
+            @foreach($errors->all() as $error)
+                makeToast("{{$error}}");
+            @endforeach
+        });
+
     </script>
 
 
