@@ -215,7 +215,7 @@ function redOrGreen($attendu, $affecte)
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                   <input type="hidden" name="id_ue" value="{{ $ue->id }}" />
                   <select name="id_enseignant" id="id_enseignant">
-                  @foreach(App\User::all() as $user)
+                  @foreach(App\User::allValidate() as $user)
                     @if(!in_array($user->id, $idEnseignants))
                         <option value="{{$user->id}}">{{$user->prenom . " " . $user->nom}}</option>
                     @endif
