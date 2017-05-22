@@ -76,7 +76,7 @@
                     </div>
 
                     @if(isset($userA->photo))
-                    <a href="#!user"><img class="circle" height="128px" src={{$photoUrl}} ></a>
+                    <a href="#!user"><img class="circle" height="128px" src="/images{{$photoUrl}}" ></a>
                     @else
                     <a href="#!user"><img class="circle" height="128px" src="/images/default.jpg" ></a>
                     @endif
