@@ -1,3 +1,12 @@
+<?php
+function redOrGreen($attendu, $affecte)
+{
+    if ($attendu == $affecte) {
+        return '<span class=" green-text">';
+    }
+    return '<span class=" red-text">';
+}
+?>
 @extends('layouts.main')
 @section('title')
     Liste des enseignements auxquels vous participez
@@ -64,14 +73,26 @@
                             </tr>
                             <tr>
                                 <th>Volume affecté</th>
-                                <td>{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}</td>
-                                <td>{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}</td>
-                                <td>{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}</td>
-                                <td>{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}</td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->cm_volume_attendu, $enseignant->enseignement->getCMNbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->ei_volume_attendu, $enseignant->enseignement->getEINbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getEINbHeuresAffectees() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->td_volume_attendu, $enseignant->enseignement->getTDNbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->tp_volume_attendu, $enseignant->enseignement->getTPNbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Nombre de groupes attendus</th>
-                                <td>{!! $enseignant->enseignement->cm_nb_groupes_attendus !!}</td>
+                                <td></td>
                                 <td>{!! $enseignant->enseignement->ei_nb_groupes_attendus !!}</td>
                                 <td>{!! $enseignant->enseignement->td_nb_groupes_attendus !!}</td>
                                 <td>{!! $enseignant->enseignement->tp_nb_groupes_attendus !!}</td>
@@ -79,9 +100,18 @@
                             <tr>
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
-                                <td>{!! $enseignant->enseignement->getEINbGroupesAffectes() !!}</td>
-                                <td>{!! $enseignant->enseignement->getTDNbGroupesAffectes() !!}</td>
-                                <td>{!! $enseignant->enseignement->getTPNbGroupesAffectes() !!}</td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->ei_nb_groupes_attendus, $enseignant->enseignement->getEINbGroupesAffectes()) !!}
+                                    {!! $enseignant->enseignement->getEINbGroupesAffectes() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->td_nb_groupes_attendus, $enseignant->enseignement->getTDNbGroupesAffectes()) !!}
+                                    {!! $enseignant->enseignement->getTDNbGroupesAffectes() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->tp_nb_groupes_attendus, $enseignant->enseignement->getTPNbGroupesAffectes()) !!}
+                                    {!! $enseignant->enseignement->getTPNbGroupesAffectes() !!}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
