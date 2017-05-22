@@ -51,7 +51,6 @@ class LoginController extends Controller
         $user = User::where('email', $email)->first();
         if ($user && $user->attente_validation) return false;
 
-        // TODO Gérer la vérification de la validation de l'inscription
         return $this->guard()->attempt(
             $this->credentials($request), $request->has('remember')
         );

@@ -24,7 +24,7 @@ class FormationsController
     public function show()
     {
         $formations = Formation::all();
-        $users = User::all();
+        $users = User::allValidate();
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();

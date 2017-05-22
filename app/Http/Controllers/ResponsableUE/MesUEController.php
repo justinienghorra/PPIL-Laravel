@@ -37,7 +37,7 @@ class MesUEController extends Controller
      */
     public function show() 
     {
-        $users = User::all();
+        $users = User::allValidate();
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
