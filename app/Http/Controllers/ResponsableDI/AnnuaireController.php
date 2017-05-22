@@ -68,11 +68,19 @@ class AnnuaireController extends Controller
     protected function getAnnuaireCSV()
     {
         $users = User::all();
-        $str = "enseignant;statut;email";
+        $str = array(array("enseignant", "statut", "email"));
         foreach ($users as $user) {
-            $str = $str . "\n" . $user->prenom . " " . $user->nom . "; " . $user->statut() . "; " . $user->email;
+            array_push($str, array($user->prenom . " " . $user->nom, $user->statut(), $user->email));
         }
-        file_put_contents("/tmp/annuaire.csv", $str);
+
+        $fichier = fopen("/tmp/annuaire.csv", "w");
+
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
+
         return response()->download("/tmp/annuaire.csv");
     }
 

@@ -36,8 +36,8 @@ function redOrGreen($attendu, $affecte)
     @foreach($ues as $ue)
 
 	<?php
-		$nbEnseignants = 0; 
-        $idEnseignants = array();
+		$nbEnseignants = 0;
+    $idEnseignants = array();
 		$volumeCMAffecte = 0; 
 		$volumeTDAffecte = 0;
 		$volumeTPAffecte = 0;
@@ -46,19 +46,28 @@ function redOrGreen($attendu, $affecte)
 		$nbGroupesTPAffectes = 0;
 		$nbGroupesEIAffectes = 0;
 		foreach($enseignants[$ue->id] as $enseignant) {
-            $idEnseignants[$nbEnseignants] = $enseignant->id_utilisateur;
+      $idEnseignants[$nbEnseignants] = $enseignant->id_utilisateur;
 			$nbEnseignants++;
 			$volumeCMAffecte += $enseignant->cm_nb_heures;
-			$volumeTDAffecte += $enseignant->td_heures_par_groupe;
-			$volumeTPAffecte += $enseignant->tp_heures_par_groupe;
-			$volumeEIAffecte += $enseignant->ei_heures_par_groupe;
+			$volumeTDAffecte += $enseignant->td_heures_par_groupe*$enseignant->td_nb_groupes;
+			$volumeTPAffecte += $enseignant->tp_heures_par_groupe*$enseignant->tp_nb_groupes;
+			$volumeEIAffecte += $enseignant->ei_heures_par_groupe*$enseignant->ei_nb_groupes;
 			$nbGroupesTDAffectes += $enseignant->td_nb_groupes;
 			$nbGroupesTPAffectes += $enseignant->tp_nb_groupes;
 			$nbGroupesEIAffectes += $enseignant->ei_nb_groupes;
 		}
-		$volumeTDAffecte = $volumeTDAffecte/$nbEnseignants;
-		$volumeTPAffecte = $volumeTPAffecte/$nbEnseignants;
-		$volumeEIAffecte = $volumeEIAffecte/$nbEnseignants;
+    if($nbGroupesTDAffectes > 0) 
+		  $volumeTDAffecte = $volumeTDAffecte/$nbGroupesTDAffectes;
+    else
+      $volumeTDAffecte = 0;
+    if($nbGroupesTPAffectes > 0)
+      $volumeTPAffecte = $volumeTPAffecte/$nbGroupesTPAffectes;
+		else
+      $volumeTPAffecte = 0;
+    if($volumeEIAffecte > 0)
+		  $volumeEIAffecte = $volumeEIAffecte/$nbGroupesEIAffectes;
+    else
+      $volumeEIAffecte = 0;
 	?>
 
     <li>
