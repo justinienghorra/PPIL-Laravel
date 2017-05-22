@@ -450,10 +450,6 @@ function redOrGreen($attendu, $affecte)
 
     @include('includes.buttonImportExportAdd')
 
-
-    <script src="/js/jquery-2.1.1.min.js"></script>
-    <script src="/js/materialize.js"></script>
-
     <script>
 
         function deleteUE(event, id_ue) {
@@ -518,7 +514,7 @@ function redOrGreen($attendu, $affecte)
                 }
             });
 
-            // TODO affichier les erreurs suite à une une redirection
+            // TODO afficher les erreurs suite à une une redirection
 
         });
     </script>
