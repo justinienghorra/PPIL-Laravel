@@ -23,7 +23,7 @@ class RecapEnseignantsController extends Controller
        
         $enseignantDansUE = EnseignantDansUE::all();
         $statut = Statut::all(); 
-        $users = User::all();
+        $users = User::allValidate();
 
         $tableauHeureTotale = array();
         

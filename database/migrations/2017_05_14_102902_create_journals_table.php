@@ -27,7 +27,7 @@ class CreateJournalsTable extends Migration
             $table->integer('id_ue')->nullable()->unsigned();
             $table->integer('id_formation')->nullable()->unsigned();
 
-            $table->foreign('id_utilisateur')->references('id')->on('users');
+            $table->foreign('id_utilisateur')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_ue')->references('id')->on('unitee_enseignements');
             $table->foreign('id_formation')->references('id')->on('formations');
         });

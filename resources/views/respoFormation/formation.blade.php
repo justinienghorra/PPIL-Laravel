@@ -216,7 +216,7 @@ function redOrGreen($attendu, $affecte)
                 <div class="row">
                     <form class="col s12" action="#!">
                         <select name="ajout_enseignant" id="">
-                            @foreach(App\User::all() as $user)
+                            @foreach(App\User::allValidate() as $user)
                                 <option value="{{$user->id}}">{{$user->prenom . " " . $user->nom}}</option>
                             @endforeach
                         </select>
@@ -338,7 +338,7 @@ function redOrGreen($attendu, $affecte)
                     </p>
                     <ul class="collection collection-with-header">
                         <li class="collection-header"><h4>Liste des utilisateurs</h4></li>
-                        @foreach(App\User::all() as $user)
+                        @foreach(App\User::allValidate() as $user)
                             <li class="collection-item">
                                 {{ $user->prenom . " " . $user->nom }}
                             <a href="#!" onclick="modifierResponsable(event, {{$ue->id}}, {{$user->id}})"

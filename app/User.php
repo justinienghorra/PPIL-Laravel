@@ -146,4 +146,8 @@ class User extends Authenticatable
     public function formations() {
         return $this->hasMany('App\ResponsableFormation', 'id_utilisateur');
     }
+
+    public static function allValidate() {
+        return User::all()->where('attente_validation', false);
+    }
 }

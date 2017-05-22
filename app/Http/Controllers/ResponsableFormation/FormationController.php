@@ -52,7 +52,7 @@ class FormationController extends Controller
         $formation = Formation::where('nom', '=', $nom_formation)->first();
         $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
         $respoUE = ResponsableUniteeEnseignement::all();
-        $users = User::all();
+        $users = User::allValidate();
 
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
