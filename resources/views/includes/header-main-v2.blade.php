@@ -11,7 +11,10 @@
     </li>
 </ul>
 
-<ul id="dropdown_enseignements" class="dropdown-content">
+<ul id="dropdown_scolarite" class="dropdown-content">
+    @if($respoForm)
+        <li><a class="blue-text darken-1" href="/formation">Vos Formations</a></li>
+    @endif
     @if($respoUE)
         <li><a class="blue-text darken-1" href="/respoUE/mesUE">Vos UE</a></li>
     @endif
@@ -39,15 +42,15 @@
 
 
 <nav class="light-blue lighten-1" role="navigation">
-    <a id="logo-container" href="#" class="brand-logo">
-        <img class="navbar-logo" src="/images/SGE.png" alt=""></a>
+    
     <div class="nav-wrapper container">
-
+	<a id="logo-container" href="#" class="brand-logo">
+        <img class="navbar-logo" src="/images/SGE.png" alt=""></a>
         <ul class="right hide-on-med-and-down">
             <li><a class="dropdown-button" href="#!" data-activates="dropdown_notifs"><span
                             class="badge badge-notifs orange white-text">2</span>Notifications<i
                             class="material-icons right">arrow_drop_down</i></a></li>
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown_enseignements">Enseignement<i
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown_scolarite">Scolarité<i
                             class="material-icons right">arrow_drop_down</i></a></li>
             <!--<li><a class="dropdown-button" href="#!" data-activates="dropdown_formations">Vos formations<i class="material-icons right">arrow_drop_down</i></a></li>-->
             @if($respoDI)
@@ -77,9 +80,12 @@
                 <div class="divider"></div>
             </li>
 
-            <li><a href="#" >Enseignement</a></li>
+            <li><a href="#" >Scolarité</a></li>
+            @if($respoForm)
+                <li><a href="/formation"><i class="material-icons">keyboard_arrow_right</i>Vos Formations</a></li>
+            @endif
             @if($respoUE)
-                <li><a href="/respoUE/mesUE">Vos UE</a></li>
+                <li><a href="/respoUE/mesUE"><i class="material-icons">keyboard_arrow_right</i>Vos UE</a></li>
             @endif
             <li><a href="mesEnseignements"><i class="material-icons">keyboard_arrow_right</i>Mes Enseignements</a></li>
             <li>

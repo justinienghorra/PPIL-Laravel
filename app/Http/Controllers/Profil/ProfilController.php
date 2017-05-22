@@ -39,6 +39,7 @@ class ProfilController extends Controller
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
 
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
 
@@ -77,6 +78,7 @@ class ProfilController extends Controller
             ->with('photoUrl', $tmp[1])
             ->with('respoDI', $respoDI)
             ->with('respoUE', $respoUE)
+            ->with('respoForm', $respoForm)
             ->with('heuresTotals', $heurestotals);
 
 

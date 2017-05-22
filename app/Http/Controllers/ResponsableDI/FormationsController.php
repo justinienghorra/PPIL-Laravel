@@ -29,6 +29,7 @@ class FormationsController
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $photoUrl = Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
@@ -36,7 +37,7 @@ class FormationsController
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
-        return view('di.formations')->with(['formations' => $formations, 'users' => $users])->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('di.formations')->with(['formations' => $formations, 'users' => $users])->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoForm', $respoForm)->with('respoUE', $respoUE);
     }
 
     /**

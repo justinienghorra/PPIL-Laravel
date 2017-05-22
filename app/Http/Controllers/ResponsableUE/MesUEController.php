@@ -41,6 +41,7 @@ class MesUEController extends Controller
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $tmp = null;
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         if ($photoUrl != null){
@@ -66,7 +67,7 @@ class MesUEController extends Controller
 
         }
 
-        return view('respoUE/affichageUEs')->with('userA', $userA)->with('photoUrl', $tmp[1])->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('users', $users)->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('respoUE/affichageUEs')->with('userA', $userA)->with('photoUrl', $tmp[1])->with('ues', $ues)->with('enseignants', $enseignantsParUE)->with('nomPrenomEnseignant', $nomPrenomEnseignant)->with('users', $users)->with('respoDI', $respoDI)->with('respoForm', $respoForm)->with('respoUE', $respoUE);
     }
 
     /**

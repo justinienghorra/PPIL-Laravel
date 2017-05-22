@@ -37,6 +37,7 @@ class FormationController extends Controller
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
@@ -45,7 +46,7 @@ class FormationController extends Controller
             $tmp = explode("images", $url);
         }
 
-        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI, 'photoUrl' => $photoUrl]);
+        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI,'respoForm' => $respoForm, 'photoUrl' => $photoUrl]);
     }
 
     /**

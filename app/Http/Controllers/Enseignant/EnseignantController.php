@@ -26,6 +26,7 @@ class EnseignantController extends Controller
         $userA = \Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $tmp = null;
 
         //recuperation des enseignements de l'utilisateur
@@ -50,7 +51,8 @@ class EnseignantController extends Controller
                                             ->with('enseignantDansUEsExterne', $enseignantDansUEsExterne)
                                             ->with('photoUrl', $tmp[1])
                                             ->with('respoDI', $respoDI)
-                                            ->with('respoUE', $respoUE);
+                                            ->with('respoUE', $respoUE)
+                                            ->with('respoForm', $respoForm);
 
     }
 

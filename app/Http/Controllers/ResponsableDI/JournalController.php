@@ -27,6 +27,7 @@ class JournalController extends Controller
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
@@ -34,7 +35,7 @@ class JournalController extends Controller
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
-        return view('di.journal')->with('events', $events)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('di.journal')->with('events', $events)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoForm', $respoForm)->with('respoUE', $respoUE);
     }
 
     /**
