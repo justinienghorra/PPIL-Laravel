@@ -42,7 +42,7 @@
 
 
 <nav class="light-blue lighten-1" role="navigation">
-    
+
     <div class="nav-wrapper container">
 	<a id="logo-container" href="#" class="brand-logo">
         <img class="navbar-logo" src="/images/SGE.png" alt=""></a>
@@ -60,21 +60,26 @@
             <li><a class="dropdown-button" href="#!" data-activates="dropdown_user">{{$userA->civilite}}
                     {{$userA->nom}}<i class="material-icons right">arrow_drop_down</i></a></li>
             @if(isset($userA->photo))
-	    <li><img src="/images{{$photoUrl}}" class="navbar-pic circle" alt=""></li>
+	    <li><img src={{$photoUrl}} class="navbar-pic circle" alt=""></li>
             @else
 	      <li><img src="/images/default.jpg" class="navbar-pic circle" alt=""></li>
-            @endif        
-            
+            @endif
+
         </ul>
 
 
-        <ul id="slide-out" class="side-nav">
+         <ul id="slide-out" class="side-nav">
             <li>
                 <div class="userView">
                     <div class="background">
                         <img src="/images/office.jpg">
                     </div>
-                    <a href="#!user"><img class="circle" height="128px" src="/images{{$photoUrl}}"></a>
+
+                    @if(isset($userA->photo))
+                    <a href="#!user"><img class="circle" height="128px" src={{$photoUrl}} ></a>
+                    @else
+                    <a href="#!user"><img class="circle" height="128px" src="/images/default.jpg" ></a>
+                    @endif
                     <a href="#!name"><span class="white-text name">{{$userA->civilite}} {{$userA->nom}}</span></a>
                     <a href="#!email"><span class="white-text email">{{$userA->email}}</span></a>
                 </div>

@@ -41,7 +41,8 @@ class ProfilController extends Controller
         $respoUE = $userA->estResponsableUE();
         $respoForm = $userA->estResponsableForm();
 
-        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $photoUrl = Photos::where('id_utilisateur', $userA->id)->first();
+
 
         $statuts = Statut::all();
 
@@ -79,7 +80,7 @@ class ProfilController extends Controller
 	  $pourcentage = 100;
         }
 
-        
+
         return view('profil')
             ->with('userA', $userA)
             ->with('statuts', $statuts)
