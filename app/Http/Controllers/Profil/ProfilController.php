@@ -76,7 +76,7 @@ class ProfilController extends Controller
 	    $pourcentage = 100;
 	  }
         }else {
-	  $pourcentage = 0;
+	  $pourcentage = 100;
         }
 
         
