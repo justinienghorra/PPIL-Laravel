@@ -60,7 +60,7 @@
             <li><a class="dropdown-button" href="#!" data-activates="dropdown_user">{{$userA->civilite}}
                     {{$userA->nom}}<i class="material-icons right">arrow_drop_down</i></a></li>
             @if(isset($userA->photo))
-	    <li><img src={{$photoUrl}} class="navbar-pic circle" alt=""></li>
+	    <li><img src="/images{{$photoUrl}}" class="navbar-pic circle" alt=""></li>
             @else
 	      <li><img src="/images/default.jpg" class="navbar-pic circle" alt=""></li>
             @endif
