@@ -22,6 +22,27 @@ class FormationController extends Controller
         $this->middleware('auth');
     }
 
+    public function showAll()
+    {
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
+
+        //recupere les formations de l'utilisateur
+        $formations = $userA->formations;
+
+        return view('respoFormation.mesFormations')->with(['formations' => $formations, 'respoUE' => $respoUE, 'userA' => $userA, 'respoDI' => $respoDI,'respoForm' => $respoForm, 'photoUrl' => $photoUrl]);
+    }
+
     public function show($nom_formation)
     {
 

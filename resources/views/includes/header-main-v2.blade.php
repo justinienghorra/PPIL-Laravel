@@ -13,7 +13,7 @@
 
 <ul id="dropdown_scolarite" class="dropdown-content">
     @if($respoForm)
-        <li><a class="blue-text darken-1" href="/formation">Vos Formations</a></li>
+        <li><a class="blue-text darken-1" href="/respoFormation/formations">Vos Formations</a></li>
     @endif
     @if($respoUE)
         <li><a class="blue-text darken-1" href="/respoUE/mesUE">Vos UE</a></li>
@@ -82,7 +82,7 @@
 
             <li><a href="#" >Scolarité</a></li>
             @if($respoForm)
-                <li><a href="/formation"><i class="material-icons">keyboard_arrow_right</i>Vos Formations</a></li>
+                <li><a href="/respoFormation/formations"><i class="material-icons">keyboard_arrow_right</i>Vos Formations</a></li>
             @endif
             @if($respoUE)
                 <li><a href="/respoUE/mesUE"><i class="material-icons">keyboard_arrow_right</i>Vos UE</a></li>

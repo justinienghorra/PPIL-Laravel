@@ -20,4 +20,8 @@ class ResponsableFormation extends Model
     public function user() {
         return $this->belongsTo('App\User', 'id_utilisateur');
     }
+
+    public function formation() {
+        return $this->belongsTo('App\Formation', 'id_formation');
+    }
 }

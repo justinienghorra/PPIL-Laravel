@@ -131,6 +131,7 @@ Route::get('/en_attente', function () {
  * ROUTES pour les RESPONSABLES FORMATION *
  ******************************************/
 
+Route::get('/respoFormation/formations', 'ResponsableFormation\FormationController@showAll');
 Route::get('/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
 Route::get('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
 Route::post('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
