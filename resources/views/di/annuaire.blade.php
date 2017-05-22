@@ -69,8 +69,8 @@
 
         <div class="modal-footer">
             <a href="/di/annuaire.csv" onclick="makeToast('Exportation réussie')"
-               class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
+               class="modal-action modal-close waves-effect waves-light btn-flat blue-text">Exporter</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat red-text">Annuler</a>
         </div>
     </div>
 
@@ -166,9 +166,9 @@
             @foreach($errors->all() as $error)
                 @if (Session::get('messages') !== null)
                     makeToast('{{$error}} (ligne {{Session::get('messages')["ligne"]}})');
-            @else
-makeToast('{{$error}}');
-            @endif
+                @else
+                    makeToast('{{$error}}');
+                @endif
             @endforeach
 
 
