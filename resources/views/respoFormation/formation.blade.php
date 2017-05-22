@@ -440,14 +440,6 @@ function redOrGreen($attendu, $affecte)
     <!-- End modal -->
 
 
-
-
-
-
-
-
-
-
     @include('includes.buttonImportExportAdd')
 
     <script>
