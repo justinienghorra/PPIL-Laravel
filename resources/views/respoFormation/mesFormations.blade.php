@@ -10,11 +10,11 @@
             <div class="col s12 m10">
                 <div class="card white">
                     <div class="card-content black-text">
-                        <span class="card-title blue-text">{!! $formation->formation->nom !!}</span>
+                        <span class="card-title orange-text">{!! $formation->formation->nom !!}</span>
                         <p>{!! $formation->formation->description !!}</p>
                     </div>
                     <div class="card-action">
-                        <a href="/respoFormation/formation/{!! $formation->formation->nom !!}">Voir</a>
+                        <a href="/respoFormation/formation/{!! $formation->formation->nom !!}" class="blue-text">Voir</a>
                     </div>
                 </div>
             </div>
