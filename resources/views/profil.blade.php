@@ -36,7 +36,7 @@
 
             <div class="row">
 
-                {!! Form::open(['url' => 'profil/updateInformations'], $attributes = ['class' => 'col s12']) !!}
+                {!! Form::open(['url' => 'profil/updateInformations', 'class' => 'col s12', 'id' => 'informations-form']) !!}
 
                 <div class="row">
 
@@ -87,7 +87,7 @@
 
                 <div class="row center">
 
-                    {!! Form::submit('Enregistrer les modifications', $attributes = ['class' => 'center btn btn-flat orange-text', 'href' => '#', 'id' => '']) !!}
+                    {!! Form::submit('Enregistrer les modifications', $attributes = ['class' => 'center btn btn-flat orange-text', 'href' => '#', 'id' => '', 'onclick' => 'return openModalInformations;']) !!}
                     {!! Form::close() !!}
                 </div>
 
@@ -101,7 +101,7 @@
                 <h5 class="header col s12 light">Modifier votre photo</h5>
             </div>
 
-            {!! Form::open(['url' => 'profil/image', 'files' => true], $attributes = ['class' => 'col s12']) !!}
+            {!! Form::open(['url' => 'profil/image', 'files' => true], $attributes = ['class' => 'col s12', 'id' => 'jkjkjkj']) !!}
             <div class="row center">
                 <!--<img src="images/groot.png" alt="Votre photo" class="circle responsive-img">-->
                 @if (Session::get('photoUrl') == null && $photoUrl == null)
@@ -184,28 +184,50 @@
 
 
 
-
-
-
-
     <!-- FIN DU FORMULAIRE DE MODIFICATION -->
 
 
 
-    <!-- MODIFICATION DU MDP -->
+    <!-- Modal Pop pour validation de changements des informations personnelles -->
 
+    <div id="modal-informations" class="modal">
+        <div class="modal-content">
+            <h4>Validation des modifications</h4>
+            <p>Voulez-vous vraiment modifier ces informations ?</p>
+        </div>
 
+        <div class="modal-footer">
+            <a onclick='document.getElementById("informations-form").submit();' href="#!" class="btn-large modal-action modal-close waves-effect waves-light btn-flat purple-text">
+                Valider
+            </a>
+            <a href="#!" onclick="window.location.reload()" class="modal-action modal-close waves-effect waves-light btn-flat btn-large red-text">
+                Annuler
+            </a>
+        </div>
+    </div>
 
 
 
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/materialize.js"></script>
-
     <script>
 
+        /*
+         * Affichage d'un toast
+         */
         function makeToast(str) {
             var toastContent = '<span>' + str + '</span>';
             Materialize.toast(toastContent, 4000, 'rounded');
+        }
+
+
+        /*
+         * Ouverture d'une fenetre personnalisee
+         * lors d'un changement d'informations
+         */
+        function openModalInformations() {
+            $('#modal-informations').modal('open');
+            return false;
         }
 
 
@@ -218,12 +240,10 @@
             });
 
             @if (Session::get('messages') !== null)
-makeToast('{{Session::get('messages')}}');
+                makeToast('{{Session::get('messages')}}');
             @endif
 
         });
     </script>
-
-
 
 @stop

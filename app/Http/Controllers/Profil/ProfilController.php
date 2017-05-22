@@ -173,7 +173,13 @@ class ProfilController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postPassword(Request $request){
+    public function postPassword(Request $request) {
+
+        ///TODO : Verifier mot de passe (validator)
+        // exemple ('password' => 'required|string|min:6|confirmed')
+
+
+
         //TODO : mettre un beau message sur la vue
         if ($request->input('password') != $request->input('check_password')){
 
@@ -242,7 +248,8 @@ class ProfilController extends Controller
 
         } else{
 
-            return redirect('profil')->with('image_message', 'Format du fichier invalide: "' . $extension . '"');
+            return redirect('profil')
+                ->with('messages', 'Format du fichier invalide: "' . $extension . '"');
         }
     }
 }
