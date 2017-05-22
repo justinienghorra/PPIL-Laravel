@@ -166,9 +166,9 @@
             @foreach($errors->all() as $error)
                 @if (Session::get('messages') !== null)
                     makeToast('{{$error}} (ligne {{Session::get('messages')["ligne"]}})');
-            @else
-makeToast('{{$error}}');
-            @endif
+                @else
+                    makeToast('{{$error}}');
+                @endif
             @endforeach
 
 

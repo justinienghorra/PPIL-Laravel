@@ -140,7 +140,11 @@ class AnnuaireController extends Controller
                 return isset($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]); //we make sure the data are present
             })->fetch();
 
-        //TODO checker le header
+        if (iterator_count($res) == 0) {
+            $validator->errors()->add('field', 'Format invalide ou aucune donnée dans le fichier');
+            return  redirect('/di/annuaire')->withErrors($validator);
+        }
+
 
         foreach ($res as $row) {
             $num_row++;
