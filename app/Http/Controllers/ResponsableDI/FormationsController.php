@@ -99,14 +99,22 @@ class FormationsController
     public function getFormationsCSV()
     {
         $formations = Formation::all();
-        $str = "nom;description;responsable";
+        $str = array(array("nom", "description", "responsable"));
         foreach ($formations as $formation) {
-            $str = $str . "\n" . $formation->nom . "; " . $formation->description . "; ";
             if ($formation->hasResponsable()) {
-                $str = $str . $formation->responsable->user->email;
+                array_push($str, array($formation->nom, $formation->description, $formation->responsable->user->email));
+            } else {
+                array_push($str, array($formation->nom, $formation->description));
             }
         }
-        file_put_contents("/tmp/formations.csv", $str);
+
+        $fichier = fopen("/tmp/formations.csv", "w");
+
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
         return response()->download("/tmp/formations.csv");
     }
 
