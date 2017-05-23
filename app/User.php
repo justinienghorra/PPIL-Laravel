@@ -150,4 +150,8 @@ class User extends Authenticatable
     public static function allValidate() {
         return User::all()->where('attente_validation', false);
     }
+
+    public function notifications() {
+        return $this->hasMany('App\Notification', 'id_utilisateur_a_notifie');
+    }
 }

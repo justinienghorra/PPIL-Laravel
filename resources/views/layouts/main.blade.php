@@ -52,6 +52,8 @@
         $('.tooltipped').tooltip({delay: 50});
 
         $(window).bind('scroll', update);
+
+
     });
 
 </script>
