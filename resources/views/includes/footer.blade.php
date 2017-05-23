@@ -2,7 +2,7 @@
   <footer class="page-footer orange">
     <div class="container">
       <div class="row">
-        <div class="col l6 s12">
+        <div class="col l6 s12 hide-on-small-and-down">
           <h5 class="white-text">Service de gestion des enseignements</h5>
           <p class="grey-text text-lighten-4">Cette application web a été réalisée par des élèves en troisième année de licence à la FST de Nancy.</p>
 
