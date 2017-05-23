@@ -12,7 +12,6 @@
           <h5 class="white-text">Informations</h5>
           <ul>
             <li><a class="white-text" href="/profil">Votre profil</a></li>
-            <li><a class="white-text" href="/contact">Nous contacter</a></li>
           </ul>
         </div>
         <div class="col l3 s12">
