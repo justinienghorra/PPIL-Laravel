@@ -84,7 +84,7 @@ Vue.component('formations-main-new', {
                         </p>\
                     </div>\
                     <div class="card-action">\
-                        <a class="center" @click.prevent="openmodal(getmodalmodifid(formationarg.id))" >Modifier le responsable</a>\
+                        <a class="center" @click.prevent="openmodal(getmodalmodifid(formationarg.id))" >Modifier responsable</a>\
                         <a @click.prevent="openmodal(getmodalsuppid(formationarg.id))" class="right red-text" href="">Supprimer</a>\
                     </div>\
                 </div>'
