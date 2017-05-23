@@ -22,18 +22,49 @@
 @include('includes.footer')
 <script>
 
-    function update() {
-        var velocity = 0.5;
-        var pos = $(window).scrollTop();
-        $('.container').each(function () {
-            var $element = $(this);
-            // subtract some from the height b/c of the padding
-            var height = $element.height() - 18;
-            $(this).css('backgroundPosition', '50% ' + Math.round((height - pos) * velocity) + 'px');
+    function deleteNotification(event, id_notification) {
+        event.preventDefault();
+        $.ajax({
+            url: '/notifications/delete',
+            method: 'post',
+            data: 'id_notification=' + id_notification
+        }).done(function (msg) {
+            $('#notification-'+id_notification).remove();
+            var count = parseInt($('#notif-count').text());
+            console.log('Count : ' + count);
+            count = count - 1;
+            $('#notif-count').text(count);
+        }).fail(function (xhr, msg) {
+            makeToast('Erreur serveur : ' + xhr.status);
         });
-    };
+    }
+
+    function deleteNotificationMobile(event, id_notification) {
+        event.preventDefault();
+        $.ajax({
+            url: '/notifications/delete',
+            method: 'post',
+            data: 'id_notification=' + id_notification
+        }).done(function (msg) {
+            $('#notification-mobile-'+id_notification).remove();
+            var count = parseInt($('#notif-count-mobile').text());
+            console.log('Count : ' + count);
+            count = count - 1;
+            $('#notif-count-mobile').text(count);
+
+        }).fail(function (xhr, msg) {
+            makeToast('Erreur serveur : ' + xhr.status);
+        });
+    }
 
     $(document).ready(function () {
+
+        $.ajaxSetup({
+            headers: {
+                // Important
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
         $('select').material_select();
 
@@ -46,12 +77,10 @@
         $('.dropdown-button').dropdown({
             hover: true, // Activate on hover
             belowOrigin: true,
-            constrainWidth: false,
+            //constrainWidth: false
         });
 
         $('.tooltipped').tooltip({delay: 50});
-
-        $(window).bind('scroll', update);
     });
 
 </script>
