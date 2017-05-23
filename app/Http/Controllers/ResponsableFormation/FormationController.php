@@ -422,8 +422,9 @@ class FormationController extends Controller
 
                 $di = ResponsableDepInfo::all()->first();
 
-                $messageNotif = "Le responsable de l'UE ".$ue->nom." de la formation ".$formation->nom." a été changé pour ".$responsable->prenom." ".$responsable->nom;
+                $messageNotif = "Nouveau responsable de l'UE ".$ue->nom." de la formation ".$formation->nom." : ".$responsable->prenom." ".$responsable->nom;
                 Notification::createNotification($messageNotif, $user->id, $di->id);
+                $messageNotif = "Vous êtes le responsable de l'UE ".$ue->nom." de la formation ".$formation->nom;
                 Notification::createNotification($messageNotif, $user->id, $responsable->id);
 
             }

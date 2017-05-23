@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ResponsableUE;
 
 
+use App\Notification;
 use App\UniteeEnseignement;
 use App\ResponsableUniteeEnseignement;
 use App\EnseignantDansUE;
@@ -82,10 +83,18 @@ class MesUEController extends Controller
         if($this->verifRespoUE($id_ue)) {
             $verifExistenceEnseignant = EnseignantDansUE::where(['id_ue' => $id_ue, 'id_utilisateur' => $id_enseignant])->first();
             if(empty($verifExistenceEnseignant)) {
+
                 $enseignantDsUE = new EnseignantDansUE();
                 $enseignantDsUE->id_utilisateur = $id_enseignant;
                 $enseignantDsUE->id_ue = $request->input('id_ue');
                 $enseignantDsUE->save();
+
+                $ue = UniteeEnseignement::where('id', $id_ue)->first();
+                $userA = Auth::user();
+
+                $messageNotif = "Ajouté dans l'UE ".$ue->nom;
+                Notification::createNotification($messageNotif, $userA->id, $id_enseignant);
+
             }
         }
         return redirect('/respoUE/mesUE');
@@ -107,6 +116,13 @@ class MesUEController extends Controller
                     $enseignantDsUE = EnseignantDansUE::where(['id_utilisateur' => $idEnseignantASupprimer, 'id_ue' => $id_ue ])->first();
                     if(!empty($enseignantDsUE)) {
                         $enseignantDsUE->delete();
+
+                        $ue = UniteeEnseignement::where('id', $id_ue)->first();
+                        $userA = Auth::user();
+
+                        $messageNotif = "Retiré de l'UE ".$ue->nom;
+                        Notification::createNotification($messageNotif, $userA->id, $enseignantDsUE->id_utilisateur);
+
                     }
                 }
             }
@@ -144,6 +160,13 @@ class MesUEController extends Controller
                     'tp_nb_groupes' => $request->input('tp_nb_groupes'),
                     'ei_nb_groupes' => $request->input('ei_nb_groupes')
                 ]);
+
+                $ue = UniteeEnseignement::where('id', $id_ue)->first();
+                $userA = Auth::user();
+
+                $messageNotif = "Horaires modifiés dans l'UE ".$ue->nom;
+                Notification::createNotification($messageNotif, $userA->id, $id_utilisateur);
+
             }
         }
         return redirect('/respoUE/mesUE');
