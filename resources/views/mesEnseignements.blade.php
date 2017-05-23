@@ -44,18 +44,19 @@ function redOrGreen($attendu, $affecte)
                     <div>
                         <ul id="horaires" class="dropdown-content">
                             <li>
-                                <a href="#!">CM<span class="badge">{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}</span></a>
+                                <a href="#!">CM<span class="badge">{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}H</span></a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="#!">EI<span class="badge">{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}</span></a>
+                                <a href="#!">EI<span class="badge">{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}H</span></a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="#!">TD<span class="badge">{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}</span></a>
+                                <a href="#!">TD<span class="badge">{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}H</span></a>
                             </li>
+                            <li class="divider"></li>
                             <li>
-                                <a href="#!">TP<span class="badge">{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}</span></a>
+                                <a href="#!">TP<span class="badge">{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}H</span></a>
                             </li>
                         </ul>
                         <a class="btn dropdown-button" href="#!" data-activates="horaires">Vos Horaires<i class="mdi-navigation-arrow-drop-down right"></i></a>
