@@ -11,7 +11,7 @@ use Validator;
 class NotificationController extends Controller
 {
     public function deleteNotification(Request $req) {
-        /*$validator = Validator::make($req->all(), [
+        $validator = Validator::make($req->all(), [
             'id_notification' => 'required|exists:notification,id'
         ]);
 
@@ -22,7 +22,7 @@ class NotificationController extends Controller
         $notif = Notification::where('id', $req->id_notification)->first();
         if ($notif->id_utilisateur_a_notifie == Auth::user()->id) {
             $notif->delete();
-        }*/
+        }
 
         return response()->json(['message' => 'success']);
     }
