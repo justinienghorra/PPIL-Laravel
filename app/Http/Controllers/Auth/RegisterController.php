@@ -101,7 +101,7 @@ class RegisterController extends Controller
 
         $di = ResponsableDepInfo::all()->first();
 
-        $messageNotif = "Une demande d'inscription est en attente de : ".$user->prenom." ".$user->nom;
+        $messageNotif = "Inscription en attente de : ".$user->prenom." ".$user->nom;
         Notification::createNotification($messageNotif, $user->id, $di->id);
 
 
