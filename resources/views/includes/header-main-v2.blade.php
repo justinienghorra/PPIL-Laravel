@@ -121,7 +121,7 @@
             @if($respoUE)
                 <li><a href="/respoUE/mesUE"><i class="material-icons">keyboard_arrow_right</i>Vos UE</a></li>
             @endif
-            <li><a href="mesEnseignements"><i class="material-icons">keyboard_arrow_right</i>Mes Enseignements</a></li>
+            <li><a href="/mesEnseignements"><i class="material-icons">keyboard_arrow_right</i>Mes Enseignements</a></li>
             <li>
                 <div class="divider"></div>
             </li>
