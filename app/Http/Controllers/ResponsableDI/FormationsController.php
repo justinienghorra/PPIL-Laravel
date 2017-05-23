@@ -24,11 +24,12 @@ class FormationsController
     public function show()
     {
         $formations = Formation::all();
-        $users = User::all();
+        $users = User::allValidate();
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $photoUrl = Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
@@ -36,7 +37,7 @@ class FormationsController
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
-        return view('di.formations')->with(['formations' => $formations, 'users' => $users])->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('di.formations')->with(['formations' => $formations, 'users' => $users])->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoForm', $respoForm)->with('respoUE', $respoUE);
     }
 
     /**
@@ -98,14 +99,24 @@ class FormationsController
     public function getFormationsCSV()
     {
         $formations = Formation::all();
-        $str = "nom;description;responsable";
+        $str = array(array("nom", "description", "responsable"));
         foreach ($formations as $formation) {
-            $str = $str . "\n" . $formation->nom . "; " . $formation->description . "; ";
             if ($formation->hasResponsable()) {
-                $str = $str . $formation->responsable->user->email;
+                array_push($str, array($formation->nom, $formation->description, $formation->responsable->user->email));
+            } else {
+                array_push($str, array($formation->nom, $formation->description));
             }
         }
-        file_put_contents("/tmp/formations.csv", $str);
+
+        $fichier = fopen("/tmp/formations.csv", "w");
+        
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
         return response()->download("/tmp/formations.csv");
     }
 

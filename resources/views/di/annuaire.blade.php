@@ -14,34 +14,46 @@
 
             @if($users->count() > 0)
 
-
-
-                @foreach($users as $user)
-
-                    <ul class="collection with-header" id="{{$user->id}}">
-
-                        <li class="collection-header">
-                            <h4>
-                                {{ $user->prenom . " " . $user->nom }}
-                                <a href="#!" id="{{$user->id}}" class="btn-delete-utilisateur secondary-content red-text">
-                                    <i class="material-icons">
-                                        clear
-                                    </i>
-                                </a>
-                            </h4>
-
+                <ul class="collection">
+                    @foreach($users as $user)
+                        <li id="li-user-{{$user->id}}" class="collection-item avatar">
+                            @if(isset($user->photo))
+                                <img src="{{$user->photo->pathForClient()}}" alt="" class="circle">
+                            @else
+                                <img src="/images/default.jpg" alt="" class="circle">
+                            @endif
+                            <span class="title">{{$user->civilite . " " . $user->prenom . " " . $user->nom}}</span>
+                            <p>
+                                @if($user->statut() == 'Aucun')
+                                    Aucun statut
+                                @else
+                                    {{$user->statut()}}
+                                @endif
+                                <br>
+                            {{$user->email}}
+                            <!--<a onclick="deleteUser(event, {{$user->id}})" class="secondary-content" href="#!"><i
+                                            class="red-text material-icons">clear</i></a>-->
+                                <a class="secondary-content" href="#modal-suppression-{{$user->id}}"><i
+                                            class="red-text material-icons">clear</i></a>
+                            </p>
                         </li>
-
-                        <li class="collection-item"><strong>Statut</strong><span class="black-text secondary-content">{{ $user->statut() }}</span></li>
-                        <li class="collection-item"><strong>Email</strong><span class="black-text secondary-content">{{ $user->email }}</span></li>
-                    </ul>
-
-                @endforeach
-
-
+                    @endforeach
+                </ul>
 
             @endif
 
+            @foreach($users as $user)
+                <div id="modal-suppression-{{$user->id}}" class="modal">
+                    <div class="modal-content">
+                        <h3>Suppresion d'un utilisateur</h3>
+                        <p>Vous allez supprimer {{$user->civilite . " " .  $user->prenom . " " . $user->nom}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a onclick="deleteUser(event, {{$user->id}})"
+                           class="modal-action modal-close waves-effect waves-light btn-flat red-text" href="#!">Confirmer</a>
+                    </div>
+                </div>
+            @endforeach
 
             @include('includes.buttonImportExport')
         </div>
@@ -57,8 +69,8 @@
 
         <div class="modal-footer">
             <a href="/di/annuaire.csv" onclick="makeToast('Exportation réussie')"
-               class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
+               class="modal-action modal-close waves-effect waves-light btn-flat blue-text">Exporter</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat red-text">Annuler</a>
         </div>
     </div>
 
@@ -91,7 +103,7 @@
 
 
         <div class="modal-footer">
-            <a onclick="submitImport(event) " href="#!" class="btn-large modal-action modal-close waves-effect waves-light btn-flat
+            <a onclick="event.preventDefault();document.getElementById('form-import').submit();" href="#!" class="btn-large modal-action modal-close waves-effect waves-light btn-flat
                purple-text">Importer</a>
             <a href="#!"
                class="modal-action modal-close waves-effect waves-light btn-flat btn-large red-text">Annuler</a>
@@ -102,19 +114,34 @@
 
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/materialize.js"></script>
+    <script src="/js/utils.js"></script>
 
     <script>
-        function submitImport(event) {
+
+        function deleteUser(event, id_utilisateur) {
             event.preventDefault();
-            $('#form-import').submit();
-        }
-    </script>
+            $.ajax({
+                url: "/di/annuaire/delete",
+                method: "POST",
+                data: "id_utilisateur=" + id_utilisateur
+            })
+                .done(function (msg) {
+                    console.log(msg);
+                    if (msg['message'] === 'success') {
+                        makeToast('Utilisateur supprimé');
+                        $('#li-user-' + id_utilisateur).remove();
+                    } else {
+                        $.each(msg['errors'], function (key, value) {
+                            makeToast('Echec : ' + value);
+                        })
 
-    <script>
-
-        function makeToast(str) {
-            var toastContent = '<span>' + str + '</span>';
-            Materialize.toast(toastContent, 5000);
+                    }
+                })
+                .fail(function (xhr, msg) {
+                    console.log(msg);
+                    console.log(xhr);
+                    makeToast('Erreur serveur : ' + xhr.status)
+                });
         }
 
 

@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use League\Csv\Reader;
 
+// TODO : confirmation suppression
+
 class AnnuaireController extends Controller
 {
     protected $statut_array;
@@ -34,11 +36,12 @@ class AnnuaireController extends Controller
      */
     protected function show()
     {
-        $users = User::all();
+        $users = User::allValidate();
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
@@ -47,7 +50,7 @@ class AnnuaireController extends Controller
             $tmp = explode("images", $url);
         }
         
-        return \view('di.annuaire')->with('users', $users)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return \view('di.annuaire')->with('users', $users)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoForm', $respoForm)->with('respoUE', $respoUE);
     }
 
     /**
@@ -55,7 +58,7 @@ class AnnuaireController extends Controller
      */
     protected function getAnnuaireJSON()
     {
-        $users = User::all();
+        $users = User::allValidate();
         return $users;
     }
 
@@ -64,12 +67,28 @@ class AnnuaireController extends Controller
      */
     protected function getAnnuaireCSV()
     {
-        $users = User::all();
-        $str = "enseignant;statut;email";
+        $users = User::allValidate();
+        $str = array(array("civilite", "prenom", "nom", "adresse", "statut", "email"));
         foreach ($users as $user) {
-            $str = $str . "\n" . $user->prenom . " " . $user->nom . "; " . $user->statut() . "; " . $user->email;
+            array_push($str, array(
+                $user->civilite,
+                $user->prenom,
+                $user->nom,
+                $user->adresse,
+                $user->statut(),
+                $user->email));
         }
-        file_put_contents("/tmp/annuaire.csv", $str);
+
+        $fichier = fopen("/tmp/annuaire.csv", "r");
+
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
+        
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
+
         return response()->download("/tmp/annuaire.csv");
     }
 
@@ -123,7 +142,11 @@ class AnnuaireController extends Controller
                 return isset($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]); //we make sure the data are present
             })->fetch();
 
-        //TODO checker le header
+        if (iterator_count($res) == 0) {
+            $validator->errors()->add('field', 'Format invalide ou aucune donnée dans le fichier');
+            return  redirect('/di/annuaire')->withErrors($validator);
+        }
+
 
         foreach ($res as $row) {
             $num_row++;
@@ -136,13 +159,15 @@ class AnnuaireController extends Controller
                 'adresse' => $row[4],
                 'statut' => $row[5],
             ], [
-                'civilite' => ['required', 'string', Rule::in(['M, "Mme'])],
+                'civilite' => ['required', 'string', Rule::in(['M.', 'Mme', 'M'])],
                 'prenom' => 'alpha|required|string|max:255',
                 'nom' => 'alpha|required|string|max:255',
                 'email' => 'required|string|email|unique:users,email',
                 'adresse' => 'required|string',
                 'statut' => ['required', 'string', Rule::in($this->statut_array)],
             ]);
+
+            if ($row[0] === 'M') $row[0] = 'M.';
 
             if ($validator->fails()) {
                 $messages['ligne'] = $num_row;
@@ -165,6 +190,10 @@ class AnnuaireController extends Controller
             $user->password = bcrypt("password");
             $user->attente_validation = false;
             $user->save();
+            $photo = new Photos;
+            $photo->adresse = "/var/www/public/images/default.jpg";
+            $photo->id_utilisateur =  $user->id;
+            $photo->save();
             array_push($new_users, $user);
 
         }

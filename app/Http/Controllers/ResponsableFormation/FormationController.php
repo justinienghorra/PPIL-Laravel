@@ -7,6 +7,7 @@ use App\Formation;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
 use App\Notification;
+use App\ResponsableDepInfo;
 use App\ResponsableUniteeEnseignement;
 use App\UniteeEnseignement;
 use App\User;
@@ -24,6 +25,27 @@ class FormationController extends Controller
         $this->middleware('auth');
     }
 
+    public function showAll()
+    {
+        /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
+        $userA = Auth::user();
+        $respoDI = $userA->estResponsableDI();
+        $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
+        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
+        $tmp = null;
+
+        if ($photoUrl != null){
+            $url = $photoUrl->adresse;
+            $tmp = explode("images", $url);
+        }
+
+        //recupere les formations de l'utilisateur
+        $formations = $userA->formations;
+
+        return view('respoFormation.mesFormations')->with(['formations' => $formations, 'respoUE' => $respoUE, 'userA' => $userA, 'respoDI' => $respoDI,'respoForm' => $respoForm, 'photoUrl' => $photoUrl]);
+    }
+
     public function show($nom_formation)
     {
 
@@ -33,12 +55,13 @@ class FormationController extends Controller
         $formation = Formation::where('nom', '=', $nom_formation)->first();
         $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
         $respoUE = ResponsableUniteeEnseignement::all();
-        $users = User::all();
+        $users = User::allValidate();
 
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
@@ -47,7 +70,7 @@ class FormationController extends Controller
             $tmp = explode("images", $url);
         }
 
-        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI, 'photoURL' => $photoUrl]);
+        return view('respoFormation.formation')->with(['user' => $user, 'formation' => $formation, 'ues' => $ues, 'respoUE' => $respoUE, 'users' => $users, 'userA' => $userA, 'respoDI' => $respoDI,'respoForm' => $respoForm, 'photoUrl' => $photoUrl]);
     }
 
     /**
@@ -66,8 +89,6 @@ class FormationController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-
-
         $formation = Formation::where('nom', $nom_formation)->first();
 
         if (!$validator->fails()) {
@@ -77,13 +98,17 @@ class FormationController extends Controller
             $ue->id_formation = $formation->id;
             $ue->save();
 
+            $di = ResponsableDepInfo::all()->first();
+
             $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
-            Notification::createNotification($messageNotif, $user->id, $formation->responsable->id);
+            Notification::createNotification($messageNotif, $user->id, $di->id);
 
 
-            return response()->json(["message" => "success", "ue" => $ue]);
+            //return response()->json(["message" => "success", "ue" => $ue]);
+            return redirect('/formation/' . $nom_formation);
         } else {
-            return response()->json(["message" => "errors", "errors" => $validator->messages()]);
+            //return response()->json(["message" => "errors", "errors" => $validator->messages()]);
+            return redirect('/formation/' . $nom_formation)->withErrors($validator);
         }
     }
 
@@ -113,8 +138,10 @@ class FormationController extends Controller
 
             $formation=Formation::where('nom', $req->nom_formation)->first();
 
+            $di = ResponsableDepInfo::all()->first();
+
             $messageNotif = "L'UE ".$ue->nom." a été supprimée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
-            Notification::createNotification($messageNotif, $user->id, $formation->responsable->id);
+            Notification::createNotification($messageNotif, $user->id, $di->id);
 
             $ue->delete();
             return response()->json(["message" => "success"]);
@@ -135,35 +162,70 @@ class FormationController extends Controller
         $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
 
         //TODO CM_VOLUME_AFFECTE
-        $str = "nom;description;responsable;cm_volume_attendu;td_volume_attendu;tp_volume_attendu;ei_volume_attendu;td_nb_groupes_attendus;tp_nb_groupes_attendus;ei_nb_groupes_attendus;attente_validation";
-
+        $str = array(
+                array($formation->nom),
+                array(),
+                array(
+                    "nom",
+                    "description",
+                    "responsable",
+                    "cm_volume_attendu",
+                    "td_volume_attendu",
+                    "tp_volume_attendu",
+                    "ei_volume_attendu",
+                    "td_nb_groupes_attendus",
+                    "tp_nb_groupes_attendus",
+                    "ei_nb_groupes_attendus",
+                    "attente_validation"
+                ));
 
         foreach ($ues as $ue) {
-            $str = $str . "\n" . $ue->nom . "; " . $ue->description . "; ";
+
             if ($ue->hasResponsable()) {
-                $str = $str . $ue->responsable->user->email;
+                array_push($str, array(
+                    $ue->nom,
+                    $ue->description,
+                    $ue->responsable->user->email,
+                    $ue->cm_volume_attendu,
+                    $ue->td_volume_attendu,
+                    $ue->tp_volume_attendu,
+                    $ue->ei_volume_attendu,
+                    $ue->td_nb_groupes_attendus,
+                    $ue->tp_nb_groupes_attendus,
+                    $ue->ei_nb_groupes_attendus,
+                    $ue->attente_validation 
+                ));
+            } else {
+                array_push($str, array(
+                    $ue->nom,
+                    $ue->description,
+                    " ",
+                    $ue->cm_volume_attendu,
+                    $ue->td_volume_attendu,
+                    $ue->tp_volume_attendu,
+                    $ue->ei_volume_attendu,
+                    $ue->td_nb_groupes_attendus,
+                    $ue->tp_nb_groupes_attendus,
+                    $ue->ei_nb_groupes_attendus,
+                    $ue->attente_validation 
+                ));
             }
-            $str = $str . ';';
-
-            $str = $str . $ue->cm_volume_attendu . ';';
-            $str = $str . $ue->td_volume_attendu . ';' ;
-            $str = $str . $ue->tp_volume_attendu . ';' ;
-            $str = $str . $ue->ei_volume_attendu . ';' ;
-
-            $str = $str . $ue->td_nb_groupes_attendus . ';';
-            $str = $str . $ue->tp_nb_groupes_attendus . ';';
-            $str = $str . $ue->ei_nb_groupes_attendus . ';';
-
-            $str = $str . $ue->attente_validation;
-            //$str = $str . $formation->nom;
         }
 
-        file_put_contents("/tmp/" . $formation->nom . ".csv", $str);
+        $fichier = fopen("/tmp/" . $formation->nom . ".csv", "w");
+
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
         return response()->download("/tmp/" . $formation->nom . ".csv");
     }
 
     /**
-     * Fonction chargé de l'imporation de CSV
+     * Fonction chargée de l'imporation de CSV
      *
      *
      */
@@ -253,8 +315,10 @@ class FormationController extends Controller
             $ue->description = $row[1];
             $ue->save();
 
+            $di = ResponsableDepInfo::all()->first();
+
             $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
-            Notification::createNotification($messageNotif, $user->id, $formation->responsable->id);
+            Notification::createNotification($messageNotif, $user->id, $di->id);
 
 
 
@@ -333,7 +397,10 @@ class FormationController extends Controller
         $validator = Validator::make($req->all(), [
             'id_utilisateur' => 'required|integer',
             'id_ue' => 'required|integer|exists:unitee_enseignements,id',
+            'nom_formation' => 'required|string|exists:formations,nom'
         ]);
+
+        $user = Auth::user();
 
         if (!$validator->fails()) {
 
@@ -342,15 +409,26 @@ class FormationController extends Controller
                 $ue->responsable->delete();
             }
 
+            $formation = Formation::where('nom', $req->nom_formation)->first();
+
             if ($req->id_utilisateur > 0) {
 
                 $resp = new ResponsableUniteeEnseignement();
                 $resp->id_utilisateur = $req->id_utilisateur;
                 $resp->id_ue = $req->id_ue;
                 $resp->save();
+
+                $responsable = User::where('id', $resp->id_utilisateur)->first();
+
+                $di = ResponsableDepInfo::all()->first();
+
+                $messageNotif = "Le responsable de l'UE ".$ue->nom." de la formation ".$formation->nom." a été changé pour ".$responsable->prenom." ".$responsable->nom." par le Responsable : ".$user->prenom." ".$user->nom;
+                Notification::createNotification($messageNotif, $user->id, $di->id);
+                Notification::createNotification($messageNotif, $user->id, $responsable->id);
+
             }
 
-            return response()->json(["message" => "success"]);
+            return response()->json(["message" => "success", "user" => $resp->user]);
         } else {
             return response()->json(["message" => "errors", "errors" => $validator]);
         }

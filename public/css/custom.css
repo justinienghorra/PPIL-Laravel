@@ -21,8 +21,6 @@ body {
 main {
     flex: 1 0 auto;
     background-image: url("../../images/grid.jpg");
-    background-size: 100%;
-    
 }
 
 .navbar-logo {
@@ -49,3 +47,18 @@ option.blue-text {
 .btn-modif-responsable {
     margin-bottom: 10px;
 }
+
+
+
+/* Sur les mobile */
+@media handheld {
+
+}
+
+@media #{$small-and-down} {
+    
+
+}
+
+
+

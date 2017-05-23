@@ -4,7 +4,6 @@
 @stop
 @section('content')
 
-
     <div class="card">
         <div class="card-content" id="content">
 
@@ -13,15 +12,15 @@
                 <h3 class="header s12 orange-text center">Formations</h3>
             </div>
 
-            <div id="liste-formation">
+            <div class="row" id="liste-formation">
                 <div v-for="formation in formations">
-                    <formations-main
+                    <formations-main-new
                             :getmodalmodifid="getModalModifId"
                             :getmodalsuppid="getModalSuppId"
                             :openmodal="openModal"
                             :responsable="responsable"
                             :formationarg="formation">
-                    </formations-main>
+                    </formations-main-new>
                     <formations-modal-suppression
                             :getmodalsuppid="getModalSuppId"
                             :deleteformation="deleteFormation"
@@ -81,7 +80,7 @@
 
 
                 <div class="modal-footer">
-                    <a onclick="submitImport(event) " href="#!" class="btn-large modal-action modal-close waves-effect waves-light btn-flat
+                    <a onclick="event.preventDefault();document.getElementById('form-import').submit();" href="#!" class="btn-large modal-action modal-close waves-effect waves-light btn-flat
                purple-text">Importer</a>
                     <a href="#!"
                        class="modal-action modal-close waves-effect waves-light btn-flat btn-large red-text">Annuler</a>
@@ -96,13 +95,18 @@
 
 
 
+
+
+
+
+
     @include('includes.buttonImportExportAdd')
 
 
 
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/materialize.js"></script>
-    <script src="https://unpkg.com/vue"></script>
+    <script src="/js/vue.min.js"></script>
     <script src="/js/di/FormationsDIComponents.js"></script>
     <script src="/js/utils.js"></script>
 
@@ -127,7 +131,7 @@
                     @endforeach
                 ],
                 users: [
-                    @foreach(App\User::all() as $user)
+                    @foreach(App\User::allValidate() as $user)
                     {
                         nom: "{{ $user->nom  }}",
                         prenom: "{{ $user->prenom  }}",

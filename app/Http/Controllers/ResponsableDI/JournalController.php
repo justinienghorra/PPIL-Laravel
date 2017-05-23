@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Journal;
 use App\User;
 use App\Photos;
+use Illuminate\Http\Response;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ class JournalController extends Controller
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
+        $respoForm = $userA->estResponsableForm();
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
@@ -33,13 +35,15 @@ class JournalController extends Controller
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }
-        return view('di.journal')->with('events', $events)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoUE', $respoUE);
+        return view('di.journal')->with('events', $events)->with('userA', $userA)->with('photoUrl', $tmp[1])->with('respoDI', $respoDI)->with('respoForm', $respoForm)->with('respoUE', $respoUE);
     }
 
     /**
      * Fonction chargée de la validation d'un élément du journal
      *
      * @param Request $req
+     * @return Response
+     *
      */
     public function accept(Request $req) {
         $validator = Validator::make($req->all(), [
@@ -57,6 +61,10 @@ class JournalController extends Controller
                         //TODO : envoyer un mail à l'utilisateur
                         $user->attente_validation = false;
                         $user->save();
+                        $photo = new Photos;
+                        $photo->adresse = "/var/www/public/images/default.jpg";
+                        $photo->id_utilisateur = $user->id;
+                        $photo->save();
                         $event->delete();
                         break;
                 }
@@ -77,6 +85,8 @@ class JournalController extends Controller
      * Fonction chargée de l'annulation d'un élément du journal
      *
      * @param Request $req
+     *
+     * @return Response
      */
     public function deny(Request $req) {
         $validator = Validator::make($req->all(), [

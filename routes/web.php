@@ -77,9 +77,16 @@ Route::post('/profil/password', 'Profil\ProfilController@postPassword');
 Route::post('/profil/image', 'Profil\ProfilController@postImage');
 
 
+/***************************
+ * Route pour les Respo UE *
+ ***************************/
 Route::get('/respoUE/mesUE', 'ResponsableUE\MesUEController@show')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::get('/respoUE/mesUE.csv', 'ResponsableUE\MesUEController@export')->middleware(\App\Http\Middleware\RespoUE::class);
 
-Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+Route::post('/respoUE/addEnseignant', 'ResponsableUE\MesUEController@addEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::post('/respoUE/deleteEnseignant', 'ResponsableUE\MesUEController@deleteEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::post('/respoUE/modifEnseignant', 'ResponsableUE\MesUEController@modifEnseignant')->middleware(\App\Http\Middleware\RespoUE::class);
+Route::post('/respoUE/modifUE', 'ResponsableUE\MesUEController@modifUE')->middleware(\App\Http\Middleware\RespoUE::class);
 
 
 /*******************************
@@ -87,7 +94,9 @@ Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@sho
  *******************************/
 
 Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
-
+Route::post('/mesEnseignements/modificationUE', 'Enseignant\EnseignantController@updateUE');
+Route::post('/mesEnseignements/modificationUEExterne', 'Enseignant\EnseignantController@updateUEExterne');
+Route::post('/mesEnseignements/ajoutUEExterne', 'Enseignant\EnseignantController@ajouterUEExterne');
 
 
 
@@ -112,6 +121,8 @@ Route::post('/di/formations/importCSV', 'ResponsableDI\FormationsController@impo
 Route::post('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 Route::get('/di/formations/updateResponsable', 'ResponsableDI\FormationsController@updateResponsable')->middleware(\App\Http\Middleware\AdminMiddleware::class);
 
+Route::get('/di/recapEnseignants', 'ResponsableDI\RecapEnseignantsController@show')->middleware(\App\Http\Middleware\AdminMiddleware::class);
+
 Route::get('/en_attente', function () {
     return view('auth.en_attente');
 });
@@ -120,6 +131,7 @@ Route::get('/en_attente', function () {
  * ROUTES pour les RESPONSABLES FORMATION *
  ******************************************/
 
+Route::get('/respoFormation/formations', 'ResponsableFormation\FormationController@showAll');
 Route::get('/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
 Route::get('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);
 Route::post('/respoFormation/formation/{nom_formation}', 'ResponsableFormation\FormationController@show')->middleware(\App\Http\Middleware\RespoFormation::class);

@@ -37,11 +37,65 @@ class UniteeEnseignement extends Model
         return $this->hasMany('App\EnseignantDansUE', 'id_ue');
     }
 
+    public function formation() {
+        return $this->belongsTo('App\Formation', 'id_formation');
+    }
+
     public function getCMNbHeuresAffectees() {
         $nbHeures = 0;
         foreach ($this->enseignants as $enseignant) {
             $nbHeures += $enseignant->cm_nb_heures;
         }
         return $nbHeures;
+    }
+
+    public function getEINbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->ei_nb_groupes * $enseignant->ei_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
+
+    public function getTDNbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->td_nb_groupes * $enseignant->td_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
+
+    public function getTPNbHeuresAffectees(){
+        $nbHeures = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbHeures += ($enseignant->tp_nb_groupes * $enseignant->tp_heures_par_groupe);
+        }
+        return $nbHeures;
+    }
+
+    public function getTDNbGroupesAffectes(){
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->td_nb_groupes;
+        }
+        return $nbGroupes;
+    }
+
+    public function getTPNbGroupesAffectes(){
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->tp_nb_groupes;
+        }
+        return $nbGroupes;
+    }
+
+    public function getEINbGroupesAffectes(){
+        $nbGroupes = 0;
+        foreach ($this->enseignants as $enseignant) {
+            $nbGroupes += $enseignant->ei_nb_groupes;
+        }
+        return $nbGroupes;
     }
 }
