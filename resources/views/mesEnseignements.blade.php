@@ -41,28 +41,6 @@ function redOrGreen($attendu, $affecte)
                     <strong class="orange-text"> {!! $enseignant->enseignement->nom !!}</strong>
                     <span class="right">{!! $enseignant->enseignement->formation->nom !!}</span>
 
-                    <div>
-                        <ul id="horaires" class="dropdown-content">
-                            <li>
-                                <a href="#!">CM<span class="badge">{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}H</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#!">EI<span class="badge">{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}H</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#!">TD<span class="badge">{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}H</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#!">TP<span class="badge">{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}H</span></a>
-                            </li>
-                        </ul>
-                        <a class="btn dropdown-button" href="#!" data-activates="horaires">Vos Horaires<i class="mdi-navigation-arrow-drop-down right"></i></a>
-
-                    </div>
-
 
                 </div>
                 <div class="collapsible-body white">
@@ -77,6 +55,18 @@ function redOrGreen($attendu, $affecte)
                             <p class="flow-text">{!! $enseignant->enseignement->description !!} </p>
 
 
+                            <h4 class="header light">Récapitulatif</h4>
+                        </blockquote>
+
+                        <ul class="collection">
+                            <li class="collection-item">CM <span class="right">0</span></li>
+                            <li class="collection-item">TD <span class="right">0</span></li>
+                            <li class="collection-item">TP <span class="right">0</span></li>
+                            <li class="collection-item">EI <span class="right">0</span></li>
+                        </ul>
+
+
+                        <blockquote>
                             <h4 class="light">Synthèse</h4>
                         </blockquote>
                         <table class="bordered">
