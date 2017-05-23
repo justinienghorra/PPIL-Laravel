@@ -84,7 +84,7 @@ class FormationsController
             $resp = $form->responsable;
             if ($resp) {
                 $userA = Auth::user();
-                $messageNotif = "La Formation " . $form->nom . " a été supprimée par le Responsable : " . $userA->prenom . " " . $userA->nom;
+                $messageNotif = "La Formation " . $form->nom . " a été supprimée";
                 Notification::createNotification($messageNotif, $userA->id, $resp->id_utilisateur);
 
                 $resp->delete();
@@ -216,7 +216,7 @@ class FormationsController
                 $resp->save();
 
                 $userA = Auth::user();
-                $messageNotif = "La Formation " . $formation->nom . " a été ajoutée par le Responsable : " . $userA->prenom . " " . $userA->nom;
+                $messageNotif = "La Formation " . $formation->nom . " a été ajoutée";
                 Notification::createNotification($messageNotif, $userA->id, $resp->id_utilisateur);
 
                 array_push($new_responsables, $resp);
@@ -273,7 +273,7 @@ class FormationsController
 
             $responsable = User::where('id', $resp->id_utilisateur)->first();
 
-            $messageNotif = "Le responsable de la formation " . $formation->nom . " de la formation " . $formation->nom . " a été changé pour " . $responsable->prenom . " " . $responsable->nom . " par le Responsable : " . $user->prenom . " " . $user->nom;
+            $messageNotif = "Le responsable de " . $formation->nom . " est maintenant " . $responsable->prenom . " " . $responsable->nom ;
             Notification::createNotification($messageNotif, $user->id, $responsable->id);
 
             return response()->json(["message" => "success", "user" => $resp->user]);

@@ -59,10 +59,10 @@ function redOrGreen($attendu, $affecte)
                         </blockquote>
 
                         <ul class="collection">
-                            <li class="collection-item">CM <span class="right">0</span></li>
-                            <li class="collection-item">TD <span class="right">0</span></li>
-                            <li class="collection-item">TP <span class="right">0</span></li>
-                            <li class="collection-item">EI <span class="right">0</span></li>
+                            <li class="collection-item">CM <span class="right">{!! $enseignant->getCMNbHeuresAffectees() !!}H</span></li>
+                            <li class="collection-item">TD <span class="right">{!! $enseignant->getTDNbHeuresAffectees() !!}H</span></li>
+                            <li class="collection-item">TP <span class="right">{!! $enseignant->getTPNbHeuresAffectees() !!}H</span></li>
+                            <li class="collection-item">EI <span class="right">{!! $enseignant->getEINbHeuresAffectees() !!}H</span></li>
                         </ul>
 
 
