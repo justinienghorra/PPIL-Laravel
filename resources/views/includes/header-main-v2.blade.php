@@ -4,11 +4,11 @@
 
 
 <!-- Dropdown Structure -->
-<ul id="dropdown_notifs_mobil" class="dropdown-content">
+<ul id="dropdown_notifs_mobile" class="dropdown-content">
     @foreach($userA->notifications as $notification)
-        <li id="notification-{{$notification->id}}">
+        <li id="notification-mobile-{{$notification->id}}">
             <a  class="blue-text darken-1" href="#!">{{$notification->resume}}
-                <i onclick="deleteNotification(event, {{$notification->id}})" class="material-icons tiny red-text">clear</i>
+                <i onclick="deleteNotificationMobile(event, {{$notification->id}})" class="material-icons tiny red-text">clear</i>
             </a>
         </li>
     @endforeach
@@ -63,7 +63,7 @@
 
             <li>
                 <a class="dropdown-button" href="#!" onclick="event.preventDefault()" data-activates="dropdown_notifs">
-                    <span class="badge badge-notifs orange white-text">{{$userA->notifications->count()}}</span>
+                    <span class="badge badge-notifs orange white-text"><span id="notif-count">{{$userA->notifications->count()}}</span></span>
                     Notifications
                     <i class="material-icons right">arrow_drop_down</i>
                 </a>
@@ -104,8 +104,8 @@
                 </div>
             </li>
              <li>
-                 <a class="dropdown-button" href="#!" onclick="event.preventDefault()" data-activates="dropdown_notifs_mobil">
-                     <span class="badge badge-notifs orange white-text">{{$userA->notifications->count()}}</span>
+                 <a class="dropdown-button" href="#!" onclick="event.preventDefault()" data-activates="dropdown_notifs_mobile">
+                     <span class="badge badge-notifs orange white-text"><span id="notif-count-mobile">{{$userA->notifications->count()}}</span></span>
                      Notifications
                      <i class="material-icons right">arrow_drop_down</i>
                  </a>

@@ -30,6 +30,28 @@
             data: 'id_notification=' + id_notification
         }).done(function (msg) {
             $('#notification-'+id_notification).remove();
+            var count = parseInt($('#notif-count').text());
+            console.log('Count : ' + count);
+            count = count - 1;
+            $('#notif-count').text(count);
+        }).fail(function (xhr, msg) {
+            makeToast('Erreur serveur : ' + xhr.status);
+        });
+    }
+
+    function deleteNotificationMobile(event, id_notification) {
+        event.preventDefault();
+        $.ajax({
+            url: '/notifications/delete',
+            method: 'post',
+            data: 'id_notification=' + id_notification
+        }).done(function (msg) {
+            $('#notification-mobile-'+id_notification).remove();
+            var count = parseInt($('#notif-count-mobile').text());
+            console.log('Count : ' + count);
+            count = count - 1;
+            $('#notif-count-mobile').text(count);
+
         }).fail(function (xhr, msg) {
             makeToast('Erreur serveur : ' + xhr.status);
         });
@@ -55,7 +77,7 @@
         $('.dropdown-button').dropdown({
             hover: true, // Activate on hover
             belowOrigin: true,
-            constrainWidth: false
+            //constrainWidth: false
         });
 
         $('.tooltipped').tooltip({delay: 50});
