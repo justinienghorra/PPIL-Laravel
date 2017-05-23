@@ -78,8 +78,6 @@ class FormationController extends Controller
             $ue->save();
 
             $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
-
-
             Notification::createNotification($messageNotif, $user->id, $formation->responsable->id);
 
 
@@ -100,18 +98,25 @@ class FormationController extends Controller
     public function delete(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'id_ue' => 'required|integer|exists:unitee_enseignements,id'
+            'id_ue' => 'required|integer|exists:unitee_enseignements,id',
+            'nom_formation' => 'required|string|exists:formations,nom'
         ]);
 
-
+        $user = Auth::user();
 
         if (!$validator->fails()) {
-            $form = UniteeEnseignement::where('id', $req->id_ue)->first();
-            $resp = $form->responsable;
+            $ue = UniteeEnseignement::where('id', $req->id_ue)->first();
+            $resp = $ue->responsable;
             if ($resp) {
                 $resp->delete();
             }
-            $form->delete();
+
+            $formation=Formation::where('nom', $req->nom_formation)->first();
+
+            $messageNotif = "L'UE ".$ue->nom." a été supprimée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
+            Notification::createNotification($messageNotif, $user->id, $formation->responsable->id);
+
+            $ue->delete();
             return response()->json(["message" => "success"]);
         } else {
             return response()->json(["message" => "errors", "errors" => json_encode($validator->messages())]);
@@ -175,6 +180,8 @@ class FormationController extends Controller
                 'extension' => 'required|in:csv',
             ]
         );
+
+        $user = Auth::user();
 
         if ($validator->fails()) {
             return redirect('/respoFormation/formation/' . $nom_formation)->withErrors($validator);
@@ -245,6 +252,10 @@ class FormationController extends Controller
             $ue->nom = $row[0];
             $ue->description = $row[1];
             $ue->save();
+
+            $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
+            Notification::createNotification($messageNotif, $user->id, $formation->responsable->id);
+
 
 
 

@@ -129,7 +129,7 @@
             $.ajax({
                 url: "/respoFormation/formation/{{$formation->nom}}/delete",
                 method: "POST",
-                data: "id_ue=" + id_ue
+                data: "id_ue=" + id_ue + "&nom_formation={{$formation->nom}}"
             })
                 .done(function (msg) {
                     console.log(msg);
