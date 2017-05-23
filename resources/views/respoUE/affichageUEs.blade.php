@@ -317,11 +317,11 @@ function redOrGreen($attendu, $affecte)
                   <div class="row">
                     <div class="col s6">
                       {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
-                      {!! Form::number('ei_heures_par_groupe', $value = $enseignant->td_heures_par_groupe) !!}
+                      {!! Form::number('ei_heures_par_groupe', $value = $enseignant->ei_heures_par_groupe) !!}
                     </div>
                     <div class="col s6">
                       {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
-                      {!! Form::number('ei_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
+                      {!! Form::number('ei_nb_groupes', $value = $enseignant->ei_nb_groupes) !!}
                     </div>
                     <button class="btn btn-flat green-text right" type="submit">Valider</button>
                   </div>
