@@ -17,9 +17,10 @@
 <ul id="dropdown_notifs" class="dropdown-content">
     @foreach($userA->notifications as $notification)
         <li id="notification-{{$notification->id}}">
-            <a  class="blue-text darken-1" href="#!">{{$notification->resume}}
-                <i onclick="deleteNotification(event, {{$notification->id}})" class="material-icons tiny red-text">clear</i>
+            <a  class="blue-text darken-1" href="#!">
+                {{$notification->resume}}
             </a>
+            <button onclick="deleteNotification(event, {{$notification->id}})" class=" right btn btn-flat red-text">Supprimer</button>
         </li>
     @endforeach
 </ul>
