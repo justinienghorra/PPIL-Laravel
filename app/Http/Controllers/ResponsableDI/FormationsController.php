@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ResponsableDI;
 
+use App\Notification;
 use Illuminate\Support\Facades\Log;
 use App\Formation;
 use App\ResponsableFormation;
@@ -82,6 +83,10 @@ class FormationsController
             $form = Formation::where('id', $req->id_formation)->first();
             $resp = $form->responsable;
             if ($resp) {
+                $userA = Auth::user();
+                $messageNotif = "La Formation " . $form->nom . " a été supprimée par le Responsable : " . $userA->prenom . " " . $userA->nom;
+                Notification::createNotification($messageNotif, $userA->id, $resp->id_utilisateur);
+
                 $resp->delete();
             }
             $form->delete();
@@ -109,10 +114,10 @@ class FormationsController
         }
 
         $fichier = fopen("/tmp/formations.csv", "w");
-        
-        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
 
-        foreach($str as $fields) {
+        fprintf($fichier, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+        foreach ($str as $fields) {
             fputcsv($fichier, $fields);
         }
 
@@ -139,6 +144,8 @@ class FormationsController
             ]
         );
 
+
+
         if ($validator->fails()) {
             return redirect('/di/formations')->withErrors($validator);
         }
@@ -147,7 +154,7 @@ class FormationsController
         $file = $req->file('file_csv');
         $num_row = 0;
         $csv = Reader::createFromPath($file->path());
-        $csv->setDelimiter(';');
+        $csv->setDelimiter(',');
         $messages = array();
         $res = $csv
             ->addFilter(function ($row, $index) {
@@ -182,6 +189,8 @@ class FormationsController
             $formation->description = $row[1];
             Log::info('Ajout de la formation : ' . $formation->nom);
             $formation->save();
+
+
             array_push($new_formations, $formation);
             if (isset($row[2]) && is_string($row[2]) && strlen(trim($row[2])) > 2) {
                 $row[2] = trim($row[2]);
@@ -205,6 +214,10 @@ class FormationsController
                 $user = User::where('email', trim($row[2]))->first();
                 $resp->id_utilisateur = $user->id;
                 $resp->save();
+
+                $userA = Auth::user();
+                $messageNotif = "La Formation " . $formation->nom . " a été ajoutée par le Responsable : " . $userA->prenom . " " . $userA->nom;
+                Notification::createNotification($messageNotif, $userA->id, $resp->id_utilisateur);
 
                 array_push($new_responsables, $resp);
             }
@@ -245,15 +258,24 @@ class FormationsController
             'id_formation' => 'required|integer|exists:formations,id',
         ]);
 
+        $user = Auth::user();
+
         if (!$validator->fails()) {
             $formation = Formation::where('id', $req->id_formation)->first();
             if ($formation->hasResponsable()) {
                 $formation->responsable->delete();
             }
+
             $resp = new ResponsableFormation;
             $resp->id_utilisateur = $req->id_utilisateur;
             $resp->id_formation = $req->id_formation;
             $resp->save();
+
+            $responsable = User::where('id', $resp->id_utilisateur)->first();
+
+            $messageNotif = "Le responsable de la formation " . $formation->nom . " de la formation " . $formation->nom . " a été changé pour " . $responsable->prenom . " " . $responsable->nom . " par le Responsable : " . $user->prenom . " " . $user->nom;
+            Notification::createNotification($messageNotif, $user->id, $responsable->id);
+
             return response()->json(["message" => "success", "user" => $resp->user]);
         } else {
             return response()->json(["message" => "errors", "errors" => $validator]);

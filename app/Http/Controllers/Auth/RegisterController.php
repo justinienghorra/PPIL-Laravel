@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Notification;
+use App\ResponsableDepInfo;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use App\Journal;
@@ -96,6 +98,12 @@ class RegisterController extends Controller
 
         $event->id_utilisateur = $user->id;
         $event->save();
+
+        $di = ResponsableDepInfo::all()->first();
+
+        $messageNotif = "Une demande d'inscription est en attente de : ".$user->prenom." ".$user->nom;
+        Notification::createNotification($messageNotif, $user->id, $di->id);
+
 
         return $user;
     }

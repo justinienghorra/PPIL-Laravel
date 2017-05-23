@@ -6,6 +6,7 @@ namespace App\Http\Controllers\ResponsableDI;
 
 use App\Http\Controllers\Controller;
 use App\Journal;
+use App\Notification;
 use App\User;
 use App\Photos;
 use Illuminate\Http\Response;
@@ -66,6 +67,13 @@ class JournalController extends Controller
                         $photo->id_utilisateur = $user->id;
                         $photo->save();
                         $event->delete();
+
+                        $di = Auth::user();
+
+                        $messageNotif = "Votre inscription a été validée par le Responsable : ".$user->prenom." ".$user->nom;
+                        Notification::createNotification($messageNotif, $user->id, $di->id);
+
+
                         break;
                 }
             }
