@@ -37,7 +37,7 @@ class MesUEController extends Controller
      */
     public function show() 
     {
-        $users = User::all();
+        $users = User::allValidate();
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
         $respoUE = $userA->estResponsableUE();
@@ -264,6 +264,8 @@ class MesUEController extends Controller
         }
 
         $fichier = fopen("/tmp/mesUE.csv", "w");
+        
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
 
         foreach($str as $fields) {
             fputcsv($fichier, $fields);

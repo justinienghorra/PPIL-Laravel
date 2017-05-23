@@ -52,7 +52,7 @@ class FormationController extends Controller
         $formation = Formation::where('nom', '=', $nom_formation)->first();
         $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
         $respoUE = ResponsableUniteeEnseignement::all();
-        $users = User::all();
+        $users = User::allValidate();
 
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
@@ -142,35 +142,70 @@ class FormationController extends Controller
         $ues = UniteeEnseignement::where('id_formation', $formation->id)->get();
 
         //TODO CM_VOLUME_AFFECTE
-        $str = "nom;description;responsable;cm_volume_attendu;td_volume_attendu;tp_volume_attendu;ei_volume_attendu;td_nb_groupes_attendus;tp_nb_groupes_attendus;ei_nb_groupes_attendus;attente_validation";
-
+        $str = array(
+                array($formation->nom),
+                array(),
+                array(
+                    "nom",
+                    "description",
+                    "responsable",
+                    "cm_volume_attendu",
+                    "td_volume_attendu",
+                    "tp_volume_attendu",
+                    "ei_volume_attendu",
+                    "td_nb_groupes_attendus",
+                    "tp_nb_groupes_attendus",
+                    "ei_nb_groupes_attendus",
+                    "attente_validation"
+                ));
 
         foreach ($ues as $ue) {
-            $str = $str . "\n" . $ue->nom . "; " . $ue->description . "; ";
+
             if ($ue->hasResponsable()) {
-                $str = $str . $ue->responsable->user->email;
+                array_push($str, array(
+                    $ue->nom,
+                    $ue->description,
+                    $ue->responsable->user->email,
+                    $ue->cm_volume_attendu,
+                    $ue->td_volume_attendu,
+                    $ue->tp_volume_attendu,
+                    $ue->ei_volume_attendu,
+                    $ue->td_nb_groupes_attendus,
+                    $ue->tp_nb_groupes_attendus,
+                    $ue->ei_nb_groupes_attendus,
+                    $ue->attente_validation 
+                ));
+            } else {
+                array_push($str, array(
+                    $ue->nom,
+                    $ue->description,
+                    " ",
+                    $ue->cm_volume_attendu,
+                    $ue->td_volume_attendu,
+                    $ue->tp_volume_attendu,
+                    $ue->ei_volume_attendu,
+                    $ue->td_nb_groupes_attendus,
+                    $ue->tp_nb_groupes_attendus,
+                    $ue->ei_nb_groupes_attendus,
+                    $ue->attente_validation 
+                ));
             }
-            $str = $str . ';';
-
-            $str = $str . $ue->cm_volume_attendu . ';';
-            $str = $str . $ue->td_volume_attendu . ';' ;
-            $str = $str . $ue->tp_volume_attendu . ';' ;
-            $str = $str . $ue->ei_volume_attendu . ';' ;
-
-            $str = $str . $ue->td_nb_groupes_attendus . ';';
-            $str = $str . $ue->tp_nb_groupes_attendus . ';';
-            $str = $str . $ue->ei_nb_groupes_attendus . ';';
-
-            $str = $str . $ue->attente_validation;
-            //$str = $str . $formation->nom;
         }
 
-        file_put_contents("/tmp/" . $formation->nom . ".csv", $str);
+        $fichier = fopen("/tmp/" . $formation->nom . ".csv", "w");
+
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
         return response()->download("/tmp/" . $formation->nom . ".csv");
     }
 
     /**
-     * Fonction chargé de l'imporation de CSV
+     * Fonction chargée de l'imporation de CSV
      *
      *
      */

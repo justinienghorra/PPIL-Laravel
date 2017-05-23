@@ -1,3 +1,12 @@
+<?php
+function redOrGreen($attendu, $affecte)
+{
+    if ($attendu == $affecte) {
+        return '<span class=" green-text">';
+    }
+    return '<span class=" red-text">';
+}
+?>
 @extends('layouts.main')
 @section('title')
     Liste des enseignements auxquels vous participez
@@ -19,16 +28,42 @@
 
     </style>
 
+
     <ul class="collapsible white" data-collapsible="expandable">
+
         <li class="collection-header orange-text"><h4 class="center">Liste des enseignements auxquels vous
                 participez</h4>
         </li><br>
 
         @foreach($enseignantDansUEs as $enseignant)
             <li>
-                <div class="active collapsible-header "><strong
-                            class="orange-text"> {!! $enseignant->enseignement->nom !!}</strong><span
-                            class="right">{!! $enseignant->enseignement->formation->nom !!}</span>
+                <div class="collapsible-header ">
+                    <strong class="orange-text"> {!! $enseignant->enseignement->nom !!}</strong>
+                    <span class="right">{!! $enseignant->enseignement->formation->nom !!}</span>
+
+                    <div>
+                        <ul id="horaires" class="dropdown-content">
+                            <li>
+                                <a href="#!">CM<span class="badge">{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}H</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#!">EI<span class="badge">{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}H</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#!">TD<span class="badge">{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}H</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#!">TP<span class="badge">{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}H</span></a>
+                            </li>
+                        </ul>
+                        <a class="btn dropdown-button" href="#!" data-activates="horaires">Vos Horaires<i class="mdi-navigation-arrow-drop-down right"></i></a>
+
+                    </div>
+
+
                 </div>
                 <div class="collapsible-body white">
                     <div class="row">
@@ -64,14 +99,26 @@
                             </tr>
                             <tr>
                                 <th>Volume affecté</th>
-                                <td>{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}</td>
-                                <td>{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}</td>
-                                <td>{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}</td>
-                                <td>{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}</td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->cm_volume_attendu, $enseignant->enseignement->getCMNbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->ei_volume_attendu, $enseignant->enseignement->getEINbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getEINbHeuresAffectees() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->td_volume_attendu, $enseignant->enseignement->getTDNbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->tp_volume_attendu, $enseignant->enseignement->getTPNbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Nombre de groupes attendus</th>
-                                <td>{!! $enseignant->enseignement->cm_nb_groupes_attendus !!}</td>
+                                <td></td>
                                 <td>{!! $enseignant->enseignement->ei_nb_groupes_attendus !!}</td>
                                 <td>{!! $enseignant->enseignement->td_nb_groupes_attendus !!}</td>
                                 <td>{!! $enseignant->enseignement->tp_nb_groupes_attendus !!}</td>
@@ -79,9 +126,18 @@
                             <tr>
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
-                                <td>{!! $enseignant->enseignement->getEINbGroupesAffectes() !!}</td>
-                                <td>{!! $enseignant->enseignement->getTDNbGroupesAffectes() !!}</td>
-                                <td>{!! $enseignant->enseignement->getTPNbGroupesAffectes() !!}</td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->ei_nb_groupes_attendus, $enseignant->enseignement->getEINbGroupesAffectes()) !!}
+                                    {!! $enseignant->enseignement->getEINbGroupesAffectes() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->td_nb_groupes_attendus, $enseignant->enseignement->getTDNbGroupesAffectes()) !!}
+                                    {!! $enseignant->enseignement->getTDNbGroupesAffectes() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->tp_nb_groupes_attendus, $enseignant->enseignement->getTPNbGroupesAffectes()) !!}
+                                    {!! $enseignant->enseignement->getTPNbGroupesAffectes() !!}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -142,12 +198,14 @@
                         </table>
 
                         <br>
+
                         <a href="#gerer-mes-horaires-{{$enseignant->id}}" class="right btn btn-flat green-text">Gérer
                             mes horaires</a>
                     </div>
 
                 </div>
             </li>
+
 
         @endforeach
 
@@ -164,7 +222,7 @@
         </li><br>
         @foreach($enseignantDansUEsExterne as $enseignantExterne)
             <li>
-                <div class="active collapsible-header "><strong
+                <div class=" collapsible-header "><strong
                             class="blue-text"> {!! $enseignantExterne->nom !!}</strong><span
                             class="right">{!! $enseignantExterne->nom_formation !!}</span>
                 </div>
@@ -219,6 +277,7 @@
         @endforeach
 
     </ul>
+
 
     <!-- Génération des modals -->
 
@@ -427,6 +486,23 @@
 
 
     @include('includes.buttonExportAdd')
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            @if(Session::get('message')  != null )
+                makeToast("{{Session::get('message')}}");
+            @endif
+
+            @foreach($errors->all() as $error)
+                makeToast("{{$error}}");
+            @endforeach
+        });
+
+    </script>
 
 
 

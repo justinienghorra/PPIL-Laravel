@@ -68,10 +68,15 @@ Vue.component('formations-main-back', {
 
 Vue.component('formations-main-new', {
     delimiters: ['${', '}'],
+    methods: {
+      getLienFormation: function (formation) {
+          return '/respoFormation/formation/' + formation['nom']
+      }
+    },
     props: ['formationarg', 'responsable', 'openmodal', 'getmodalsuppid', 'getmodalmodifid'],
     template: '<div class="card">\
                     <div class="card-content">\
-                        <span class="card-title">${formationarg.nom}</span>\
+                        <a :href="getLienFormation(formationarg)" class="card-title">${formationarg.nom}</a>\
                         <p>\
                         <strong>Description : </strong>${formationarg.description}\
                         <br>\
@@ -79,7 +84,7 @@ Vue.component('formations-main-new', {
                         </p>\
                     </div>\
                     <div class="card-action">\
-                        <a @click.prevent="openmodal(getmodalmodifid(formationarg.id))" href="">Modifier le responsable</a>\
+                        <a class="center" @click.prevent="openmodal(getmodalmodifid(formationarg.id))" >Modifier le responsable</a>\
                         <a @click.prevent="openmodal(getmodalsuppid(formationarg.id))" class="right red-text" href="">Supprimer</a>\
                     </div>\
                 </div>'

@@ -36,7 +36,7 @@ class AnnuaireController extends Controller
      */
     protected function show()
     {
-        $users = User::all();
+        $users = User::allValidate();
         /** Récupération des droit de l'utilisateur authentifier pour gérer le menu */
         $userA = Auth::user();
         $respoDI = $userA->estResponsableDI();
@@ -58,7 +58,7 @@ class AnnuaireController extends Controller
      */
     protected function getAnnuaireJSON()
     {
-        $users = User::all();
+        $users = User::allValidate();
         return $users;
     }
 
@@ -67,12 +67,28 @@ class AnnuaireController extends Controller
      */
     protected function getAnnuaireCSV()
     {
-        $users = User::all();
-        $str = "enseignant;statut;email";
+        $users = User::allValidate();
+        $str = array(array("civilite", "prenom", "nom", "adresse", "statut", "email"));
         foreach ($users as $user) {
-            $str = $str . "\n" . $user->prenom . " " . $user->nom . "; " . $user->statut() . "; " . $user->email;
+            array_push($str, array(
+                $user->civilite,
+                $user->prenom,
+                $user->nom,
+                $user->adresse,
+                $user->statut(),
+                $user->email));
         }
-        file_put_contents("/tmp/annuaire.csv", $str);
+
+        $fichier = fopen("/tmp/annuaire.csv", "r");
+
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
+        
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
+
         return response()->download("/tmp/annuaire.csv");
     }
 
@@ -126,7 +142,11 @@ class AnnuaireController extends Controller
                 return isset($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]); //we make sure the data are present
             })->fetch();
 
-        //TODO checker le header
+        if (iterator_count($res) == 0) {
+            $validator->errors()->add('field', 'Format invalide ou aucune donnée dans le fichier');
+            return  redirect('/di/annuaire')->withErrors($validator);
+        }
+
 
         foreach ($res as $row) {
             $num_row++;

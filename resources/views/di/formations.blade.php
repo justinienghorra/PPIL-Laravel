@@ -131,7 +131,7 @@
                     @endforeach
                 ],
                 users: [
-                    @foreach(App\User::all() as $user)
+                    @foreach(App\User::allValidate() as $user)
                     {
                         nom: "{{ $user->nom  }}",
                         prenom: "{{ $user->prenom  }}",

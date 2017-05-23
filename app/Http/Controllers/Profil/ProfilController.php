@@ -41,16 +41,14 @@ class ProfilController extends Controller
         $respoUE = $userA->estResponsableUE();
         $respoForm = $userA->estResponsableForm();
 
-        $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
-
+        $photoUrl = Photos::where('id_utilisateur', $userA->id)->first();
         $statuts = Statut::all();
-
         $civilite = User::select('civilite')->where('id', '=', $userA->id)->first();
+
         if ($civilite->civilite == "M.") $civilites = array("M." => "M.","Mme" => "Mme");
         else $civilites = array("Mme" => "Mme", "M." => "M.");
 
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
-
         $tmp = null;
 
         if ($photoUrl != null){
@@ -79,6 +77,7 @@ class ProfilController extends Controller
         else {
 	        $pourcentage = 100;
         }
+
 
         return view('profil')
             ->with('userA', $userA)
@@ -138,7 +137,7 @@ class ProfilController extends Controller
 
         // Si la verification a echoue
         if ($validator->fails()) {
-            $messages = "Impossible de modifier vos informations, un des champs spécifiés n'est pas valide";
+            $messages = "Impossible de modifier vos informations, un des champs spécifiés n'est pas valide.";
             return redirect('profil')
                 ->with('messages', $messages);
         }
@@ -152,11 +151,10 @@ class ProfilController extends Controller
             $user->updateAdresse($request->input('adresse'));
             $user->updateEmail($request->input('email'));
 
-            $messages = "Informations modifiées avec succès";
+            $messages = "Informations modifiées avec succès.";
 
             return redirect('profil')
                 ->with('messages', $messages);
-
         }
     }
 

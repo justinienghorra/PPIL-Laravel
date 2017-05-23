@@ -87,7 +87,7 @@
 
                 <div class="row center">
 
-                    {!! Form::submit('Enregistrer les modifications', $attributes = ['class' => 'center btn btn-flat orange-text', 'href' => '#', 'id' => '', 'onclick' => 'return openModalInformations;']) !!}
+                    {!! Form::submit('Enregistrer les modifications', $attributes = ['class' => 'center btn btn-flat orange-text', 'href' => '#', 'id' => '', 'onclick' => 'return openModalInformations();']) !!}
                     {!! Form::close() !!}
                 </div>
 
@@ -101,7 +101,7 @@
                 <h5 class="header col s12 light">Modifier votre photo</h5>
             </div>
 
-            {!! Form::open(['url' => 'profil/image', 'files' => true], $attributes = ['class' => 'col s12', 'id' => 'jkjkjkj']) !!}
+            {!! Form::open(['url' => 'profil/image', 'files' => true], $attributes = ['class' => 'col s12', 'id' => '']) !!}
             <div class="row center">
                 <!--<img src="images/groot.png" alt="Votre photo" class="circle responsive-img">-->
                 @if (Session::get('photoUrl') == null && $photoUrl == null)
