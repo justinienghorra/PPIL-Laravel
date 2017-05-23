@@ -16,10 +16,10 @@ class NotificationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->withErrors($validator);
+            return response()->json($validator->errors);
         }
 
-        $notif = Notification::where('id', $req->id_notification);
+        $notif = Notification::where('id', $req->id_notification)->first();
         if ($notif->id_utilisateur_a_notifie == Auth::user()->id) {
             $notif->delete();
         }

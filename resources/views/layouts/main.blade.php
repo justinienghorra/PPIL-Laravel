@@ -55,7 +55,7 @@
         $('.dropdown-button').dropdown({
             hover: true, // Activate on hover
             belowOrigin: true,
-            //constrainWidth: false
+            constrainWidth: false
         });
 
         $('.tooltipped').tooltip({delay: 50});
