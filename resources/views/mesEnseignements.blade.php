@@ -37,9 +37,32 @@ function redOrGreen($attendu, $affecte)
 
         @foreach($enseignantDansUEs as $enseignant)
             <li>
-                <div class="collapsible-header "><strong
-                            class="orange-text"> {!! $enseignant->enseignement->nom !!}</strong><span
-                            class="right">{!! $enseignant->enseignement->formation->nom !!}</span>
+                <div class="collapsible-header ">
+                    <strong class="orange-text"> {!! $enseignant->enseignement->nom !!}</strong>
+                    <span class="right">{!! $enseignant->enseignement->formation->nom !!}</span>
+
+                    <div>
+                        <ul id="horaires" class="dropdown-content">
+                            <li>
+                                <a href="#!">CM<span class="badge">{!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#!">EI<span class="badge">{!! $enseignant->enseignement->getEINbHeuresAffectees() !!}</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#!">TD<span class="badge">{!! $enseignant->enseignement->getTDNbHeuresAffectees() !!}</span></a>
+                            </li>
+                            <li>
+                                <a href="#!">TP<span class="badge">{!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}</span></a>
+                            </li>
+                        </ul>
+                        <a class="btn dropdown-button" href="#!" data-activates="horaires">Vos Horaires<i class="mdi-navigation-arrow-drop-down right"></i></a>
+
+                    </div>
+
+
                 </div>
                 <div class="collapsible-body white">
                     <div class="row">
@@ -181,6 +204,7 @@ function redOrGreen($attendu, $affecte)
 
                 </div>
             </li>
+
 
         @endforeach
 
