@@ -22,6 +22,39 @@ class EnseignantDansUE extends Model
         return $this->belongsTo('App\UniteeEnseignement', 'id_ue');
     }
 
+    public function getCMNbHeuresAffectees() {
+        $nbHeures = 0;
+
+        $nbHeures += $this->cm_nb_heures;
+
+        return $nbHeures;
+    }
+
+    public function getEINbHeuresAffectees(){
+        $nbHeures = 0;
+
+        $nbHeures += ($this->ei_nb_groupes * $this->ei_heures_par_groupe);
+
+        return $nbHeures;
+    }
+
+
+    public function getTDNbHeuresAffectees(){
+        $nbHeures = 0;
+
+        $nbHeures += ($this->td_nb_groupes * $this->td_heures_par_groupe);
+
+        return $nbHeures;
+    }
+
+
+    public function getTPNbHeuresAffectees(){
+        $nbHeures = 0;
+
+        $nbHeures += ($this->tp_nb_groupes * $this->tp_heures_par_groupe);
+
+        return $nbHeures;
+    }
 
 
 }
