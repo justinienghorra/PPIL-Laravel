@@ -100,7 +100,7 @@ class FormationController extends Controller
 
             $di = ResponsableDepInfo::all()->first();
 
-            $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
+            $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom;
             Notification::createNotification($messageNotif, $user->id, $di->id);
 
 
@@ -140,7 +140,7 @@ class FormationController extends Controller
 
             $di = ResponsableDepInfo::all()->first();
 
-            $messageNotif = "L'UE ".$ue->nom." a été supprimée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
+            $messageNotif = "L'UE ".$ue->nom." a été supprimée à la formation ".$formation->nom;
             Notification::createNotification($messageNotif, $user->id, $di->id);
 
             $ue->delete();
@@ -317,7 +317,7 @@ class FormationController extends Controller
 
             $di = ResponsableDepInfo::all()->first();
 
-            $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom." par le Responsable : ".$user->prenom." ".$user->nom;
+            $messageNotif = "L'UE ".$ue->nom." a été ajoutée à la formation ".$formation->nom;
             Notification::createNotification($messageNotif, $user->id, $di->id);
 
 
@@ -422,7 +422,7 @@ class FormationController extends Controller
 
                 $di = ResponsableDepInfo::all()->first();
 
-                $messageNotif = "Le responsable de l'UE ".$ue->nom." de la formation ".$formation->nom." a été changé pour ".$responsable->prenom." ".$responsable->nom." par le Responsable : ".$user->prenom." ".$user->nom;
+                $messageNotif = "Le responsable de l'UE ".$ue->nom." de la formation ".$formation->nom." a été changé pour ".$responsable->prenom." ".$responsable->nom;
                 Notification::createNotification($messageNotif, $user->id, $di->id);
                 Notification::createNotification($messageNotif, $user->id, $responsable->id);
 
