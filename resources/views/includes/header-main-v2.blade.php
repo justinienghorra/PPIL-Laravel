@@ -5,10 +5,13 @@
 
 <!-- Dropdown Structure -->
 <ul id="dropdown_notifs" class="dropdown-content">
-    <li><a class="blue-text darken-1" href="#!"><strong>Inscription</strong> Chuck Norris <i
-                    class="material-icons tiny red-text">clear</i></a></li>
-    <li><a class="blue-text darken-1" href="#!"><strong>Inscription</strong> Mickey <i class="material-icons tiny red-text">clear</i></a>
-    </li>
+    @foreach($user->notifications as $notification)
+        <li id="notification-{{$notification->id}}">
+            <a  class="blue-text darken-1" href="#!">{{$notification->description}}
+                <i onclick="deleteNotification(event, {{$notification->id}})" class="material-icons tiny red-text">clear</i>
+            </a>
+        </li>
+    @endforeach
 </ul>
 
 <ul id="dropdown_scolarite" class="dropdown-content">
@@ -47,9 +50,15 @@
 	<a id="logo-container" href="#" class="brand-logo">
         <img class="navbar-logo" src="/images/SGE.png" alt=""></a>
         <ul class="right hide-on-med-and-down">
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown_notifs"><span
-                            class="badge badge-notifs orange white-text">2</span>Notifications<i
-                            class="material-icons right">arrow_drop_down</i></a></li>
+
+            <li>
+                <a class="dropdown-button" href="#!" data-activates="dropdown_notifs">
+                    <span class="badge badge-notifs orange white-text">{{$userA->notifications->count()}}</span>
+                    Notifications
+                    <i class="material-icons right">arrow_drop_down</i>
+                </a>
+            </li>
+
             <li><a class="dropdown-button" href="#!" data-activates="dropdown_scolarite">Scolarité<i
                             class="material-icons right">arrow_drop_down</i></a></li>
             <!--<li><a class="dropdown-button" href="#!" data-activates="dropdown_formations">Vos formations<i class="material-icons right">arrow_drop_down</i></a></li>-->

@@ -66,6 +66,8 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/notifications/delete', 'Notification\NotificationController@deleteNotification')->middleware('auth');
+
 
 /*************************
  * Route pour le Profil  *
