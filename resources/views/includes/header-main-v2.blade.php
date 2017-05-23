@@ -4,10 +4,20 @@
 
 
 <!-- Dropdown Structure -->
-<ul id="dropdown_notifs" class="dropdown-content">
-    @foreach($user->notifications as $notification)
+<ul id="dropdown_notifs_mobil" class="dropdown-content">
+    @foreach($userA->notifications as $notification)
         <li id="notification-{{$notification->id}}">
-            <a  class="blue-text darken-1" href="#!">{{$notification->description}}
+            <a  class="blue-text darken-1" href="#!">{{$notification->resume}}
+                <i onclick="deleteNotification(event, {{$notification->id}})" class="material-icons tiny red-text">clear</i>
+            </a>
+        </li>
+    @endforeach
+</ul>
+
+<ul id="dropdown_notifs" class="dropdown-content">
+    @foreach($userA->notifications as $notification)
+        <li id="notification-{{$notification->id}}">
+            <a  class="blue-text darken-1" href="#!">{{$notification->resume}}
                 <i onclick="deleteNotification(event, {{$notification->id}})" class="material-icons tiny red-text">clear</i>
             </a>
         </li>
@@ -52,7 +62,7 @@
         <ul class="right hide-on-med-and-down">
 
             <li>
-                <a class="dropdown-button" href="#!" data-activates="dropdown_notifs">
+                <a class="dropdown-button" href="#!" onclick="event.preventDefault()" data-activates="dropdown_notifs">
                     <span class="badge badge-notifs orange white-text">{{$userA->notifications->count()}}</span>
                     Notifications
                     <i class="material-icons right">arrow_drop_down</i>
@@ -93,9 +103,13 @@
                     <a href="#!email"><span class="white-text email">{{$userA->email}}</span></a>
                 </div>
             </li>
-            <li><a href="">Notifications<span class="badge badge-notifs orange white-text"
-                                              data-badge-caption="">2</span></a></li>
-            <li>
+             <li>
+                 <a class="dropdown-button" href="#!" onclick="event.preventDefault()" data-activates="dropdown_notifs_mobil">
+                     <span class="badge badge-notifs orange white-text">{{$userA->notifications->count()}}</span>
+                     Notifications
+                     <i class="material-icons right">arrow_drop_down</i>
+                 </a>
+             </li>
                 <div class="divider"></div>
             </li>
 
