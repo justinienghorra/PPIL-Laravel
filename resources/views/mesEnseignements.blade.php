@@ -278,6 +278,7 @@ function redOrGreen($attendu, $affecte)
 
     </ul>
 
+
     <!-- Génération des modals -->
 
     <!-- Génération des modals horaire -->
