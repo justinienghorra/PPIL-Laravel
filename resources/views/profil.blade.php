@@ -217,7 +217,7 @@
          */
         function makeToast(str) {
             var toastContent = '<span>' + str + '</span>';
-            Materialize.toast(toastContent, 4000, 'rounded');
+            Materialize.toast(toastContent, 4000);
         }
 
 
