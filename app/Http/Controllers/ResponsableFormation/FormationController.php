@@ -88,7 +88,7 @@ class FormationController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make($req->all(), [
-            'nom' => 'required|string|max:255|unique:unitee_enseignements',
+            'nom' => 'required|string|max:255',
             'description' => 'required|string|max:255',
         ]);
 
@@ -258,7 +258,7 @@ class FormationController extends Controller
         $file = $req->file('file_csv');
         $num_row = 0;
         $csv = Reader::createFromPath($file->path());
-        $csv->setDelimiter(';');
+        $csv->setDelimiter(',');
         $errors_custom = array();
         $res = $csv
             ->addFilter(function ($row, $index) {
