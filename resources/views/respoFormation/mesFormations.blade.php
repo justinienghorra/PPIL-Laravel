@@ -7,7 +7,7 @@
 
     @foreach($formations as $formation)
         <div class="row">
-            <div class="col s12 m10">
+            <div class="col s12 m10 offset-m1">
                 <div class="card white">
                     <div class="card-content black-text">
                         <span class="card-title orange-text">{!! $formation->formation->nom !!}</span>

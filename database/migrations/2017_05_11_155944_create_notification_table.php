@@ -23,10 +23,10 @@ class CreateNotificationTable extends Migration
             $table->date('date_notification');
 
             $table->integer('id_utilisateur_a_notifie')->unsigned();
-            $table->foreign('id_utilisateur_a_notifie')->references('id')->on('users');
+            $table->foreign('id_utilisateur_a_notifie')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('venant_de_id_utilisateur')->unsigned();
-            $table->foreign('venant_de_id_utilisateur')->references('id')->on('users');
+            $table->foreign('venant_de_id_utilisateur')->references('id')->on('users')->onDelete('cascade');
 
 
         });

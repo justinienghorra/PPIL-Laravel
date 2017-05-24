@@ -55,14 +55,14 @@ function redOrGreen($attendu, $affecte)
                             <p class="flow-text">{!! $enseignant->enseignement->description !!} </p>
 
 
-                            <h4 class="header light">Récapitulatif</h4>
+                            <h4 class="header light">Vos horaires</h4>
                         </blockquote>
 
                         <ul class="collection">
                             <li class="collection-item">CM <span class="right">{!! $enseignant->getCMNbHeuresAffectees() !!}H</span></li>
+                            <li class="collection-item">EI <span class="right">{!! $enseignant->getEINbHeuresAffectees() !!}H</span></li>
                             <li class="collection-item">TD <span class="right">{!! $enseignant->getTDNbHeuresAffectees() !!}H</span></li>
                             <li class="collection-item">TP <span class="right">{!! $enseignant->getTPNbHeuresAffectees() !!}H</span></li>
-                            <li class="collection-item">EI <span class="right">{!! $enseignant->getEINbHeuresAffectees() !!}H</span></li>
                         </ul>
 
 
