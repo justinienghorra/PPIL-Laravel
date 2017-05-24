@@ -53,7 +53,7 @@ class ProfilController extends Controller
         $photoUrl =  Photos::where('id_utilisateur', $userA->id)->first();
         $tmp = null;
 
-        if ($photoUrl != null){
+        if ($photoUrl != null) {
             $url = $photoUrl->adresse;
             $tmp = explode("images", $url);
         }

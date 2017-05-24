@@ -81,8 +81,8 @@
                 <p>Les données importées doivent être au format CSV. Un header doit être présent et le
                     séparateur doit
                     être ;</p>
-                <p>Le format à respecter est le suivant : <br><strong>civilite ; prenom ; nom ; email
-                        ; adresse ; statut</strong></p>
+                <p>Le format à respecter est le suivant : <br><strong>civilite , prenom , nom , email
+                        , adresse , statut</strong></p>
             </div>
             <div class="row">
                 <form id="form-import" method="post" action="/di/annuaire/importCSV" enctype="multipart/form-data">
