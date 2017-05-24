@@ -56,18 +56,6 @@ function redOrGreen($attendu, $affecte)
 			$nbGroupesTPAffectes += $enseignant->tp_nb_groupes;
 			$nbGroupesEIAffectes += $enseignant->ei_nb_groupes;
 		}
-    if($nbGroupesTDAffectes > 0) 
-		  $volumeTDAffecte = $volumeTDAffecte/$nbGroupesTDAffectes;
-    else
-      $volumeTDAffecte = 0;
-    if($nbGroupesTPAffectes > 0)
-      $volumeTPAffecte = $volumeTPAffecte/$nbGroupesTPAffectes;
-		else
-      $volumeTPAffecte = 0;
-    if($volumeEIAffecte > 0)
-		  $volumeEIAffecte = $volumeEIAffecte/$nbGroupesEIAffectes;
-    else
-      $volumeEIAffecte = 0;
 	?>
 
     <li>

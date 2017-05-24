@@ -35,8 +35,8 @@ class UnitesEnseignementsTableSeeder extends Seeder
         $devmob->nom = "Développement Mobile";
         $devmob->description = "UE de développement mobile en L3";
         $devmob->cm_volume_attendu = 30;
-        $devmob->td_volume_attendu = 15;
-        $devmob->tp_volume_attendu = 15;
+        $devmob->td_volume_attendu = 30;
+        $devmob->tp_volume_attendu = 60;
         $devmob->ei_volume_attendu = 0;
         $devmob->td_nb_groupes_attendus = 2;
         $devmob->tp_nb_groupes_attendus = 3;
@@ -52,9 +52,9 @@ class UnitesEnseignementsTableSeeder extends Seeder
 		$algo->nom = "Algorithmique 2";
 		$algo->description = "UE d'algorithmique 2 en L1";
 		$algo->cm_volume_attendu = 0;
-		$algo->td_volume_attendu = 30;
-		$algo->tp_volume_attendu = 15;
-		$algo->ei_volume_attendu = 15;
+		$algo->td_volume_attendu = 60;
+		$algo->tp_volume_attendu = 60;
+		$algo->ei_volume_attendu = 30;
 		$algo->td_nb_groupes_attendus = 2;
 		$algo->tp_nb_groupes_attendus = 4;
 		$algo->ei_nb_groupes_attendus = 2;

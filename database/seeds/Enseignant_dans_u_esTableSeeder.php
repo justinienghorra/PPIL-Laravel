@@ -43,7 +43,7 @@ class Enseignant_dans_u_esTableSeeder extends Seeder
         $enseignantA1->id_utilisateur = User::where('prenom', 'RespoUE')->first()->id;
 		$enseignantA1->cm_nb_heures = 0;
 		$enseignantA1->td_nb_groupes = 1;
-		$enseignantA1->tp_nb_groupes = 1;
+		$enseignantA1->tp_nb_groupes = 2;
 		$enseignantA1->ei_nb_groupes = 1;
 		$enseignantA1->td_heures_par_groupe = 30;
 		$enseignantA1->tp_heures_par_groupe = 15;
@@ -55,7 +55,7 @@ class Enseignant_dans_u_esTableSeeder extends Seeder
         $enseignant->id_utilisateur = 2;
         $enseignant->cm_nb_heures = 0;
         $enseignant->td_nb_groupes = 1;
-        $enseignant->tp_nb_groupes = 1;
+        $enseignant->tp_nb_groupes = 2;
         $enseignant->ei_nb_groupes = 1;
         $enseignant->td_heures_par_groupe = 30;
         $enseignant->tp_heures_par_groupe = 15;
