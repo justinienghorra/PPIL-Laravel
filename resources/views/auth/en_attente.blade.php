@@ -1,4 +1,4 @@
-@extends('layouts.inscription')
+@extends('layouts.app')
 
 @section('title')
     Inscription en attente
