@@ -79,7 +79,7 @@ class AnnuaireController extends Controller
                 $user->email));
         }
 
-        $fichier = fopen("/tmp/annuaire.csv", "r");
+        $fichier = fopen("/tmp/annuaire.csv", "w");
 
         fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
         

@@ -8,22 +8,24 @@
     "packages": [
         {
             "name": "caouecs/laravel-lang",
-            "version": "3.0.31",
+            "version": "3.0.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/caouecs/Laravel-lang.git",
-                "reference": "48b75812ff56da0be2cd5b2ae838e621af4a6d1c"
+                "reference": "f9e44e9718add90791680ab27abb19099656d18d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/48b75812ff56da0be2cd5b2ae838e621af4a6d1c",
-                "reference": "48b75812ff56da0be2cd5b2ae838e621af4a6d1c",
+                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/f9e44e9718add90791680ab27abb19099656d18d",
+                "reference": "f9e44e9718add90791680ab27abb19099656d18d",
                 "shasum": ""
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^1.10"
             },
             "suggest": {
+                "ablunier/laravel-lang-installer": "Command for easily add languages to a Laravel project",
+                "arcanedev/laravel-lang": "Translations manager and checker for Laravel 5",
                 "overtrue/laravel-lang": "Command to add languages in your project"
             },
             "type": "library",
@@ -44,7 +46,7 @@
                 "laravel",
                 "lpm"
             ],
-            "time": "2017-05-21T19:49:19+00:00"
+            "time": "2017-05-24T07:51:40+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
