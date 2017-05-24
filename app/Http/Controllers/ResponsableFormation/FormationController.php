@@ -166,6 +166,8 @@ class FormationController extends Controller
 
         //TODO CM_VOLUME_AFFECTE
         $str = array(
+            array($formation->nom),
+            array(),
             array(
                 "nom",
                 "description",
