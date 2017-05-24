@@ -43,7 +43,7 @@ class FormationController extends Controller
         //recupere les formations de l'utilisateur
         $formations = $userA->formations;
 
-        return view('respoFormation.mesFormations')->with(['formations' => $formations, 'respoUE' => $respoUE, 'userA' => $userA, 'respoDI' => $respoDI,'respoForm' => $respoForm, 'photoUrl' => $photoUrl]);
+        return view('respoFormation.mesFormations')->with(['formations' => $formations, 'respoUE' => $respoUE, 'userA' => $userA, 'respoDI' => $respoDI,'respoForm' => $respoForm, 'photoUrl' => $tmp[1]]);
     }
 
     public function show($nom_formation)
