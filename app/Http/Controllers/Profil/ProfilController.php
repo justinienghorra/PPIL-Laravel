@@ -180,7 +180,7 @@ class ProfilController extends Controller
         ]);
 
         if ( ! Hash::check($request['old_password'], $user->password) ) {
-            
+
             return redirect('profil')->with('messages', 'L\'ancien mot de passe entré est faux.');
         }
         else if ($request->input('password') != $request->input('check_password')) {
