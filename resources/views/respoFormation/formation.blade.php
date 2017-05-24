@@ -195,7 +195,10 @@ function redOrGreen($attendu, $affecte)
                 <blockquote><h4>Suppression d'enseignants</h4></blockquote>
 
                 <div class="row">
-                    <form class="col s12" action="#!">
+                    <form class="col s12" method="post" action="/respoFormation/formation/{{$formation->nom}}/deleteEnseignant">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <input type="hidden" name="id_ue" value="{{ $ue->id }}" />
+                        <input type="hidden" name="nom_formation" value="{{ $formation->nom }}" />
                         @foreach($ue->enseignants as $enseignant)
                             <p>
                                 <input name="enseignants_a_supprimer[]" type="checkbox"
@@ -203,9 +206,7 @@ function redOrGreen($attendu, $affecte)
                                 <label for="{{$enseignant->user->id}}">{{ $enseignant->user->prenom . " " . $enseignant->user->nom }}</label>
                             </p>
                         @endforeach
-                        <button onclick="event.preventDefault();makeToast('TODO : suppression enseignant')"
-                                class="right btn btn-flat red-text" type="submit">Supprimer
-                        </button>
+                        <button class="right btn btn-flat red-text" type="submit">Supprimer</button>
                     </form>
                 </div>
 
@@ -214,15 +215,16 @@ function redOrGreen($attendu, $affecte)
                 <blockquote><h4>Ajout d'un enseignant</h4></blockquote>
 
                 <div class="row">
-                    <form class="col s12" action="#!">
-                        <select name="ajout_enseignant" id="">
+                    <form class="col s12" method="post" action="/respoFormation/formation/{{$formation->nom}}/addEnseignant">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <input type="hidden" name="id_ue" value="{{ $ue->id }}" />
+                        <input type="hidden" name="nom_formation" value="{{ $formation->nom }}" />
+                        <select name="id_enseignant" id="">
                             @foreach(App\User::allValidate() as $user)
-                                <option value="{{$user->id}}">{{$user->prenom . " " . $user->nom}}</option>
+                                    <option value="{{$user->id}}">{{$user->prenom . " " . $user->nom}}</option>
                             @endforeach
                         </select>
-                        <button onclick="event.preventDefault();makeToast('TODO : ajout enseignant')"
-                                class="right btn btn-flat green-text" type="submit">Ajouter
-                        </button>
+                        <button class="right btn btn-flat green-text" type="submit">Ajouter</button>
                     </form>
                 </div>
             </div>
@@ -232,7 +234,9 @@ function redOrGreen($attendu, $affecte)
             <div class="modal-content">
                 <h4>Gestion des horaires de l'UE {{$ue->nom}}</h4>
                 <blockquote><h4>Modification des horaires globaux</h4></blockquote>
-                {!! Form::open(['url' => '#!'], $attributes = ['class' => 'col s12']) !!}
+                {!! Form::open(['url' => "/respoFormation/formation/$formation->nom/modifUE"], $attributes = ['class' => 'col s12']) !!}
+                <input type="hidden" name="id_ue" value="{{ $ue->id }}" />
+                <input type="hidden" name="nom_formation" value="{{ $formation->nom}}" />
                 <div class="row">
                     <div class="col s6">
                         {!! Form::label('cm_volume_attendu', 'CM : Nombre d\'heures attendues') !!}
@@ -270,9 +274,7 @@ function redOrGreen($attendu, $affecte)
                     </div>
                 </div>
                 <div class="row">
-                    <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires globaux')"
-                            class="btn btn-flat green-text right" type="submit">Valider
-                    </button>
+                    <button class="btn btn-flat green-text right" type="submit">Valider</button>
                 </div>
 
                 {!! Form::close() !!}
@@ -282,12 +284,15 @@ function redOrGreen($attendu, $affecte)
                     <blockquote><h4>Modification des horaires
                             de {{$enseignant->user->civilite . " " . $enseignant->user->prenom . " " . $enseignant->user->nom}}</h4>
                     </blockquote>
-                    {!! Form::open(['url' => '#!']) !!}
+                    {!! Form::open(['url' => "/respoFormation/formation/$formation->nom/modifEnseignant"]) !!}
+
                     <div class="row">
                         {!! Form::hidden('id_utilisateur', $enseignant->user->id) !!}
+                        {!! Form::hidden('id_ue', $ue->id) !!}
+                        {!! Form::hidden('nom_formation', $formation->nom) !!}
                         <div class="col s6">
-                            {!! Form::label('cm_volume_affecte', 'CM : Nombre d\'heures affectées') !!}
-                            {!! Form::number('cm_volume_affecte', $value = $enseignant->cm_nb_heures) !!}
+                            {!! Form::label('cm_nb_heures', 'CM : Nombre d\'heures affectées') !!}
+                            {!! Form::number('cm_nb_heures', $value = $enseignant->cm_nb_heures) !!}
                         </div>
                     </div>
                     <div class="row">
@@ -313,15 +318,13 @@ function redOrGreen($attendu, $affecte)
                     <div class="row">
                         <div class="col s6">
                             {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
-                            {!! Form::number('ei_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
+                            {!! Form::number('ei_nb_groupes', $value = $enseignant->ei_nb_groupes) !!}
                         </div>
                         <div class="col s6">
                             {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
-                            {!! Form::number('ei_heures_par_groupe', $value = $enseignant->td_heures_par_groupe) !!}
+                            {!! Form::number('ei_heures_par_groupe', $value = $enseignant->ei_heures_par_groupe) !!}
                         </div>
-                        <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires enseignants')"
-                                class="btn btn-flat green-text right" type="submit">Valider
-                        </button>
+                        <button class="btn btn-flat green-text right" type="submit">Valider</button>
                     </div>
                     {!! Form::close() !!}
 
