@@ -1,6 +1,5 @@
 .navbar-pic {
-    margin-left: 10px;
-    margin-top: 16px;
+    vertical-align: middle;
     height: 32px;
 }
 
@@ -15,7 +14,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    
+
 }
 
 main {
@@ -34,7 +33,7 @@ main {
 }
 
 .h2{
-    font-family: Trebuchet;    
+    font-family: Trebuchet;
     text-align: center;
     text-decoration: underline;
     color: black;
@@ -56,9 +55,10 @@ option.blue-text {
 }
 
 @media #{$small-and-down} {
-    
-
 }
 
-
-
+@media (max-width: 800px) {
+    #blockfooter {
+        display: flex;
+    }
+}

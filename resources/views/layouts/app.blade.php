@@ -28,7 +28,7 @@
             <div class="nav-wrapper container">                 
                 
                     <!-- Branding Image -->
-		                <a id="logo-container" href="#" class="brand-logo">
+		                <a id="logo-container" href="/login" class="brand-logo">
 		                 <img class="navbar-logo-connexion" src="/images/SGE.png" alt="">
 		                </a>                  
 		   

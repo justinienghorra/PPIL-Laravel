@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Photos;
 use App\Statut;
 use App\EnseignantDansUE;
+use App\EnseignantDansUEExterne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -59,9 +60,17 @@ class ProfilController extends Controller
 
         $statuts = Statut::all();
         $uesUserA = EnseignantDansUE::where('id_utilisateur', $userA->id)->get();
+        $uesExUserA = EnseignantDansUEExterne::where('id_utilisateur', $userA->id)->get();
         $heurestotals = 0;
 
         foreach ($uesUserA as $ue) {
+
+            $heurestotals = $heurestotals + $ue->cm_nb_heures*1.5 + ($ue->td_nb_groupes*$ue->td_heures_par_groupe)
+                + ($ue->tp_nb_groupes*$ue->tp_heures_par_groupe)*1.5
+                + ($ue->ei_nb_groupes*$ue->ei_heures_par_groupe)*1.25;
+        }
+        
+        foreach ($uesExUserA as $ue) {
 
             $heurestotals = $heurestotals + $ue->cm_nb_heures*1.5 + ($ue->td_nb_groupes*$ue->td_heures_par_groupe)
                 + ($ue->tp_nb_groupes*$ue->tp_heures_par_groupe)*1.5

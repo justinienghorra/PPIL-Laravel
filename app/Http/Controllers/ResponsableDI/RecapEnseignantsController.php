@@ -8,6 +8,7 @@ use App\EnseignantDansUEExterne;
 use App\Statut;
 use App\User;
 use App\Photos;
+use Illuminate\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class RecapEnseignantsController extends Controller
     /**
      * Retourne la vue présentant le recapitulatif des enseignants
      *
-     * @return View
+     * @return View\View
      */
     public function show() {
        
@@ -25,12 +26,15 @@ class RecapEnseignantsController extends Controller
         $statut = Statut::all(); 
         $users = User::allValidate();
 
-        $tableauHeureTotale = array();
+        $tableauHeureTotale = [];
         
 
         $usersStatut = DB::table('statuts')
                         ->join('users', 'users.id_statut', '=', 'statuts.id')
+                        ->where('attente_validation', false)
                         ->get();
+
+        $tableauHeureTotaleFST = [];
 
         foreach ($users as $user) {
             # code...
