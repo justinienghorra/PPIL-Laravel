@@ -45,7 +45,7 @@ class FormationController extends Controller
         $formations = $userA->formations;
 
 
-        return view('respoFormation.mesFormations')->with(['formations' => $formations, 'respoUE' => $respoUE, 'userA' => $userA, 'respoDI' => $respoDI,'respoForm' => $respoForm, 'photoUrl' => $tmp[1]]);
+        return view('respoFormation.mesFormations')->with(['formations' => $formations, 'respoUE' => $respoUE, 'userA' => $userA, 'respoDI' => $respoDI, 'respoForm' => $respoForm, 'photoUrl' => $tmp[1]]);
 
     }
 
@@ -533,6 +533,40 @@ class FormationController extends Controller
             Notification::createNotification($messageNotif, $userA->id, $id_utilisateur);
 
 
+        }
+        return redirect('/respoFormation/formation/' . $nom_formation);
+    }
+
+    /**
+     * Modifie les horaires et les groupes attendus d'une UE
+     *
+     * @param $request la requête du formulaire de modification d'une UE
+     */
+    public function modifUE(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'cm_volume_attendu' => 'required|integer|min:0',
+            'td_volume_attendu' => 'required|integer|min:0',
+            'tp_volume_attendu' => 'required|integer|min:0',
+            'ei_volume_attendu' => 'required|integer|min:0',
+            'td_nb_groupes' => 'required|integer|min:0',
+            'tp_nb_groupes' => 'required|integer|min:0',
+            'ei_nb_groupes' => 'required|integer|min:0',
+        ]);
+
+        $nom_formation = $request->input('nom_formation');
+
+        if (!$validator->fails()) {
+            $id_ue = $request->input('id_ue');
+            UniteeEnseignement::where('id', $id_ue)->update([
+                'cm_volume_attendu' => $request->input('cm_volume_attendu'),
+                'td_volume_attendu' => $request->input('td_volume_attendu'),
+                'tp_volume_attendu' => $request->input('tp_volume_attendu'),
+                'ei_volume_attendu' => $request->input('ei_volume_attendu'),
+                'td_nb_groupes_attendus' => $request->input('td_nb_groupes'),
+                'tp_nb_groupes_attendus' => $request->input('tp_nb_groupes'),
+                'ei_nb_groupes_attendus' => $request->input('ei_nb_groupes')
+            ]);
         }
         return redirect('/respoFormation/formation/' . $nom_formation);
     }

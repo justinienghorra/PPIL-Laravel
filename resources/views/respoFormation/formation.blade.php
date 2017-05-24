@@ -234,7 +234,9 @@ function redOrGreen($attendu, $affecte)
             <div class="modal-content">
                 <h4>Gestion des horaires de l'UE {{$ue->nom}}</h4>
                 <blockquote><h4>Modification des horaires globaux</h4></blockquote>
-                {!! Form::open(['url' => '#!'], $attributes = ['class' => 'col s12']) !!}
+                {!! Form::open(['url' => "/respoFormation/formation/$formation->nom/modifUE"], $attributes = ['class' => 'col s12']) !!}
+                <input type="hidden" name="id_ue" value="{{ $ue->id }}" />
+                <input type="hidden" name="nom_formation" value="{{ $formation->nom}}" />
                 <div class="row">
                     <div class="col s6">
                         {!! Form::label('cm_volume_attendu', 'CM : Nombre d\'heures attendues') !!}
@@ -272,9 +274,7 @@ function redOrGreen($attendu, $affecte)
                     </div>
                 </div>
                 <div class="row">
-                    <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires globaux')"
-                            class="btn btn-flat green-text right" type="submit">Valider
-                    </button>
+                    <button class="btn btn-flat green-text right" type="submit">Valider</button>
                 </div>
 
                 {!! Form::close() !!}
