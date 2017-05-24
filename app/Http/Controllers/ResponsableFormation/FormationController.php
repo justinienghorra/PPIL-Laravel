@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ResponsableFormation;
 
 
+use App\EnseignantDansUE;
 use App\Formation;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
@@ -433,5 +434,34 @@ class FormationController extends Controller
         } else {
             return response()->json(["message" => "errors", "errors" => $validator]);
         }
+    }
+
+    /**
+     * Ajoute un enseignant à une UE s'il n'y enseigne pas déjà
+     *
+     * @param $request la requête du formulaire d'ajout d'un enseignant
+     */
+    public function addEnseignant(Request $request)
+    {
+        $id_ue = $request->input('id_ue');
+        $id_enseignant = $request->input('id_enseignant');
+        $nom_formation = $request->input('nom_formation');
+
+            $verifExistenceEnseignant = EnseignantDansUE::where(['id_ue' => $id_ue, 'id_utilisateur' => $id_enseignant])->first();
+            if(empty($verifExistenceEnseignant)) {
+
+                $enseignantDsUE = new EnseignantDansUE();
+                $enseignantDsUE->id_utilisateur = $id_enseignant;
+                $enseignantDsUE->id_ue = $request->input('id_ue');
+                $enseignantDsUE->save();
+
+                $ue = UniteeEnseignement::where('id', $id_ue)->first();
+                $userA = Auth::user();
+
+                $messageNotif = "Ajouté dans l'UE ".$ue->nom;
+                Notification::createNotification($messageNotif, $userA->id, $id_enseignant);
+
+            }
+        return redirect('/respoFormation/formation/'.$nom_formation);
     }
 }

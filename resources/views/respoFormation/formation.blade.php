@@ -214,15 +214,16 @@ function redOrGreen($attendu, $affecte)
                 <blockquote><h4>Ajout d'un enseignant</h4></blockquote>
 
                 <div class="row">
-                    <form class="col s12" action="#!">
-                        <select name="ajout_enseignant" id="">
+                    <form class="col s12" method="post" action="/respoFormation/formation/{{$formation->nom}}/addEnseignant">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <input type="hidden" name="id_ue" value="{{ $ue->id }}" />
+                        <input type="hidden" name="nom_formation" value="{{ $formation->nom }}" />
+                        <select name="id_enseignant" id="">
                             @foreach(App\User::allValidate() as $user)
-                                <option value="{{$user->id}}">{{$user->prenom . " " . $user->nom}}</option>
+                                    <option value="{{$user->id}}">{{$user->prenom . " " . $user->nom}}</option>
                             @endforeach
                         </select>
-                        <button onclick="event.preventDefault();makeToast('TODO : ajout enseignant')"
-                                class="right btn btn-flat green-text" type="submit">Ajouter
-                        </button>
+                        <button class="right btn btn-flat green-text" type="submit">Ajouter</button>
                     </form>
                 </div>
             </div>
