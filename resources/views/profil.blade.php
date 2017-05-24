@@ -152,6 +152,15 @@
                 <div class="row">
                     <div class="input-field col s10 offset-s1">
 
+                        {!! Form::password('old_password', $attributes = ['class' => 'validate', 'id' => 'password']) !!}
+                        {!! Form::label('old_password', 'Ancien mot de passe') !!}
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s10 offset-s1">
+
                         {!! Form::password('password', $attributes = ['class' => 'validate', 'id' => 'password']) !!}
                         {!! Form::label('password', 'Nouveau mot de passe') !!}
 
