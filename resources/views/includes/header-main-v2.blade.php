@@ -58,7 +58,7 @@
 <nav class="light-blue lighten-1" role="navigation">
 
     <div class="nav-wrapper container">
-	<a id="logo-container" href="#" class="brand-logo">
+	<a id="logo-container" href="/profil" class="brand-logo">
         <img class="navbar-logo" src="/images/SGE.png" alt=""></a>
         <ul class="right hide-on-med-and-down">
 
@@ -80,9 +80,9 @@
             <li><a class="dropdown-button" href="#!" data-activates="dropdown_user">{{$userA->civilite}}
                     {{$userA->nom}}<i class="material-icons right">arrow_drop_down</i></a></li>
             @if(isset($userA->photo))
-	    <li><img src="/images{{$photoUrl}}" class="navbar-pic circle" alt=""></li>
+	    <li><a id="imageProfil" href="/profil"><img src="/images{{$photoUrl}}" class="navbar-pic circle" alt=""></li></a>
             @else
-	      <li><img src="/images/default.jpg" class="navbar-pic circle" alt=""></li>
+	      <li><a id="imageProfil" href="/profil"><img src="/images/default.jpg" class="navbar-pic circle" alt=""></li></a>
             @endif
 
         </ul>

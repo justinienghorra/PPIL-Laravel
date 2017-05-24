@@ -147,3 +147,8 @@ Route::post('/respoFormation/formation/{nom_formation}/export', 'ResponsableForm
 Route::post('/respoFormation/formation/{nom_formation}/import', 'ResponsableFormation\FormationController@importCSV')->middleware(\App\Http\Middleware\RespoFormation::class);
 
 Route::post('/respoFormation/formation/{nom_formation}/updateResponsable', 'ResponsableFormation\FormationController@updateResponsable')->middleware(\App\Http\Middleware\RespoFormation::class);
+
+Route::post('/respoFormation/formation/{nom_formation}/addEnseignant', 'ResponsableFormation\FormationController@addEnseignant')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/deleteEnseignant', 'ResponsableFormation\FormationController@deleteEnseignant')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/modifEnseignant', 'ResponsableFormation\FormationController@modifEnseignant')->middleware(\App\Http\Middleware\RespoFormation::class);
+Route::post('/respoFormation/formation/{nom_formation}/modifUE', 'ResponsableFormation\FormationController@modifUE')->middleware(\App\Http\Middleware\RespoFormation::class);

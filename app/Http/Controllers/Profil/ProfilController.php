@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Photos;
 use App\Statut;
 use App\EnseignantDansUE;
+use App\EnseignantDansUEExterne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\User;
 use Illuminate\Validation\Rule;
 use Validator;
+use \Hash;
 
 class ProfilController extends Controller
 {
@@ -58,9 +60,17 @@ class ProfilController extends Controller
 
         $statuts = Statut::all();
         $uesUserA = EnseignantDansUE::where('id_utilisateur', $userA->id)->get();
+        $uesExUserA = EnseignantDansUEExterne::where('id_utilisateur', $userA->id)->get();
         $heurestotals = 0;
 
         foreach ($uesUserA as $ue) {
+
+            $heurestotals = $heurestotals + $ue->cm_nb_heures*1.5 + ($ue->td_nb_groupes*$ue->td_heures_par_groupe)
+                + ($ue->tp_nb_groupes*$ue->tp_heures_par_groupe)*1.5
+                + ($ue->ei_nb_groupes*$ue->ei_heures_par_groupe)*1.25;
+        }
+        
+        foreach ($uesExUserA as $ue) {
 
             $heurestotals = $heurestotals + $ue->cm_nb_heures*1.5 + ($ue->td_nb_groupes*$ue->td_heures_par_groupe)
                 + ($ue->tp_nb_groupes*$ue->tp_heures_par_groupe)*1.5
@@ -170,13 +180,19 @@ class ProfilController extends Controller
 
     public function postPassword(Request $request) {
 
+        $user = Auth::user();
+
         // validation pour un type String et une longueur minimale de 6 caracteres
         $validator = Validator::make($request->all(), [
             'password' => 'string|min:6',
             'check_password' => 'string|min:6'
         ]);
 
-        if ($request->input('password') != $request->input('check_password')) {
+        if ( ! Hash::check($request['old_password'], $user->password) ) {
+            
+            return redirect('profil')->with('messages', 'L\'ancien mot de passe entré est faux.');
+        }
+        else if ($request->input('password') != $request->input('check_password')) {
 
             return redirect('profil')->with('messages', 'Les deux mot de passe entrés sont différents.');
         }
@@ -186,7 +202,7 @@ class ProfilController extends Controller
         }
         else {
 
-            $user = Auth::user();
+
             $user->updatePassword(bcrypt($request->input('password')));
             $messages = "Mot de passe modifié avec succès.";
 
