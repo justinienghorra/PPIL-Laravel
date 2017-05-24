@@ -195,7 +195,10 @@ function redOrGreen($attendu, $affecte)
                 <blockquote><h4>Suppression d'enseignants</h4></blockquote>
 
                 <div class="row">
-                    <form class="col s12" action="#!">
+                    <form class="col s12" method="post" action="/respoFormation/formation/{{$formation->nom}}/deleteEnseignant">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <input type="hidden" name="id_ue" value="{{ $ue->id }}" />
+                        <input type="hidden" name="nom_formation" value="{{ $formation->nom }}" />
                         @foreach($ue->enseignants as $enseignant)
                             <p>
                                 <input name="enseignants_a_supprimer[]" type="checkbox"
@@ -203,9 +206,7 @@ function redOrGreen($attendu, $affecte)
                                 <label for="{{$enseignant->user->id}}">{{ $enseignant->user->prenom . " " . $enseignant->user->nom }}</label>
                             </p>
                         @endforeach
-                        <button onclick="event.preventDefault();makeToast('TODO : suppression enseignant')"
-                                class="right btn btn-flat red-text" type="submit">Supprimer
-                        </button>
+                        <button class="right btn btn-flat red-text" type="submit">Supprimer</button>
                     </form>
                 </div>
 
