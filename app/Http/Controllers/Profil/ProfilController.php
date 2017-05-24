@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Input;
 use App\User;
 use Illuminate\Validation\Rule;
 use Validator;
+use \Hash;
 
 class ProfilController extends Controller
 {
@@ -179,13 +180,19 @@ class ProfilController extends Controller
 
     public function postPassword(Request $request) {
 
+        $user = Auth::user();
+
         // validation pour un type String et une longueur minimale de 6 caracteres
         $validator = Validator::make($request->all(), [
             'password' => 'string|min:6',
             'check_password' => 'string|min:6'
         ]);
 
-        if ($request->input('password') != $request->input('check_password')) {
+        if ( ! Hash::check($request['old_password'], $user->password) ) {
+            
+            return redirect('profil')->with('messages', 'L\'ancien mot de passe entré est faux.');
+        }
+        else if ($request->input('password') != $request->input('check_password')) {
 
             return redirect('profil')->with('messages', 'Les deux mot de passe entrés sont différents.');
         }
@@ -195,7 +202,7 @@ class ProfilController extends Controller
         }
         else {
 
-            $user = Auth::user();
+
             $user->updatePassword(bcrypt($request->input('password')));
             $messages = "Mot de passe modifié avec succès.";
 
