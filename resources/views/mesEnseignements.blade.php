@@ -55,7 +55,7 @@ function redOrGreen($attendu, $affecte)
                             <p class="flow-text">{!! $enseignant->enseignement->description !!} </p>
 
 
-                            <h4 class="header light">Récapitulatif</h4>
+                            <h4 class="header light">Vos horaires</h4>
                         </blockquote>
 
                         <ul class="collection">
@@ -74,28 +74,24 @@ function redOrGreen($attendu, $affecte)
                             <tr>
                                 <th></th>
                                 <th>CM</th>
-                                <th>EI</th>
                                 <th>TD</th>
                                 <th>TP</th>
+                                <th>EI</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <th>Volume attendu</th>
                                 <td>{!! $enseignant->enseignement->cm_volume_attendu !!}</td>
-                                <td>{!! $enseignant->enseignement->ei_volume_attendu !!}</td>
                                 <td>{!! $enseignant->enseignement->td_volume_attendu !!}</td>
                                 <td>{!! $enseignant->enseignement->tp_volume_attendu !!}</td>
+                                <td>{!! $enseignant->enseignement->ei_volume_attendu !!}</td>
                             </tr>
                             <tr>
                                 <th>Volume affecté</th>
                                 <td>
                                     {!! redOrGreen($enseignant->enseignement->cm_volume_attendu, $enseignant->enseignement->getCMNbHeuresAffectees()) !!}
                                     {!! $enseignant->enseignement->getCMNbHeuresAffectees() !!}
-                                </td>
-                                <td>
-                                    {!! redOrGreen($enseignant->enseignement->ei_volume_attendu, $enseignant->enseignement->getEINbHeuresAffectees()) !!}
-                                    {!! $enseignant->enseignement->getEINbHeuresAffectees() !!}
                                 </td>
                                 <td>
                                     {!! redOrGreen($enseignant->enseignement->td_volume_attendu, $enseignant->enseignement->getTDNbHeuresAffectees()) !!}
@@ -105,21 +101,21 @@ function redOrGreen($attendu, $affecte)
                                     {!! redOrGreen($enseignant->enseignement->tp_volume_attendu, $enseignant->enseignement->getTPNbHeuresAffectees()) !!}
                                     {!! $enseignant->enseignement->getTPNbHeuresAffectees() !!}
                                 </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->ei_volume_attendu, $enseignant->enseignement->getEINbHeuresAffectees()) !!}
+                                    {!! $enseignant->enseignement->getEINbHeuresAffectees() !!}
+                                </td>
                             </tr>
                             <tr>
                                 <th>Nombre de groupes attendus</th>
                                 <td></td>
-                                <td>{!! $enseignant->enseignement->ei_nb_groupes_attendus !!}</td>
                                 <td>{!! $enseignant->enseignement->td_nb_groupes_attendus !!}</td>
                                 <td>{!! $enseignant->enseignement->tp_nb_groupes_attendus !!}</td>
+                                <td>{!! $enseignant->enseignement->ei_nb_groupes_attendus !!}</td>
                             </tr>
                             <tr>
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
-                                <td>
-                                    {!! redOrGreen($enseignant->enseignement->ei_nb_groupes_attendus, $enseignant->enseignement->getEINbGroupesAffectes()) !!}
-                                    {!! $enseignant->enseignement->getEINbGroupesAffectes() !!}
-                                </td>
                                 <td>
                                     {!! redOrGreen($enseignant->enseignement->td_nb_groupes_attendus, $enseignant->enseignement->getTDNbGroupesAffectes()) !!}
                                     {!! $enseignant->enseignement->getTDNbGroupesAffectes() !!}
@@ -127,6 +123,10 @@ function redOrGreen($attendu, $affecte)
                                 <td>
                                     {!! redOrGreen($enseignant->enseignement->tp_nb_groupes_attendus, $enseignant->enseignement->getTPNbGroupesAffectes()) !!}
                                     {!! $enseignant->enseignement->getTPNbGroupesAffectes() !!}
+                                </td>
+                                <td>
+                                    {!! redOrGreen($enseignant->enseignement->ei_nb_groupes_attendus, $enseignant->enseignement->getEINbGroupesAffectes()) !!}
+                                    {!! $enseignant->enseignement->getEINbGroupesAffectes() !!}
                                 </td>
                             </tr>
                             </tbody>
@@ -146,9 +146,9 @@ function redOrGreen($attendu, $affecte)
 
                                 <th class="center">Nom</th>
                                 <th class="center">CM</th>
-                                <th class="center" colspan="2">EI</th>
                                 <th class="center" colspan="2">TD</th>
                                 <th class="center" colspan="2">TP</th>
+                                <th class="center" colspan="2">EI</th>
                             </tr>
                             </thead>
 
@@ -174,12 +174,12 @@ function redOrGreen($attendu, $affecte)
                                 <tr>
                                     <td>{!! $enseignantParticipeUE->user->nom . ' ' . $enseignantParticipeUE->user->prenom !!}</td>
                                     <td class="center">{!! $enseignantParticipeUE->cm_nb_heures !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->ei_nb_groupes !!}</td>
-                                    <td class="center">{!! $enseignantParticipeUE->ei_heures_par_groupe !!}</td>
                                     <td class="center">{!! $enseignantParticipeUE->td_nb_groupes !!}</td>
                                     <td class="center">{!! $enseignantParticipeUE->td_heures_par_groupe !!}</td>
                                     <td class="center">{!! $enseignantParticipeUE->tp_nb_groupes !!}</td>
                                     <td class="center">{!! $enseignantParticipeUE->tp_heures_par_groupe !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->ei_nb_groupes !!}</td>
+                                    <td class="center">{!! $enseignantParticipeUE->ei_heures_par_groupe !!}</td>
                                 </tr>
 
                             @endforeach
@@ -235,25 +235,25 @@ function redOrGreen($attendu, $affecte)
                             <tr>
                                 <th></th>
                                 <th>CM</th>
-                                <th>EI</th>
                                 <th>TD</th>
                                 <th>TP</th>
+                                <th>EI</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <th>Volume affecté</th>
                                 <td>{!! $enseignantExterne->cm_nb_heures !!}</td>
-                                <td>{!! $enseignantExterne->getEINbHeuresAffectees() !!}</td>
                                 <td>{!! $enseignantExterne->getTDNbHeuresAffectees() !!}</td>
                                 <td>{!! $enseignantExterne->getTPNbHeuresAffectees() !!}</td>
+                                <td>{!! $enseignantExterne->getEINbHeuresAffectees() !!}</td>
                             </tr>
                             <tr>
                                 <th>Nombre de groupes affecté</th>
                                 <td></td>
-                                <td>{!! $enseignantExterne->ei_nb_groupes !!}</td>
                                 <td>{!! $enseignantExterne->td_nb_groupes !!}</td>
                                 <td>{!! $enseignantExterne->tp_nb_groupes !!}</td>
+                                <td>{!! $enseignantExterne->ei_nb_groupes !!}</td>
                             </tr>
                             </tbody>
                         </table>
