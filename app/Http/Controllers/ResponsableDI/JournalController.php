@@ -71,7 +71,7 @@ class JournalController extends Controller
                         $di = Auth::user();
 
                         $messageNotif = "Votre inscription a été validée par le Responsable : ".$user->prenom." ".$user->nom;
-                        Notification::createNotification($messageNotif, $user->id, $di->id);
+                        Notification::createNotification($messageNotif, $di->id, $user->id);
 
 
                         break;
