@@ -284,12 +284,15 @@ function redOrGreen($attendu, $affecte)
                     <blockquote><h4>Modification des horaires
                             de {{$enseignant->user->civilite . " " . $enseignant->user->prenom . " " . $enseignant->user->nom}}</h4>
                     </blockquote>
-                    {!! Form::open(['url' => '#!']) !!}
+                    {!! Form::open(['url' => "/respoFormation/formation/$formation->nom/modifEnseignant"]) !!}
+
                     <div class="row">
                         {!! Form::hidden('id_utilisateur', $enseignant->user->id) !!}
+                        {!! Form::hidden('id_ue', $ue->id) !!}
+                        {!! Form::hidden('nom_formation', $formation->nom) !!}
                         <div class="col s6">
-                            {!! Form::label('cm_volume_affecte', 'CM : Nombre d\'heures affectées') !!}
-                            {!! Form::number('cm_volume_affecte', $value = $enseignant->cm_nb_heures) !!}
+                            {!! Form::label('cm_nb_heures', 'CM : Nombre d\'heures affectées') !!}
+                            {!! Form::number('cm_nb_heures', $value = $enseignant->cm_nb_heures) !!}
                         </div>
                     </div>
                     <div class="row">
@@ -315,15 +318,13 @@ function redOrGreen($attendu, $affecte)
                     <div class="row">
                         <div class="col s6">
                             {!! Form::label('ei_nb_groupes', 'EI : Nombre de groupes') !!}
-                            {!! Form::number('ei_nb_groupes', $value = $enseignant->td_nb_groupes) !!}
+                            {!! Form::number('ei_nb_groupes', $value = $enseignant->ei_nb_groupes) !!}
                         </div>
                         <div class="col s6">
                             {!! Form::label('ei_heures_par_groupe', 'EI : Heures par groupe') !!}
-                            {!! Form::number('ei_heures_par_groupe', $value = $enseignant->td_heures_par_groupe) !!}
+                            {!! Form::number('ei_heures_par_groupe', $value = $enseignant->ei_heures_par_groupe) !!}
                         </div>
-                        <button onclick="event.preventDefault();makeToast('TODO : Backend modif horaires enseignants')"
-                                class="btn btn-flat green-text right" type="submit">Valider
-                        </button>
+                        <button class="btn btn-flat green-text right" type="submit">Valider</button>
                     </div>
                     {!! Form::close() !!}
 

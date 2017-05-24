@@ -489,4 +489,49 @@ class FormationController extends Controller
         }
         return redirect('/respoFormation/formation/' . $nom_formation);
     }
+
+
+    /**
+     * Modifie les horaires et les groupes d'un enseignant dans une UE
+     *
+     * @param $request la requête du formulaire de modification d'un enseignant
+     */
+    public function modifEnseignant(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'cm_nb_heures' => 'required|integer|min:0',
+            'td_heures_par_groupe' => 'required|integer|min:0',
+            'tp_heures_par_groupe' => 'required|integer|min:0',
+            'ei_heures_par_groupe' => 'required|integer|min:0',
+            'td_nb_groupes' => 'required|integer|min:0',
+            'tp_nb_groupes' => 'required|integer|min:0',
+            'ei_nb_groupes' => 'required|integer|min:0',
+        ]);
+
+        $nom_formation = $request->input('nom_formation');
+
+
+        if (!$validator->fails()) {
+            $id_ue = $request->input('id_ue');
+            $id_utilisateur = $request->input('id_utilisateur');
+            EnseignantDansUE::where(['id_utilisateur' => $id_utilisateur, 'id_ue' => $id_ue])->update([
+                'cm_nb_heures' => $request->input('cm_nb_heures'),
+                'td_heures_par_groupe' => $request->input('td_heures_par_groupe'),
+                'tp_heures_par_groupe' => $request->input('tp_heures_par_groupe'),
+                'ei_heures_par_groupe' => $request->input('ei_heures_par_groupe'),
+                'td_nb_groupes' => $request->input('td_nb_groupes'),
+                'tp_nb_groupes' => $request->input('tp_nb_groupes'),
+                'ei_nb_groupes' => $request->input('ei_nb_groupes')
+            ]);
+
+            $ue = UniteeEnseignement::where('id', $id_ue)->first();
+            $userA = Auth::user();
+
+            $messageNotif = "Horaires modifiés dans l'UE " . $ue->nom;
+            Notification::createNotification($messageNotif, $userA->id, $id_utilisateur);
+
+
+        }
+        return redirect('/respoFormation/formation/' . $nom_formation);
+    }
 }
