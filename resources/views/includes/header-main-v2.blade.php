@@ -80,9 +80,13 @@
             <li><a class="dropdown-button" href="#!" data-activates="dropdown_user">{{$userA->civilite}}
                     {{$userA->nom}}<i class="material-icons right">arrow_drop_down</i></a></li>
             @if(isset($userA->photo))
-	    <li><a id="imageProfil" href="/profil"><img src="/images{{$photoUrl}}" class="navbar-pic circle" alt=""></li></a>
+	    <li>
+            <a id="imageProfil" href="/profil">
+                <img src="/images{{$photoUrl}}" class="navbar-pic circle" alt="">
+            </a>
+        </li>
             @else
-	      <li><a id="imageProfil" href="/profil"><img src="/images/default.jpg" class="navbar-pic circle" alt=""></li></a>
+	      <li><a id="imageProfil" href="/profil"><img src="/images/default.jpg" class="navbar-pic circle" alt=""></a></li>
             @endif
 
         </ul>
