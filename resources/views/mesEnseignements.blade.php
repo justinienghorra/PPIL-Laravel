@@ -405,7 +405,7 @@ function redOrGreen($attendu, $affecte)
 
 
         <div class="modal-footer">
-            <a href="#!" onclick="event.preventDefault();makeToast('TODO :  Exportation')"
+            <a href="/mesEnseignements/exportation" {{--onclick="event.preventDefault();makeToast('TODO :  Exportation')"--}}
                class="modal-action modal-close waves-effect waves-green btn-flat blue-text">Exporter</a>
             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Annuler</a>
         </div>

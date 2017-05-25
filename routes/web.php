@@ -99,6 +99,7 @@ Route::get('/mesEnseignements', 'Enseignant\EnseignantController@show');
 Route::post('/mesEnseignements/modificationUE', 'Enseignant\EnseignantController@updateUE');
 Route::post('/mesEnseignements/modificationUEExterne', 'Enseignant\EnseignantController@updateUEExterne');
 Route::post('/mesEnseignements/ajoutUEExterne', 'Enseignant\EnseignantController@ajouterUEExterne');
+Route::get('/mesEnseignements/exportation', 'Enseignant\EnseignantController@exportation');
 
 
 

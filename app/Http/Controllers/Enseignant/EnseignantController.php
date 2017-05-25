@@ -192,4 +192,111 @@ class EnseignantController extends Controller
             return redirect('mesEnseignements')->withErrors($validator);
         }
     }
+
+
+    public function exportation(){
+
+        $userA = \Auth::user();
+        //recuperation des enseignements de l'utilisateur
+        $enseignantDansUEs = $userA->enseignantDansUEs;
+
+        //recuperation des enseignements externe de l'utilisateur
+        $enseignantDansUEsExterne = $userA->enseignantDansUEsExterne;
+
+        $str = array(
+            array("Liste des UE"),
+            array(
+                "Nom",
+                "heures CM",
+                "heures TD",
+                "heures TP ",
+                "heures EI",
+                "groupes TD",
+                "groupes TP",
+                "groupes EI"
+            ));
+
+
+        foreach ($enseignantDansUEs as $enseignant){
+            array_push($str, array(
+                $enseignant->enseignement->nom,
+                $enseignant->enseignement->cm_volume_attendu,
+                $enseignant->enseignement->td_volume_attendu,
+                $enseignant->enseignement->tp_volume_attendu,
+                $enseignant->enseignement->ei_volume_attendu,
+                $enseignant->enseignement->td_nb_groupes_attendus,
+                $enseignant->enseignement->tp_nb_groupes_attendus,
+                $enseignant->enseignement->ei_nb_groupes_attendus
+            ));
+        }
+
+        array_push($str, array(""));
+        array_push($str, array("Enseignants par UE"));
+
+        $champs = array("Nom",
+                        "heures CM",
+                        "heures TD",
+                        "groupes TD",
+                        "heures TP ",
+                        "groupes TP",
+                        "heures EI",
+                        "groupes EI"
+        );
+
+        foreach ($enseignantDansUEs as $enseignant){
+            array_push($str, array(" ", " ", " ", $enseignant->enseignement->nom, " ", " ", " ", " "));
+            array_push($str, $champs);
+            foreach ($enseignant->enseignement->enseignants as $enseignantParticipeUE){
+                array_push($str, array(
+                    $enseignantParticipeUE->user->nom . ' ' . $enseignantParticipeUE->user->prenom ,
+                    $enseignantParticipeUE->cm_nb_heures,
+                    $enseignantParticipeUE->td_heures_par_groupe,
+                    $enseignantParticipeUE->td_nb_groupes,
+                    $enseignantParticipeUE->tp_heures_par_groupe,
+                    $enseignantParticipeUE->tp_nb_groupes,
+                    $enseignantParticipeUE->ei_heures_par_groupe,
+                    $enseignantParticipeUE->ei_nb_groupes
+                ));
+            }
+        }
+
+
+        array_push($str, array(""));
+        array_push($str, array('Liste des UE externe de ' . $userA->nom . ' ' . $userA->prenom));
+        array_push($str, array( "Nom",
+                                "heures CM",
+                                "heures TD",
+                                "heures TP ",
+                                "heures EI",
+                                "groupes TD",
+                                "groupes TP",
+                                "groupes EI"
+        ));
+
+
+        foreach ($enseignantDansUEsExterne as $enseignantExterne){
+            array_push($str, array( $enseignantExterne->nom,
+                                    $enseignantExterne->cm_nb_heures,
+                                    $enseignantExterne->getTDNbHeuresAffectees(),
+                                    $enseignantExterne->getTPNbHeuresAffectees(),
+                                    $enseignantExterne->getEINbHeuresAffectees(),
+                                    $enseignantExterne->td_nb_groupes,
+                                    $enseignantExterne->tp_nb_groupes,
+                                    $enseignantExterne->ei_nb_groupes)
+            );
+
+        }
+
+        $fichier = fopen("/tmp/mesEnseignements.csv", "w");
+
+        fprintf($fichier, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        foreach($str as $fields) {
+            fputcsv($fichier, $fields);
+        }
+
+        fclose($fichier);
+
+        return response()->download("/tmp/mesEnseignements.csv");
+    }
 }
