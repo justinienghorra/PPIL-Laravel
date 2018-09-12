@@ -1,20 +1,9 @@
-# PPIL-Laravel
-Projet PPIL - L3 Informatique - FST
+# Univ-Manager
+Gestionnaire d'unités d'enseignement pour universitaires
 
-## Infos pour le frontend
-* ```php artisan migrate:refresh --seed ``` pour mettre à jour la base
-* Après ça, deux utilisateur sont créés :
-    * Le resp DI : jean.dupont@gmail.com | password
-    * Un utilisateur lambda : utilisateur.lambda@gmail.com | password
-    * Un respo UE : respoue@gmail.com | password
-* La vue du login est dispo sur /login - elle a été générée par Laravel (A modifier)
-* La vue register est dispo sur /register - elle a été générée par Laravel (A modifier)
-* + la vue sur /en_attente
-* La vue journal est dispo sur /di/journal (Quand on est loggé en resp DI)
-* La vue annuaire est dispo sur /di/annuaire (Quand on est loggé en resp DI)
-* La vue profil est dispo sur /profil
-* La vue mesUE est dispo sur /respoUE/mesUE (Quand on est loggé en resp UE)
-* Les vues de la partie modélisation sont dispo sur /conception/xxxxxx
+L3 Informatique - Faculté des Sciences et Technologies - Vandoeuvre-lès-Nancy
+
+Mai 2017
 
 ## Setup avec Docker/laradock
 * (Installer docker)
@@ -46,13 +35,14 @@ Projet PPIL - L3 Informatique - FST
     * DB_PASSWORD=root (#ultrasécu)
     
 # Persistence de la base entre les reboots
-Petit détail très léger, le dossier où est stocké la base est par défaut /tmp..... (Sérieusement quoi...) 
+Petit détail très léger, le dossier où est stocké la base est par défaut /tmp
+
 Pour changer ça :
 * A la racine du projet, créer un dossier app-data
 * Dans le .env du dossier laradock
     * Remplacer DATA_SAVE_PATH=/tmp par DATA_SAVE_PATH=../app-data
     
-## Si vous voulez un IP fixe pour phpmyadmin et pour le .env
+## Si vous voulez une IP fixe pour phpmyadmin et pour le .env
 * Sur Mac
     * sudo ifconfig nomdel'interface alias IP/Masque
     * Ex : sudo ifconfig en0 alias 10.200.10.1/24
@@ -76,8 +66,22 @@ Dans le .env du dossier racine
 * Créer un Model avec fichier de migration : php artisan make:model User -m 
     * -> Classe User dans app/
     * -> fichier de migration create_users_table dans database/migrations/
-    
-## Trucs à fix
-* Les cards moches sur /di/formations
+
+## Infos pour le frontend
+* ```php artisan migrate:refresh --seed ``` pour mettre à jour la base
+* Après ça, trois utilisateurs sont créés :
+    * Le resp DI : jean.dupont@gmail.com | password
+    * Un utilisateur lambda : utilisateur.lambda@gmail.com | password
+    * Un respo UE : respoue@gmail.com | password
+* La vue du login est dispo sur /login - elle a été générée par Laravel (A modifier)
+* La vue register est dispo sur /register - elle a été générée par Laravel (A modifier)
+* La vue journal est dispo sur /di/journal (Quand on est loggé en resp DI)
+* La vue annuaire est dispo sur /di/annuaire (Quand on est loggé en resp DI)
+* La vue profil est dispo sur /profil
+* La vue mesUE est dispo sur /respoUE/mesUE (Quand on est loggé en resp UE)
+* Les vues de la partie modélisation sont dispo sur /conception/xxxxxx
+
+## Bugs
+* Affichage de /di/formations
 * Changement photo de profil sur mobile : erreur 500
 * Photo de profil par défaut pour l'admin
